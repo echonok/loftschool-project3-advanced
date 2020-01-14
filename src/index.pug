@@ -9,7 +9,122 @@ html(lang="en")
     title Portfolio | main page
   body
     .wrapper
-      .maincontent
-        +image('content/user.jpg', 'user-pic')
-        +icon('link', 'link-class')
-        .icon-bg
+      
+      .header.header__container
+        .logo ен
+        nav.nav
+          ul.nav__list
+            li.nav__item Главная
+            li.nav__item Обо мне
+            li.nav__item Навыки
+            li.nav__item Работы
+            li.nav__item Отзывы
+            li.nav__item Связаться
+        .social
+          ul.social__list
+            li.social__item
+              +icon('insta', 'social-icon')
+            li.social__item
+              +icon('vk', 'social-icon')
+            li.social__item
+              +icon('github', 'social-icon')
+      
+      .maincontent.maincontent__container
+        .welcome
+          .welcome-short Личный сайт веб разработчика
+          .welcome-full Еловский Николай
+      
+      .main-info.main-info__container
+        .left-side
+          .pic-area
+            +image('content/user.jpg', 'user-pic')    
+          .charcs
+            ul.charcs__list
+              li.charcs__item
+                .char__name Проживаю:
+                .char__value Сочи
+              li.charcs__item
+                .char__name Возраст:
+                .char__value 34 года
+              li.charcs__item
+                .char__name Родился:
+                .char__value 22 июля 1985
+        .right-side
+          .greetings Привет, меня зовут
+          .my-name Николай Еловский
+          .about-me Я занимаюсь разработкой современных сайтов и приложений. Мне нравится делать интересные и современные проекты.
+          .about-site Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
+          
+      .container.skills__container
+        .skills__big-pic
+        .skills__info
+          .skills__heeadline.heeadline Чем я могу быть полезен вам
+          .skills__info Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
+
+          .skills__field
+            .skills__field-name Front-end
+            ul.skills__list
+              li.skills__item HTML
+              li.skills__item CSS
+              li.skills__item JavaScript
+              li.skills__item jQuery & VUE
+
+          .skills__field
+            .skills__field-name Workflow
+            ul.skills__list
+              li.skills__item Git
+              li.skills__item Terminal
+              li.skills__item Gulp
+              li.skills__item Webpack
+
+      .container.portfolio__container
+        .container-headline Мои работы
+        .project-image
+          .project__pic-area
+          .project__switcher
+            .up-button.button
+            .down-button.button
+
+        .project__desc
+          .project__tags
+            ul.tags_list
+              li.tags__item HTML
+              li.tags__item CSS
+              li.tags__item JavaScript
+          .project__headline Сайт школы образования
+          .project__info Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!
+          .project__link Посмотреть сайт
+
+      .container.reviews__container
+        .container-headline Что обо мне говорят
+          
+          .reviews
+            ul.reviews__list
+              
+              li.reviews__item.review
+                .review__text Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!
+                .review__author
+                  .author__pic-area
+                    +image('content/reviews/Ковальчук Дмитрий.jpeg', 'user-pic')
+                  .author
+                    .author__name Ковальчук Дмитрий
+                    .author__occup Основатель Loftschool
+
+              li.reviews__item.review
+                .review__text Этот код выдержит любые испытания. Только пожалуйста, не загружайте сайт на слишком старых браузерах
+                .review__author
+                  .author__pic-area
+                    +image('content/reviews/Владимир Сабанцев.jpeg', 'user-pic')
+                  .author
+                    .author__name Владимир Сабанцев
+                    .author__occup Преподаватель Loftschool
+          
+          .feedback
+            .feedback__headline
+              .feedback__fields
+                ul.fields__list
+                  li.fields__item
+                    .field__pic
+                      +icon('avatar', 'field__pic')
+                    .field__name
+                    .field__value

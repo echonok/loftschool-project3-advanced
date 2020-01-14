@@ -1,8 +1,16 @@
 {
-  "text-color": "#414c63",
+  "text-color-light": "#414c63",
+  "text-color": "#464d62",
+
+  "blue-dark": "#252830",
+  "blue-middle": "#353e4e",
+  "grey": "#e6e6e6",
+  "violet1": "#9300e8",
+  "violet2": "#4a00ed",
+
   "links-color": "#4b6fd7",
   "bp-desktop-hd": "1800px",
   "bp-desktop": "1200px",
   "bp-tablets": "768px",
-  "bp-phones": "480px"
+  "bp-phones": "320px"
 }
