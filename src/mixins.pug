@@ -17,8 +17,8 @@ mixin tags(ulClassName, liClassName, ...items)
     each item in items
       li(class=liClassName)&attributes(attributes)= item
 
-mixin addField(nameClassName, valueClassName, iconAreaClassName, iconPath, iconClassName)
-  div(class=iconAreaClassName)
+mixin addField(nameClassName, nameValue, valueClassName, iconAreaClassName, iconPath, iconClassName)
+  div(class=iconAreaClassName)&attributes(attributes)= nameValue
     +icon(iconPath, iconClassName)
   div(class=nameClassName)
   div(class=valueClassName)

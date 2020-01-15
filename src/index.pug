@@ -10,6 +10,11 @@ html(lang="en")
   body
     .wrapper
       
+      .scroll
+        .scroll__text Скролл
+        .scroll_icon-area
+          +icon('scroll', 'scroll__icon')
+
       .header.header__container
         .logo ен
         +nav('nav', 'nav__list', 'nav__item', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
@@ -102,7 +107,7 @@ html(lang="en")
                   .review__text Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!
                   .review__author
                     .author__pic-area
-                      +image('content/reviews/Ковальчук Дмитрий.jpeg', 'user-pic')
+                      +image('content/reviews/Ковальчук Дмитрий.jpeg', 'author__avatar')
                     .author
                       .author__name Ковальчук Дмитрий
                       .author__occup Основатель Loftschool
@@ -111,7 +116,7 @@ html(lang="en")
                   .review__text Этот код выдержит любые испытания. Только пожалуйста, не загружайте сайт на слишком старых браузерах
                   .review__author
                     .author__pic-area
-                      +image('content/reviews/Владимир Сабанцев.jpeg', 'user-pic')
+                      +image('content/reviews/Владимир Сабанцев.jpeg', 'author__avatar')
                     .author
                       .author__name Владимир Сабанцев
                       .author__occup Преподаватель Loftschool
@@ -122,9 +127,25 @@ html(lang="en")
             .feedback__fields
               ul.fields__list
                 li.fields__item
-                  +addField('field__name', 'field__value', 'field__pic-area', 'avatar', 'field__pic')
+                  +addField('field__name', 'Введите ваше имя', 'field__value', 'field__pic-area', 'avatar', 'field__pic')
+                  +addField('field__name', 'Введите ваш email', 'field__value', 'field__pic-area', 'envelope', 'field__pic')
+                  +addField('field__name', 'Сообщение к письму', 'field__value', 'field__pic-area', 'chat', 'field__pic')
 
       .footer.footer__container
-        .copyright
-          +nav('footer-nav', 'footer-nav__list', 'footer-nav__item', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
+        .footer__group
+          .footer__block
+            .copyright ©2020
+          .footer__block
+            .footer__author Николай Еловский
+            .footer__site Личный сайт веб-разработчика
+        .footer__group
+          +nav('footer-nav', 'nav__list nav__list--footer', 'nav__item nav__item--footer', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
+          .footer__group
+            .footer__block
+              .footer__about Этот сайт я сделал в рамках обучения в Школе онлайн образования Loftschool
+              .footer__social
+            .footer__block
+              .footer__quoute
+                .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
+                .quote__author Martin Golding
         
