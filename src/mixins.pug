@@ -5,3 +5,20 @@ mixin icon(name, className)
 
 mixin image(path, className)
   img(src=require(`images/${path}`) class=className)
+
+mixin nav(navClassName, ulClassName, liClassName, ...items)
+  nav(class=navClassName)
+    ul(class=ulClassName)
+      each item in items
+        li(class=liClassName)&attributes(attributes)= item
+
+mixin tags(ulClassName, liClassName, ...items)
+  ul(class=ulClassName)
+    each item in items
+      li(class=liClassName)&attributes(attributes)= item
+
+mixin addField(nameClassName, valueClassName, iconAreaClassName, iconPath, iconClassName)
+  div(class=iconAreaClassName)
+    +icon(iconPath, iconClassName)
+  div(class=nameClassName)
+  div(class=valueClassName)
