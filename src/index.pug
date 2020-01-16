@@ -11,13 +11,15 @@ html(lang="en")
     .wrapper
       
       .scroll
-        .scroll__text Скролл
-        .scroll_icon-area
-          +icon('scroll', 'scroll__icon')
+        .scroll__box
+          .scroll__text Скролл
+          .scroll__icon-area
+            +icon('scroll', 'scroll__icon')
 
       .header.header__container
         .logo ен
         +nav('nav', 'nav__list', 'nav__item', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
+        +social('social', 'social__list', 'social__item', 'social-icon', 'insta', 'vk', 'github')
         .social
           ul.social__list
             li.social__item
@@ -36,19 +38,19 @@ html(lang="en")
       section.section.main-info
         .container.main-info__container
           .short-bio
-            .pic-area
-              +image('content/user.jpg', 'user-pic')    
+            .short-bio__pic-area
+              +image('content/user.jpg', 'short-bio__user-pic')
             .charcs
               ul.charcs__list
-                li.charcs__item
-                  .char__name Проживаю:
-                  .char__value Сочи
-                li.charcs__item
-                  .char__name Возраст:
-                  .char__value 34 года
-                li.charcs__item
-                  .char__name Родился:
-                  .char__value 22 июля 1985
+                li.charcs__item.charc
+                  .charc__name Проживаю:
+                  .charc__value Сочи
+                li.charcs__item.charc
+                  .charc__name Возраст:
+                  .charc__value 34 года
+                li.charcs__item.charc
+                  .charc__name Родился:
+                  .charc__value 22 июля 1985
           .full-bio
             .greetings Привет, меня зовут
             .my-name Николай Еловский
@@ -82,44 +84,57 @@ html(lang="en")
       section.section.portfolio
         .container.portfolio__container
           .container-headline Мои работы
-          .project-image
-            .project__pic-area
-              +image('content/projects/1.jpg', 'project-big-pic')
-            .project__switcher
-              .up-button.button
-              .down-button.button
+          .project
+            .project__image
+              .project__pic-area
+                +image('content/projects/1.jpg', 'project__big-pic')
+                +image('content/projects/2.jpg', 'project__small-pic')
+              .project__switcher
+                .up-button.button
+                .down-button.button
 
-          .project__desc
-            .project__tags
-              +tags('tags_list', 'tags__item', 'HTML', 'CSS', 'JavaScript')
-            .project__headline Сайт школы образования
-            .project__info Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!
-            .project__link Посмотреть сайт
+            .project__desc
+              .project__tags
+                +tags('tags_list', 'tags__item', 'tags__text', 'HTML', 'CSS', 'JavaScript')
+              .project__headline Сайт школы образования
+              .project__info Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!
+              .project__link
+                .link__image-area
+                  +icon('link', 'link__image')
+                .link__text Посмотреть сайт
 
       section.section.reviews
         .container.reviews__container
           .container-headline Что обо мне говорят
             
-            .reviews
-              ul.reviews__list
-                
-                li.reviews__item.review
-                  .review__text Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!
-                  .review__author
-                    .author__pic-area
-                      +image('content/reviews/Ковальчук Дмитрий.jpeg', 'author__avatar')
-                    .author
-                      .author__name Ковальчук Дмитрий
-                      .author__occup Основатель Loftschool
+          .reviews
+            ul.reviews__list
+              
+              li.reviews__item
+                .review
+                  .review__image-box
+                    +icon('quote', 'review__image')                    
+                  .review__box
+                    p.review__text Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!
+                    .review__author
+                      .author__pic-area
+                        +image('content/reviews/Ковальчук Дмитрий.jpeg', 'author__avatar')
+                      .author__box
+                        .author__name Ковальчук Дмитрий
+                        .author__occup Основатель Loftschool
 
-                li.reviews__item.review
-                  .review__text Этот код выдержит любые испытания. Только пожалуйста, не загружайте сайт на слишком старых браузерах
-                  .review__author
-                    .author__pic-area
-                      +image('content/reviews/Владимир Сабанцев.jpeg', 'author__avatar')
-                    .author
-                      .author__name Владимир Сабанцев
-                      .author__occup Преподаватель Loftschool
+              li.reviews__item
+                .review
+                  .review__image-box
+                    +icon('quote', 'review__image')                    
+                  .review__box
+                    p.review__text Этот код выдержит любые испытания. Только пожалуйста, не загружайте сайт на слишком старых браузерах
+                    .review__author
+                      .author__pic-area
+                        +image('content/reviews/Владимир Сабанцев.jpeg', 'author__avatar')
+                      .author__box
+                        .author__name Владимир Сабанцев
+                        .author__occup Преподаватель Loftschool
 
       section.section.feedback
         .feedback
@@ -129,23 +144,25 @@ html(lang="en")
                 li.fields__item
                   +addField('field__name', 'Введите ваше имя', 'field__value', 'field__pic-area', 'avatar', 'field__pic')
                   +addField('field__name', 'Введите ваш email', 'field__value', 'field__pic-area', 'envelope', 'field__pic')
-                  +addField('field__name', 'Сообщение к письму', 'field__value', 'field__pic-area', 'chat', 'field__pic')
+                  //+addField('field__name', 'Сообщение к письму', 'field__value', 'field__pic-area', 'chat', 'field__pic')
 
-      .footer.footer__container
-        .footer__group
-          .footer__block
-            .copyright ©2020
-          .footer__block
-            .footer__author Николай Еловский
-            .footer__site Личный сайт веб-разработчика
-        .footer__group
-          +nav('footer-nav', 'nav__list nav__list--footer', 'nav__item nav__item--footer', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
-          .footer__group
+      .footer
+        .container.footer__container
+          .footer__group.footer__group--vertical
             .footer__block
-              .footer__about Этот сайт я сделал в рамках обучения в Школе онлайн образования Loftschool
-              .footer__social
+              .copyright ©2020
             .footer__block
-              .footer__quoute
-                .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
-                .quote__author Martin Golding
+              .footer__author Николай Еловский
+              .footer__site Личный сайт веб-разработчика
+          .footer__group.footer__group--vertical
+            +nav('footer-nav', 'nav__list nav__list--footer', 'nav__item nav__item--footer', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
+            .footer__group
+              .footer__block
+                .footer__about Этот сайт я сделал в рамках обучения в Школе онлайн образования Loftschool
+                .footer__social
+                  +social('social', 'social__list', 'social__item', 'social-icon', 'insta', 'vk', 'github')
+              .footer__block
+                .footer__quoute
+                  .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
+                  .quote__author Martin Golding
         
