@@ -18,11 +18,14 @@ mixin tags(ulClassName, liClassName, spanClassName, ...items)
       li(class=liClassName)
         span(class=spanClassName)&attributes(attributes)= item
 
-mixin addField(nameClassName, nameValue, valueClassName, iconAreaClassName, iconPath, iconClassName)
-  div(class=iconAreaClassName)&attributes(attributes)= nameValue
-    +icon(iconPath, iconClassName)
-  div(class=nameClassName)
-  div(class=valueClassName)
+mixin addField(nameClassName, nameValue, valueClassName, placeholderValue, iconAreaClassName, iconPath, iconClassName)
+  label.field__label
+    div(class=iconAreaClassName)
+    span(class=nameClassName)&attributes(attributes)= nameValue
+  div.field__box
+    div(class=iconAreaClassName)
+      +icon(iconPath, iconClassName)
+    input(class=valueClassName type='text' value=placeholderValue required)
 
 mixin pieChart(power, name)
   div(class='pie-wrapper progress-45 styler')
@@ -32,9 +35,10 @@ mixin pieChart(power, name)
       div(class='right-side half-circle')
     div.shadow
 
-mixin social(socialClassName, listClassName, itemClassName, iconClassName, ...items)
+mixin social(socialClassName, listClassName, itemClassName, iconAreaClassName, iconClassName, ...items)
   div(class=socialClassName)
     ul(class=listClassName)
       each item in items
-        li(calss=itemClassName)
-          +icon(item, iconClassName)
+        li(class=itemClassName)
+          div(class=iconAreaClassName)
+            +icon(item, iconClassName)

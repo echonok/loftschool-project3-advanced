@@ -19,21 +19,13 @@ html(lang="en")
       .header.header__container
         .logo ен
         +nav('nav', 'nav__list', 'nav__item', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
-        +social('social', 'social__list', 'social__item', 'social-icon', 'insta', 'vk', 'github')
-        .social
-          ul.social__list
-            li.social__item
-              +icon('insta', 'social-icon')
-            li.social__item
-              +icon('vk', 'social-icon')
-            li.social__item
-              +icon('github', 'social-icon')
+        +social('social', 'social__list', 'social__item', 'social-icon-area', 'social-icon', 'insta', 'vk', 'github')
       
       section.section.maincontent
         .container.maincontent__container
           .welcome
-            .welcome-full Еловский Николай
-              .welcome-short Личный сайт веб разработчика
+            .welcome__full Еловский Николай
+              .welcome__short Личный сайт веб разработчика
       
       section.section.main-info
         .container.main-info__container
@@ -88,14 +80,24 @@ html(lang="en")
             .project__image
               .project__pic-area
                 +image('content/projects/1.jpg', 'project__big-pic')
-                +image('content/projects/2.jpg', 'project__small-pic')
-              .project__switcher
-                .up-button.button
-                .down-button.button
+                ul.project__list
+                  li.project__item
+                    +image('content/projects/2.jpg', 'project__small-pic')
+                  li.project__item
+                    +image('content/projects/3.jpg', 'project__small-pic')
+                  li.project__item
+                    +image('content/projects/4.jpg', 'project__small-pic')
+                  li.project__item
+                    +image('content/projects/5.jpg', 'project__small-pic')
+                .project__switcher.switcher
+                  .switcher__button
+                    +icon('arrow', 'switcher__ico switcher__ico--last switcher__ico--up')
+                  .switcher__button
+                    +icon('arrow', 'switcher__ico switcher__ico--down')
 
             .project__desc
               .project__tags
-                +tags('tags_list', 'tags__item', 'tags__text', 'HTML', 'CSS', 'JavaScript')
+                +tags('tags__list', 'tags__item', 'tags__text', 'HTML', 'CSS', 'JavaScript')
               .project__headline Сайт школы образования
               .project__info Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!
               .project__link
@@ -106,7 +108,6 @@ html(lang="en")
       section.section.reviews
         .container.reviews__container
           .container-headline Что обо мне говорят
-            
           .reviews
             ul.reviews__list
               
@@ -137,14 +138,24 @@ html(lang="en")
                         .author__occup Преподаватель Loftschool
 
       section.section.feedback
-        .feedback
+        .container.feedback__container
           .feedback__headline
+            .container-headline Связаться со мной
+            .switcher
+              .switcher__button
+                +icon('arrow', 'switcher__ico switcher__ico--left')
+              .switcher__button
+                +icon('arrow', 'switcher__ico switcher__ico--right')
+          form.form
             .feedback__fields
               ul.fields__list
                 li.fields__item
-                  +addField('field__name', 'Введите ваше имя', 'field__value', 'field__pic-area', 'avatar', 'field__pic')
-                  +addField('field__name', 'Введите ваш email', 'field__value', 'field__pic-area', 'envelope', 'field__pic')
-                  //+addField('field__name', 'Сообщение к письму', 'field__value', 'field__pic-area', 'chat', 'field__pic')
+                  +addField('field__name', 'Введите ваше имя', 'field__value', 'Ковальчук Дмитрий', 'field__pic-area', 'avatar', 'field__pic')
+                li.fields__item
+                  +addField('field__name', 'Введите ваш email', 'field__value', 'loftschool@study.com', 'field__pic-area', 'envelope', 'field__pic')
+                li.fields__item
+                  +addField('field__name', 'Сообщение к письму', 'field__value', 'Требуется ваша помощь в создании сайта. Интересуют сроки и цена вопроса', 'field__pic-area', 'chat', 'field__pic')
+            button(class='btn btn--velvet' type='submit' id='send-button') Отправить
 
       .footer
         .container.footer__container
@@ -160,7 +171,7 @@ html(lang="en")
               .footer__block
                 .footer__about Этот сайт я сделал в рамках обучения в Школе онлайн образования Loftschool
                 .footer__social
-                  +social('social', 'social__list', 'social__item', 'social-icon', 'insta', 'vk', 'github')
+                  +social('social', 'social__list', 'social__item', 'social-icon-area social-icon-area--circle', 'social-icon social-icon--light', 'insta', 'vk', 'github')
               .footer__block
                 .footer__quoute
                   .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете

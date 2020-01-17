@@ -7,7 +7,7 @@
 }
 
 .project__image {
-  margin-right: 150px;
+  margin-right: 3%;
 }
 
 .project__pic-area {
@@ -15,14 +15,18 @@
 }
 
 .project__big-pic {
-  
+  width: 100%;  
 }
 
-.project__small-pic {
+.project__list {
   position: absolute;
   bottom: 0;
   right: 0;
-  max-height: 100px;
+  max-width: 20%;
+}
+
+.project__small-pic {
+  cursor: pointer;  
 }
 
 .project__desc {
@@ -56,6 +60,7 @@
 }
 
 .project__link {
+  cursor: pointer;
   display: flex;
   align-items: center;
 }
@@ -76,4 +81,9 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color-blue;
+}
+
+.project__switcher {
+  position: absolute;
+  right: 0;
 }
