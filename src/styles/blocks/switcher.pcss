@@ -10,6 +10,13 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  &--rounded {
+    border-radius: 50%;
+    border: 1px solid $blue-middle;
+    background-color: transparent;
+    fill: $text-color-white;
+    margin-right: 30px;
+  }
 }
 
 .switcher__ico {
@@ -30,5 +37,7 @@
   &--down {
     transform: rotate(+90deg);
   }
-  
+  &--dark {
+    fill: $blue-middle;
+  }  
 }

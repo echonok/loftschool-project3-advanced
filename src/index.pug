@@ -16,7 +16,7 @@ html(lang="en")
           .scroll__icon-area
             +icon('scroll', 'scroll__icon')
 
-      .header.header__container
+      header.header.header__container
         .logo ен
         +nav('nav', 'nav__list', 'nav__item', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
         +social('social', 'social__list', 'social__item', 'social-icon-area', 'social-icon', 'insta', 'vk', 'github')
@@ -53,8 +53,8 @@ html(lang="en")
         .container.skills__container
           .skills__big-pic
             +image('content/backpack.png', 'skill-img')
-          .skills__info
-            .skills__heeadline.heeadline Чем я могу быть полезен вам
+          .skills__box
+            .skills__heeadline.container-headline Чем я могу быть полезен вам
             .skills__info Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
 
             .skills__field
@@ -80,6 +80,7 @@ html(lang="en")
             .project__image
               .project__pic-area
                 +image('content/projects/1.jpg', 'project__big-pic')
+                span.project__number 2
                 ul.project__list
                   li.project__item
                     +image('content/projects/2.jpg', 'project__small-pic')
@@ -142,10 +143,10 @@ html(lang="en")
           .feedback__headline
             .container-headline Связаться со мной
             .switcher
-              .switcher__button
-                +icon('arrow', 'switcher__ico switcher__ico--left')
-              .switcher__button
-                +icon('arrow', 'switcher__ico switcher__ico--right')
+              .switcher__button.switcher__button--rounded
+                +icon('arrow', 'switcher__ico switcher__ico--left switcher__ico--dark')
+              .switcher__button.switcher__button--rounded
+                +icon('arrow', 'switcher__ico switcher__ico--right switcher__ico--dark')
           form.form
             .feedback__fields
               ul.fields__list
@@ -157,7 +158,7 @@ html(lang="en")
                   +addField('field__name', 'Сообщение к письму', 'field__value', 'Требуется ваша помощь в создании сайта. Интересуют сроки и цена вопроса', 'field__pic-area', 'chat', 'field__pic')
             button(class='btn btn--velvet' type='submit' id='send-button') Отправить
 
-      .footer
+      footer.footer
         .container.footer__container
           .footer__group.footer__group--vertical
             .footer__block
