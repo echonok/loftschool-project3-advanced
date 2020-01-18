@@ -1,3 +1,66 @@
+.portfolio__container {
+  max-width: 1480px;
+}
+
+.project {
+  display: flex;
+}
+
+.project__image {
+  margin-right: 8%;
+}
+
+.project__pic-area {
+  position: relative;
+}
+
+.project__big-pic {
+  width: 100%;  
+}
+
+.project__number {
+  position: absolute;
+  font-size: 300px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.16;
+  letter-spacing: normal;
+  text-align: left;
+  color: $grey;
+  top: 80px;
+  right: -150px;
+  z-index: -1;
+}
+
+.project__list {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  max-width: 20%;
+}
+
+.project__small-pic {
+  cursor: pointer;  
+}
+
+.project__desc {
+  display: flex;
+  flex-direction: column;
+}
+
+.project__headline {
+  margin: 50px 0;
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  text-align: left;
+  color: $text-color;
+}
+
 .project__info {
   opacity: 0.7;
   font-size: 16px;
@@ -8,9 +71,23 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  margin-bottom: 50px;
 }
 
 .project__link {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.link__image-area {
+  width: 15px;
+  height: 15px;
+  fill: $text-color-blue;
+  margin-right: 20px;
+}
+
+.link__text {
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
@@ -18,5 +95,10 @@
   line-height: 2.67;
   letter-spacing: normal;
   text-align: left;
-  color: #586ed3;
+  color: $text-color-blue;
+}
+
+.project__switcher {
+  position: absolute;
+  right: 0;
 }

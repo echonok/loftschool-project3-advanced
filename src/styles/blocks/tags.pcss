@@ -1,22 +1,26 @@
-.tags_list {
+.tags__list {
   display: flex;
 }
 
 .tags__item {
+  cursor: pointer;
+  opacity: 0.7;
+  border-radius: 22.5px;
+  margin-right: 15px;
+  padding: 5px 20px;
+  background-color: #859ec2;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.tags__text {
   opacity: 0.7;
   font-size: 15px;
   font-weight: 600;
   font-stretch: normal;
   font-style: normal;
-  line-height: 3.2;
   letter-spacing: normal;
   text-align: left;
-  color: $text-color;
-  margin-right: 15px;
-  padding: 5px 20px;
-  border-radius: 20px;
-  background-color: #859ec2;
-  &:last-child {
-    margin-right: 0;
-  }
+  color: black;
 }

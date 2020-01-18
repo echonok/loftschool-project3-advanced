@@ -20,6 +20,12 @@ body {
   color: $text-color;
 }
 
+label {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
 .wrapper {
   overflow: hidden;
   min-height: 100%;
@@ -42,6 +48,19 @@ body {
   width: 95%;
 }
 
+.container-headline {
+  font-size: 36px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: $text-color;
+  margin-bottom: 90px;
+  margin-right: 75px;
+}
+
 .fullscreen-section {
   height: 100vh;
   min-height: 650px;
@@ -51,6 +70,31 @@ button {
   border: 0;
   cursor: pointer;
 }
+
+.btn {
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.67;
+  letter-spacing: normal;
+  text-align: left;
+  padding: 15px 100px;
+  border-radius: 40px 5px;
+  transition: all 0.5s;
+  &--velvet {
+    border: 0;
+    cursor: pointer;
+    color: $text-color-white;
+    background-image: linear-gradient(to right, $violet1, $violet2);
+    &:hover {
+      background-image: linear-gradient(to left, $violet1, $violet2);
+      border-radius: 5px 40px;
+    }
+  }
+}
+
 
 * {
   box-sizing: border-box;

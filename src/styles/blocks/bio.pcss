@@ -1,3 +1,30 @@
+.short-bio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 auto;
+}
+
+.short-bio__pic-area {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 80px;
+}
+
+.short-bio__user-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.full-bio {
+  flex: 1 1 auto;
+  margin-left: 20px;
+}
+
+
 .greetings {
   opacity: 0.5;
   font-size: 16px;
@@ -8,6 +35,7 @@
   letter-spacing: normal;
   text-align: left;
   text-color: $text-color;
+  margin-bottom: 30px;
 }
 
 .my-name {
@@ -19,6 +47,7 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  margin-bottom: 40px;
 }
 
 .about-me {
@@ -31,6 +60,7 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  margin-bottom: 105px;
 }
 
 .about-site {

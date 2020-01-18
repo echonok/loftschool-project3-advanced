@@ -1,9 +1,15 @@
 .skills {
-  background: grey;
+  background-color: white;
 }
 
 .skills__container {
   display: flex;
+  max-width: 1500px;
+  align-items: center;
+}
+
+.skills__box {
+  
 }
 
 .skills__info {
@@ -16,4 +22,36 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  margin-top: 60px;
+  max-width: 600px;
+}
+
+.skills__field {
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  align-content: center;
+}
+
+.skills__field-name {
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2;
+  letter-spacing: normal;
+  text-align: left;
+  color: $text-color;
+}
+
+.skills__list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.skills__item {
+  margin-right: 60px;
+  &:last-child {
+    margin-right: 0;
+  }
 }
