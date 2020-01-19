@@ -1,9 +1,23 @@
+.nav {
+  &--footer {
+    margin-bottom: 70px;
+  }
+}
+
 .nav__list {
   display: flex;
 }
 
 .nav__item {
   cursor: pointer;
+  margin-right: 60px;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.nav__link {
+  text-decoration: none;
   color: $text-color;
   font-size: 16px;
   font-weight: normal;
@@ -12,11 +26,10 @@
   line-height: 1.88;
   letter-spacing: normal;
   text-align: left;
-  margin-right: 60px;
-  &:last-child {
-    margin-right: 0;
-  }
   &--footer {
     color: $text-color-white;
+  }
+  &:hover {
+    font-weight: 600;
   }
 }

@@ -6,11 +6,12 @@ mixin icon(name, className)
 mixin image(path, className)
   img(src=require(`images/${path}`) class=className)
 
-mixin nav(navClassName, ulClassName, liClassName, ...items)
+mixin nav(navClassName, ulClassName, liClassName, linkClassName, ...items)
   nav(class=navClassName)
     ul(class=ulClassName)
       each item in items
-        li(class=liClassName)&attributes(attributes)= item
+        li(class=liClassName)
+          a(class=linkClassName href="#")&attributes(attributes)= item
 
 mixin tags(ulClassName, liClassName, spanClassName, ...items)
   ul(class=ulClassName)

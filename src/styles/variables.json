@@ -7,8 +7,13 @@
   "blue-dark": "#252830",
   "blue-middle": "#353e4e",
   "grey": "#e6e6e6",
+  "orange": "#dc9322",
+
   "violet1": "#9300e8",
   "violet2": "#4a00ed",
+  "violet1hover": "#bb00ff",
+  "violet2hover": "#5900ff",
+  "blue-hover": "#5500f2",
 
   "links-color": "#4b6fd7",
   "bp-desktop-hd": "1800px",

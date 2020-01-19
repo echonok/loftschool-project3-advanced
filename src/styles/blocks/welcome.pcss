@@ -1,9 +1,23 @@
 .welcome {
+  background-image: url('~images/content/Mountain_Baloon.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.welcome__polygon {
+  height: 90px;
+  width: 100%;
+  background: white;
+  clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 50% 100%, 0% 0%);
+}
+
+.this-site {
   max-width: 500px;
   margin: 0 auto;
 }
 
-.welcome__full {
+.this-site__full {
   font-size: 72px;
   font-weight: 800;
   font-stretch: normal;
@@ -15,7 +29,7 @@
   position: relative;
 }
 
-.welcome__short {
+.this-site__short {
   opacity: 0.4;
   font-size: 18px;
   font-weight: 600;
