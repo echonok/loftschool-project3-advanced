@@ -1,0 +1,39 @@
+.indicator__text-area {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.indicator__text {
+  opacity: 0.5;
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: $text-color;
+  z-index: 100;
+  max-width: 100px;
+}
+
+
+.indicator__circle-area {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  z-index: 50;
+}
+
+.indicator__circle {
+  position: absolute;  
+}
+
+.indicator__circle-segment {
+  stroke: linear-gradient(to top, $violet1, $violet2);
+}
