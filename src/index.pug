@@ -64,18 +64,26 @@ html(lang="en")
             .skills__field
               .skills__field-name Front-end
               ul.skills__list
-                li.skills__item HTML
-                li.skills__item CSS
-                li.skills__item JavaScript
-                li.skills__item jQuery & VUE
+                li.skills__item
+                  +indicator(25, "HTML")
+                li.skills__item
+                  +indicator(15, "CSS")
+                li.skills__item
+                  +indicator(15, "JavaScript")
+                li.skills__item
+                  +indicator(15, "jQuery & VUE")
 
             .skills__field
               .skills__field-name Workflow
               ul.skills__list
-                li.skills__item Git
-                li.skills__item Terminal
-                li.skills__item Gulp
-                li.skills__item Webpack
+                li.skills__item
+                  +indicator(25, "Git")
+                li.skills__item
+                  +indicator(25, "Terminal")
+                li.skills__item
+                  +indicator(25, "Gulp")
+                li.skills__item
+                  +indicator(25, "Webpack")
 
       section.section.portfolio
         .container.portfolio__container
