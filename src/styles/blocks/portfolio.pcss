@@ -116,6 +116,7 @@
 }
 
 .link__text {
+  text-decoration: none;
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
@@ -124,6 +125,16 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color-blue;
+
+}
+
+.link__text::before {
+  content: url('~images/icons/link.svg');
+  //background-image: url('~images/icons/link.svg');
+  //background-image: url('~images/content/Mountain_Baloon.jpg');
+  width: 15px;
+  height: 15px;
+  fill: $text-color-blue;
 }
 
 .project__switcher {
