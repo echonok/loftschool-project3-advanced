@@ -25,9 +25,9 @@ html(lang="en")
 
         section.section.maincontent
           .container.maincontent__container
-            .this-site
-              .this-site__full Еловский Николай
-                .this-site__short Личный сайт веб разработчика
+            .site
+              .site__full Еловский Николай
+                .site__short Личный сайт веб разработчика
         
         section.section.main-info
           .container.main-info__container
@@ -108,9 +108,9 @@ html(lang="en")
                     .overlay
 
                 .project__switcher.switcher
-                  .switcher__button
+                  button.switcher__button
                     +icon('arrow', 'switcher__ico switcher__ico--last switcher__ico--up')
-                  .switcher__button
+                  button.switcher__button
                     +icon('arrow', 'switcher__ico switcher__ico--down')
 
             .project__desc
@@ -119,9 +119,9 @@ html(lang="en")
               .project__headline Сайт школы образования
               .project__info Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!
               .project__link
-                .link__image-area
-                  +icon('link', 'link__image')
-                .link__text Посмотреть сайт
+                //.link__image-area
+                //  +icon('link', 'link__image')
+                a(class="link__text" href="#") Посмотреть сайт
 
       .goodbye
         .goodbye__polygon

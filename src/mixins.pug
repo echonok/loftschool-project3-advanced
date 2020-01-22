@@ -26,7 +26,7 @@ mixin addField(nameClassName, nameValue, valueClassName, placeholderValue, iconA
   div.field__box
     div(class=iconAreaClassName)
       +icon(iconPath, iconClassName)
-    input(class=valueClassName type='text' value=placeholderValue required)
+    input(class=valueClassName type='text' placeholder=placeholderValue required)
 
 mixin pieChart(power, name)
   div(class='pie-wrapper progress-45 styler')
