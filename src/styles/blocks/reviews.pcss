@@ -36,7 +36,7 @@
   min-height: 210px;
   display: flex;
   flex-direction: column;
-  max-width: 350px;
+  //max-width: 350px;
   justify-content: space-between;
 }
 
@@ -50,6 +50,9 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    font-size: 14px;
+  }
 }
 
 .review__author {
@@ -61,7 +64,7 @@
   height: 75px;
   border-radius: 50%;
   overflow: hidden;
-  margin-right: 30px;
+  margin-right: 2.5%;
 }
 
 .author__avatar {
@@ -85,6 +88,9 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    font-size: 16px;
+  }
 }
 
 .author__occup {
@@ -97,4 +103,7 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    font-size: 14px;
+  }
 }

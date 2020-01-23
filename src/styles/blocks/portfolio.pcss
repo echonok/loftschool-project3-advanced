@@ -4,6 +4,10 @@
 
 .project {
   display: flex;
+  justify-content: space-between;
+  @include tablets {
+    flex-direction: column;
+  }
 }
 
 .project__image {
@@ -72,6 +76,9 @@
 .project__desc {
   display: flex;
   flex-direction: column;
+  @include tablets {
+    align-items: center;
+  }
 }
 
 .project__headline {
@@ -84,6 +91,9 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    text-align: center;
+  }
 }
 
 .project__info {
@@ -97,6 +107,9 @@
   text-align: left;
   color: $text-color;
   margin-bottom: 50px;
+  @include tablets {
+    text-align: center;
+  }
 }
 
 .project__link {

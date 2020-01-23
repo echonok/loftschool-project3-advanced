@@ -27,6 +27,12 @@
   text-align: center;
   color: $text-color;
   position: relative;
+  @include tablets {
+    font-size: 48px;
+  }
+  @include phones {
+    font-size: 32px;
+  }
 }
 
 .site__short {
@@ -42,4 +48,10 @@
   left: 0;
   right: 0;
   top: -50px;
+  @include tablets {
+    font-size: 16px;
+  }
+  @include phones {
+    font-size: 14px;
+  }
 }

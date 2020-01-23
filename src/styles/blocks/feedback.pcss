@@ -54,6 +54,9 @@
   letter-spacing: normal;
   text-align: left;
   fill: $text-color;
+  @include tablets {
+    font-size: 14px;
+  }
 }
 
 .field__value {
@@ -74,6 +77,9 @@
   &::placeholder {
     color: $light-grey;
     opacity: 0.3;
+  }
+  @include tablets {
+    font-size: 14px;
   }
 }
 

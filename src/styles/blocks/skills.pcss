@@ -6,6 +6,15 @@
   display: flex;
   max-width: 1500px;
   align-items: center;
+  @include tablets {
+    flex-direction: column-reverse;
+  }
+}
+
+.skills__big-pic {
+  @include tablets {
+    max-width: 40%;
+  }
 }
 
 .skills__info {
@@ -20,6 +29,9 @@
   color: $text-color;
   margin-top: 60px;
   max-width: 600px;
+  @include tablets {
+    font-size: 14px;
+  }
 }
 
 .skills__field {
@@ -38,6 +50,10 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    font-size: 18px;
+    text-align: center;
+  }
 }
 
 .skills__list {
