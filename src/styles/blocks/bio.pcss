@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   flex: 1 1 auto;
+  margin-bottom: 10%;
 }
 
 .short-bio__pic-area {
@@ -10,7 +11,11 @@
   height: 200px;
   border-radius: 50%;
   overflow: hidden;
-  margin-bottom: 80px;
+  margin-bottom: 10%;
+  @include tablets {
+    width: 170px;
+    height: 170px;
+  }
 }
 
 .short-bio__user-pic {
@@ -22,6 +27,9 @@
 .full-bio {
   flex: 1 1 auto;
   margin-left: 20px;
+  @include phones {
+    margin-left: 0;
+  }
 }
 
 
@@ -35,7 +43,10 @@
   letter-spacing: normal;
   text-align: left;
   text-color: $text-color;
-  margin-bottom: 30px;
+  margin-bottom: 10%;
+  @include tablets {
+    font-size: 14px;
+  }
 }
 
 .my-name {
@@ -47,7 +58,10 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
-  margin-bottom: 40px;
+  margin-bottom: 10%;
+  @include tablets {
+    font-size: 36px;
+  }
 }
 
 .about-me {
@@ -60,7 +74,10 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
-  margin-bottom: 105px;
+  margin-bottom: 10%;
+  @include tablets {
+    font-size: 14px;
+  }
 }
 
 .about-site {
@@ -73,4 +90,7 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    font-size: 14px;
+  }
 }

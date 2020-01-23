@@ -1,3 +1,8 @@
+.charcs {
+  align-self: flex-start;
+  width: 100%;
+}
+
 .charcs__list {
   display: flex;
   flex-direction: column;
@@ -18,6 +23,9 @@
   text-align: left;
   color: $text-color;
   min-width: 170px;
+  @include phones {
+    min-width: 50%;
+  }
 }
 
 .charc__value {
@@ -30,4 +38,7 @@
   text-align: left;
   color: $text-color;
   min-width: 170px;
+  @include phones {
+    min-width: 50%;
+  }
 }

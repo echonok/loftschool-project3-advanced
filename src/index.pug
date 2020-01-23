@@ -18,7 +18,7 @@ html(lang="en")
 
       header.header.header__container
         .logo ен
-        +nav('nav', 'nav__list', 'nav__item', 'nav__link', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
+        +nav('nav nav--header', 'nav__list', 'nav__item', 'nav__link', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
         +social('social', 'social__list', 'social__item', 'social-icon-area', 'social-icon', 'insta', 'vk', 'github')
         .hamburger
           a(href="").hamburger-menu-link
@@ -47,8 +47,8 @@ html(lang="en")
         section.section.maincontent
           .container.maincontent__container
             .site
-              .site__full Еловский Николай
-                .site__short Личный сайт веб разработчика
+              .site__short Личный сайт веб разработчика
+              .site__full Еловский Николай              
         
         section.section.main-info
           .container.main-info__container
@@ -201,23 +201,18 @@ html(lang="en")
       footer.footer
         .container.footer__container
           .footer__left
-            .footer__block
-              .footer__copyright ©2020
+            .footer__copyright ©2020
             .footer__block
               .footer__author Николай Еловский
               .footer__site Личный сайт веб-разработчика
           .footer__right
             +nav('nav nav--footer', 'nav__list nav__list--footer', 'nav__item', 'nav__link nav__link--footer', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
-            ul.footer__list
-              li.footer__item
-                .footer__block
-                  .footer__about Этот сайт я сделал в рамках обучения в Школе онлайн образования Loftschool
-                  .footer__social
-                    +social('social', 'social__list', 'social__item', 'social-icon-area social-icon-area--circle', 'social-icon social-icon--light', 'insta', 'vk', 'github')
-              li.footer__item
-                .footer__block
-                  .footer__quoute
-                    .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
-                    .quote__author Martin Golding
+            .footer__about.about
+              .footer__info Этот сайт я сделал в рамках обучения в Школе онлайн образования Loftschool
+              .footer__social
+                +social('social', 'social__list', 'social__item', 'social-icon-area social-icon-area--circle', 'social-icon social-icon--light', 'insta', 'vk', 'github')
+            .footer__quoute.quoute
+              .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
+              .quote__author Martin Golding
         
         script(src='/src/scripts/parallax.js')
