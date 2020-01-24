@@ -44,7 +44,7 @@ mixin social(socialClassName, listClassName, itemClassName, iconAreaClassName, i
           div(class=iconAreaClassName)
             +icon(item, iconClassName)
 
-mixin indicator(indicatorPower="50", indicatorText="new")
+mixin indicator(indicatorPower=50, indicatorText="new")
   -var persentage = indicatorPower + ` ` + (100 - indicatorPower)
   div(class="indicator__circle-area")
     div(class="indicator__text-area")
