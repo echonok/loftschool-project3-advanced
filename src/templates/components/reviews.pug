@@ -1,0 +1,22 @@
+script(type="text/x-template")#reviews-component
+  .container.reviews__container
+    .reviews__headline
+      .container-headline Что обо мне говорят
+      .switcher
+        button(type="button" @click="previous()").switcher__button.switcher__button--rounded
+          +icon('arrow', 'switcher__ico switcher__ico--left switcher__ico--dark')
+        button(type="button" @click="next()").switcher__button.switcher__button--rounded
+          +icon('arrow', 'switcher__ico switcher__ico--right switcher__ico--dark')
+    flickity(ref="flickity" :options="flickityOptions").reviews__list
+      .carousel-cell(v-for="review in reviews")
+        li.reviews__item.review
+          .review__image-box
+            +icon('quote', 'review__image')                    
+          .review__box
+            p.review__text {{review.text}}
+            .review__author
+              .author__pic-area
+                img(:src="review.author_pic" class="author__avatar")
+              .author__box
+                .author__name {{review.author_name}}
+                .author__occup {{review.author_occ}}

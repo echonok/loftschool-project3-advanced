@@ -6,11 +6,10 @@ html(lang="en")
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    link(rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css")
     title Portfolio | main page
   body
-    .wrapper
-      
-      
+    .wrapper      
 
       .scroll
         .scroll__box
@@ -26,10 +25,9 @@ html(lang="en")
           a(href="").hamburger-menu-link
             div(id="hamburger-animated").hamburger-menu-link__animated
               span
-
       
       .welcome
-        .parallax
+        section.parallax
           .parallax__layer(data-speed="0.1")
             img(src=require("images/content/parallax/1.png")).parallax__image
           .parallax__layer(data-speed="0.13")
@@ -45,36 +43,35 @@ html(lang="en")
           .parallax__layer(data-speed="0.28")
             img(src=require("images/content/parallax/7.png")).parallax__image
 
-
-        section.section.maincontent
-          .container.maincontent__container
-            .site
-              .site__short Личный сайт веб разработчика
-              .site__full Еловский Николай              
-        
-        section.section.main-info
-          .container.main-info__container
-            .short-bio
-              .short-bio__pic-area
-                +image('content/user.jpg', 'short-bio__user-pic')
-              .charcs
-                ul.charcs__list
-                  li.charcs__item.charc
-                    .charc__name Проживаю:
-                    .charc__value Сочи
-                  li.charcs__item.charc
-                    .charc__name Возраст:
-                    .charc__value 34 года
-                  li.charcs__item.charc
-                    .charc__name Родился:
-                    .charc__value 22 июля 1985
-            .full-bio
-              .greetings Привет, меня зовут
-              .my-name Николай Еловский
-              .about-me Я занимаюсь разработкой современных сайтов и приложений. Мне нравится делать интересные и современные проекты.
-              .about-site Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
-        
-        .welcome__polygon
+          section.section.maincontent
+            .container.maincontent__container
+              .site
+                .site__short Личный сайт веб разработчика
+                .site__full Еловский Николай              
+          
+          section.section.main-info
+            .container.main-info__container
+              .short-bio
+                .short-bio__pic-area
+                  +image('content/user.jpg', 'short-bio__user-pic')
+                .charcs
+                  ul.charcs__list
+                    li.charcs__item.charc
+                      .charc__name Проживаю:
+                      .charc__value Сочи
+                    li.charcs__item.charc
+                      .charc__name Возраст:
+                      .charc__value 34 года
+                    li.charcs__item.charc
+                      .charc__name Родился:
+                      .charc__value 22 июля 1985
+              .full-bio
+                .greetings Привет, меня зовут
+                .my-name Николай Еловский
+                .about-me Я занимаюсь разработкой современных сайтов и приложений. Мне нравится делать интересные и современные проекты.
+                .about-site Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
+          
+          .welcome__polygon
 
       section.section.skills
         .container.skills__container
@@ -93,42 +90,7 @@ html(lang="en")
       .goodbye
         .goodbye__polygon
         section.section.reviews
-          .container.reviews__container
-            .reviews__headline
-              .container-headline Что обо мне говорят
-              .switcher
-                .switcher__button.switcher__button--rounded
-                  +icon('arrow', 'switcher__ico switcher__ico--left switcher__ico--dark')
-                .switcher__button.switcher__button--rounded
-                  +icon('arrow', 'switcher__ico switcher__ico--right switcher__ico--dark')
-            .reviews
-              ul.reviews__list
-                
-                li.reviews__item
-                  .review
-                    .review__image-box
-                      +icon('quote', 'review__image')                    
-                    .review__box
-                      p.review__text Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!
-                      .review__author
-                        .author__pic-area
-                          +image('content/reviews/Ковальчук Дмитрий.jpeg', 'author__avatar')
-                        .author__box
-                          .author__name Ковальчук Дмитрий
-                          .author__occup Основатель Loftschool
-
-                li.reviews__item
-                  .review
-                    .review__image-box
-                      +icon('quote', 'review__image')                    
-                    .review__box
-                      p.review__text Этот код выдержит любые испытания. Только пожалуйста, не загружайте сайт на слишком старых браузерах
-                      .review__author
-                        .author__pic-area
-                          +image('content/reviews/Владимир Сабанцев.jpeg', 'author__avatar')
-                        .author__box
-                          .author__name Владимир Сабанцев
-                          .author__occup Преподаватель Loftschool
+          #reviews-container
 
         section.section.feedback
           .container.feedback__container
@@ -160,5 +122,6 @@ html(lang="en")
             .footer__quoute.quoute
               .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
               .quote__author Martin Golding
-        
+    
+    script(src="https://unpkg.com/swiper/js/swiper.min.js")
     include ./templates/entry.pug

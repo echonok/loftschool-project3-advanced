@@ -3,6 +3,7 @@ const layers = parallax.children;
 
 const moveLayersOnScroll = (wScroll) => {
   Array.from(layers).forEach(layer => {
+    //console.log(layers);
     const divider = layer.dataset.speed;
     const strafe = wScroll * divider / 10;
 
