@@ -1,0 +1,58 @@
+script(type="text/x-template")#projects-container
+  .project
+    projects-image(
+      :projects="projects",
+      :currentProject="currentProject",
+      :lastUp="lastUp",
+      :lastDown="lastDown",
+      @slide="handleSlide"
+    )
+    projects-info(
+      :currentProject="currentProject"
+    )
+
+script(type="text/x-template")#projects-image
+  .project__image
+    .project__pic-area
+      img(:src="currentProject.photo" alt="" class="project__big-pic")
+      projects-buttons(
+        :lastUp="lastUp",
+        :lastDown="lastDown",
+        @slide="$emit('slide', $event)"
+      )
+      span.project__number 1
+      projects-preview(
+        :projects="reversedProjects",
+        :currentProject="currentProject"
+      )        
+
+script(type="text/x-template")#projects-info
+  .project__desc
+    projects-tags(
+      :tags="currentProject.skills"
+    )
+    .project__headline {{currentProject.title}}
+    .project__info {{currentProject.desc}}
+    .project__link
+      a(class="link__text" :href="currentProject.link") Посмотреть сайт
+
+script(type="text/x-template")#projects-preview
+  ul.project__list
+    li.project__item(
+      v-for="project in projects"
+      :class="{'project__item--active': project.id === currentProject.id}"
+    )
+      .project__pic-area
+        img(:src="project.photo" alt="" class="project__small-pic")
+        .overlay
+
+script(type="text/x-template")#projects-buttons
+  .project__switcher.switcher
+    button(@click.prevent="$emit('slide', 'next')" href="#" class="switcher__button" :class="{'switcher__button--last': lastUp}")
+      +icon('arrow', "switcher__ico switcher__ico--up")
+    button(@click.prevent="$emit('slide', 'prev')" href="#" class="switcher__button" :class="{'switcher__button--last': lastDown}")
+      +icon('arrow', "switcher__ico switcher__ico--down")
+
+script(type="text/x-template")#projects-tags
+  .project__tags
+    +tags('tags__list', 'tags__item', 'tags__text', 'HTML', 'CSS', 'JavaScript')

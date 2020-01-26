@@ -88,40 +88,7 @@ html(lang="en")
       section.section.portfolio
         .container.portfolio__container
           .container-headline Мои работы
-          .project
-            .project__image
-              .project__pic-area
-                +image('content/projects/1.jpg', 'project__big-pic')
-                span.project__number 2
-                ul.project__list
-                  li.project__item
-                    +image('content/projects/2.jpg', 'project__small-pic')
-                    .overlay
-                  li.project__item
-                    +image('content/projects/3.jpg', 'project__small-pic')
-                    .overlay
-                  li.project__item
-                    +image('content/projects/4.jpg', 'project__small-pic')
-                    .overlay
-                  li.project__item
-                    +image('content/projects/5.jpg', 'project__small-pic project__small-pic--active')
-                    .overlay
-
-                .project__switcher.switcher
-                  button.switcher__button
-                    +icon('arrow', 'switcher__ico switcher__ico--last switcher__ico--up')
-                  button.switcher__button
-                    +icon('arrow', 'switcher__ico switcher__ico--down')
-
-            .project__desc
-              .project__tags
-                +tags('tags__list', 'tags__item', 'tags__text', 'HTML', 'CSS', 'JavaScript')
-              .project__headline Сайт школы образования
-              .project__info Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!
-              .project__link
-                //.link__image-area
-                //  +icon('link', 'link__image')
-                a(class="link__text" href="#") Посмотреть сайт
+          #projects-component
 
       .goodbye
         .goodbye__polygon
