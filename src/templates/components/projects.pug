@@ -12,7 +12,7 @@ script(type="text/x-template")#projects-container
     )
 
 script(type="text/x-template")#projects-image
-  .project__image
+  .project__image(:data-slide="currentProject.id")
     .project__pic-area
       img(:src="currentProject.photo" alt="" class="project__big-pic")
       projects-buttons(
@@ -20,7 +20,7 @@ script(type="text/x-template")#projects-image
         :lastDown="lastDown",
         @slide="$emit('slide', $event)"
       )
-      span.project__number 1
+      span.project__number {{currentProject.id}}
       projects-preview(
         :projects="reversedProjects",
         :currentProject="currentProject"
@@ -29,7 +29,7 @@ script(type="text/x-template")#projects-image
 script(type="text/x-template")#projects-info
   .project__desc
     projects-tags(
-      :tags="currentProject.skills"
+      :tagsArray="tagsArray"
     )
     .project__headline {{currentProject.title}}
     .project__info {{currentProject.desc}}
@@ -55,4 +55,6 @@ script(type="text/x-template")#projects-buttons
 
 script(type="text/x-template")#projects-tags
   .project__tags
-    +tags('tags__list', 'tags__item', 'tags__text', 'HTML', 'CSS', 'JavaScript')
+    ul.tags__list
+      li.tags__item(v-for="tag in tagsArray")
+        span(class="tags__text") {{tag}}

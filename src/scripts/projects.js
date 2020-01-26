@@ -2,11 +2,16 @@ import Vue from "vue";
 
 const projectsTags = {
   template: "#projects-tags",
-  props: ["tags"]
+  props: ["tagsArray"]
 };
 
 const projectsInfo = {
   template: "#projects-info",
+  computed: {
+    tagsArray() {
+      return this.currentProject.skills.split(', ');
+    }
+  },
   components: {
     projectsTags
   },
