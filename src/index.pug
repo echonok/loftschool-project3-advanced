@@ -51,7 +51,6 @@ html(lang="en")
             .site
               .site__short Личный сайт веб разработчика
               .site__full Еловский Николай              
-              div(id="app")
         
         section.section.main-info
           .container.main-info__container
@@ -84,30 +83,7 @@ html(lang="en")
           .skills__box
             .skills__heeadline.container-headline Чем я могу быть полезен вам
             .skills__info Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
-
-            .skills__field
-              .skills__field-name Front-end
-              ul.skills__list
-                li.skills__item
-                  +indicator(25, "HTML")
-                li.skills__item
-                  +indicator(15, "CSS")
-                li.skills__item
-                  +indicator(15, "JavaScript")
-                li.skills__item
-                  +indicator(15, "jQuery & VUE")
-
-            .skills__field
-              .skills__field-name Workflow
-              ul.skills__list
-                li.skills__item
-                  +indicator(25, "Git")
-                li.skills__item
-                  +indicator(25, "Terminal")
-                li.skills__item
-                  +indicator(25, "Gulp")
-                li.skills__item
-                  +indicator(25, "Webpack")
+            #skill-component
 
       section.section.portfolio
         .container.portfolio__container
@@ -218,4 +194,4 @@ html(lang="en")
               .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
               .quote__author Martin Golding
         
-        //script(src='./main.js')
+    include ./templates/entry.pug
