@@ -1,42 +1,36 @@
-.reviews {
-  
+.reviews__switcher {
+  width: 70%;
+}
+
+.carousel-cell {
+  width: 50%;
 }
 
 .reviews__headline {
   display: flex;
 }
 
-.reviews__list {
+.review {
+  width: 100%;
   display: flex;
-}
-
-.reviews__item {
-  display: flex;
-  flex-direction: column;
-  margin-right: 80px;
-  
-  
+  //flex-direction: column;
+  margin-right: 80px;  
   &:last-shild {
     margin-right: 0;
   }
 }
 
-.review {
-  display: flex;
-}
-
 .review__image-box {
   width: 75px;
   opacity: 0.1;
-  margin-right: 20px;
-  
+  margin-right: 20px;  
 }
 
 .review__box {
   min-height: 210px;
   display: flex;
   flex-direction: column;
-  max-width: 350px;
+  //max-width: 350px;
   justify-content: space-between;
 }
 
@@ -50,6 +44,9 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    font-size: 14px;
+  }
 }
 
 .review__author {
@@ -61,7 +58,7 @@
   height: 75px;
   border-radius: 50%;
   overflow: hidden;
-  margin-right: 30px;
+  margin-right: 2.5%;
 }
 
 .author__avatar {
@@ -75,7 +72,6 @@
   flex-direction: column;
 }
 
-
 .author__name {
   font-size: 18px;
   font-weight: bold;
@@ -85,6 +81,9 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    font-size: 16px;
+  }
 }
 
 .author__occup {
@@ -97,4 +96,7 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    font-size: 14px;
+  }
 }

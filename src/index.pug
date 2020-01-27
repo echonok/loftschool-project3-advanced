@@ -6,10 +6,11 @@ html(lang="en")
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    link(rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css")
     title Portfolio | main page
   body
-    .wrapper
-      
+    .wrapper      
+
       .scroll
         .scroll__box
           .scroll__text Скролл
@@ -18,40 +19,59 @@ html(lang="en")
 
       header.header.header__container
         .logo ен
-        +nav('nav', 'nav__list', 'nav__item', 'nav__link', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
+        +nav('nav nav--header', 'nav__list', 'nav__item', 'nav__link', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
         +social('social', 'social__list', 'social__item', 'social-icon-area', 'social-icon', 'insta', 'vk', 'github')
+        .hamburger
+          a(href="").hamburger-menu-link
+            div(id="hamburger-animated").hamburger-menu-link__animated
+              span
       
       .welcome
+        section.parallax
+          .parallax__layer(data-speed="0.1")
+            img(src=require("images/content/parallax/1.png")).parallax__image
+          .parallax__layer(data-speed="0.2")
+            img(src=require("images/content/parallax/2.png")).parallax__image
+          .parallax__layer(data-speed="0.3")
+            img(src=require("images/content/parallax/3.png")).parallax__image
+          .parallax__layer(data-speed="0.4")
+            img(src=require("images/content/parallax/4.png")).parallax__image
+          .parallax__layer(data-speed="0.5")
+            img(src=require("images/content/parallax/5.png")).parallax__image
+          .parallax__layer(data-speed="0.6")
+            img(src=require("images/content/parallax/6.png")).parallax__image
+          .parallax__layer(data-speed="0.7")
+            img(src=require("images/content/parallax/7.png")).parallax__image
 
-        section.section.maincontent
-          .container.maincontent__container
-            .site
-              .site__full Еловский Николай
+          section.section.maincontent
+            .container.maincontent__container
+              .site
                 .site__short Личный сайт веб разработчика
-        
-        section.section.main-info
-          .container.main-info__container
-            .short-bio
-              .short-bio__pic-area
-                +image('content/user.jpg', 'short-bio__user-pic')
-              .charcs
-                ul.charcs__list
-                  li.charcs__item.charc
-                    .charc__name Проживаю:
-                    .charc__value Сочи
-                  li.charcs__item.charc
-                    .charc__name Возраст:
-                    .charc__value 34 года
-                  li.charcs__item.charc
-                    .charc__name Родился:
-                    .charc__value 22 июля 1985
-            .full-bio
-              .greetings Привет, меня зовут
-              .my-name Николай Еловский
-              .about-me Я занимаюсь разработкой современных сайтов и приложений. Мне нравится делать интересные и современные проекты.
-              .about-site Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
-        
-        .welcome__polygon
+                .site__full Еловский Николай              
+          
+          section.section.main-info
+            .container.main-info__container
+              .short-bio
+                .short-bio__pic-area
+                  +image('content/user.jpg', 'short-bio__user-pic')
+                .charcs
+                  ul.charcs__list
+                    li.charcs__item.charc
+                      .charc__name Проживаю:
+                      .charc__value Сочи
+                    li.charcs__item.charc
+                      .charc__name Возраст:
+                      .charc__value 34 года
+                    li.charcs__item.charc
+                      .charc__name Родился:
+                      .charc__value 22 июля 1985
+              .full-bio
+                .greetings Привет, меня зовут
+                .my-name Николай Еловский
+                .about-me Я занимаюсь разработкой современных сайтов и приложений. Мне нравится делать интересные и современные проекты.
+                .about-site Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
+          
+          .welcome__polygon
 
       section.section.skills
         .container.skills__container
@@ -60,108 +80,17 @@ html(lang="en")
           .skills__box
             .skills__heeadline.container-headline Чем я могу быть полезен вам
             .skills__info Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
-
-            .skills__field
-              .skills__field-name Front-end
-              ul.skills__list
-                li.skills__item
-                  +indicator(25, "HTML")
-                li.skills__item
-                  +indicator(15, "CSS")
-                li.skills__item
-                  +indicator(15, "JavaScript")
-                li.skills__item
-                  +indicator(15, "jQuery & VUE")
-
-            .skills__field
-              .skills__field-name Workflow
-              ul.skills__list
-                li.skills__item
-                  +indicator(25, "Git")
-                li.skills__item
-                  +indicator(25, "Terminal")
-                li.skills__item
-                  +indicator(25, "Gulp")
-                li.skills__item
-                  +indicator(25, "Webpack")
+            #skill-component
 
       section.section.portfolio
         .container.portfolio__container
           .container-headline Мои работы
-          .project
-            .project__image
-              .project__pic-area
-                +image('content/projects/1.jpg', 'project__big-pic')
-                span.project__number 2
-                ul.project__list
-                  li.project__item
-                    +image('content/projects/2.jpg', 'project__small-pic')
-                    .overlay
-                  li.project__item
-                    +image('content/projects/3.jpg', 'project__small-pic')
-                    .overlay
-                  li.project__item
-                    +image('content/projects/4.jpg', 'project__small-pic')
-                    .overlay
-                  li.project__item
-                    +image('content/projects/5.jpg', 'project__small-pic project__small-pic--active')
-                    .overlay
-
-                .project__switcher.switcher
-                  button.switcher__button
-                    +icon('arrow', 'switcher__ico switcher__ico--last switcher__ico--up')
-                  button.switcher__button
-                    +icon('arrow', 'switcher__ico switcher__ico--down')
-
-            .project__desc
-              .project__tags
-                +tags('tags__list', 'tags__item', 'tags__text', 'HTML', 'CSS', 'JavaScript')
-              .project__headline Сайт школы образования
-              .project__info Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!
-              .project__link
-                //.link__image-area
-                //  +icon('link', 'link__image')
-                a(class="link__text" href="#") Посмотреть сайт
+          #projects-component
 
       .goodbye
         .goodbye__polygon
         section.section.reviews
-          .container.reviews__container
-            .reviews__headline
-              .container-headline Что обо мне говорят
-              .switcher
-                .switcher__button.switcher__button--rounded
-                  +icon('arrow', 'switcher__ico switcher__ico--left switcher__ico--dark')
-                .switcher__button.switcher__button--rounded
-                  +icon('arrow', 'switcher__ico switcher__ico--right switcher__ico--dark')
-            .reviews
-              ul.reviews__list
-                
-                li.reviews__item
-                  .review
-                    .review__image-box
-                      +icon('quote', 'review__image')                    
-                    .review__box
-                      p.review__text Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!
-                      .review__author
-                        .author__pic-area
-                          +image('content/reviews/Ковальчук Дмитрий.jpeg', 'author__avatar')
-                        .author__box
-                          .author__name Ковальчук Дмитрий
-                          .author__occup Основатель Loftschool
-
-                li.reviews__item
-                  .review
-                    .review__image-box
-                      +icon('quote', 'review__image')                    
-                    .review__box
-                      p.review__text Этот код выдержит любые испытания. Только пожалуйста, не загружайте сайт на слишком старых браузерах
-                      .review__author
-                        .author__pic-area
-                          +image('content/reviews/Владимир Сабанцев.jpeg', 'author__avatar')
-                        .author__box
-                          .author__name Владимир Сабанцев
-                          .author__occup Преподаватель Loftschool
+          #reviews-container
 
         section.section.feedback
           .container.feedback__container
@@ -180,22 +109,19 @@ html(lang="en")
       footer.footer
         .container.footer__container
           .footer__left
-            .footer__block
-              .footer__copyright ©2020
+            .footer__copyright ©2020
             .footer__block
               .footer__author Николай Еловский
               .footer__site Личный сайт веб-разработчика
           .footer__right
             +nav('nav nav--footer', 'nav__list nav__list--footer', 'nav__item', 'nav__link nav__link--footer', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
-            ul.footer__list
-              li.footer__item
-                .footer__block
-                  .footer__about Этот сайт я сделал в рамках обучения в Школе онлайн образования Loftschool
-                  .footer__social
-                    +social('social', 'social__list', 'social__item', 'social-icon-area social-icon-area--circle', 'social-icon social-icon--light', 'insta', 'vk', 'github')
-              li.footer__item
-                .footer__block
-                  .footer__quoute
-                    .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
-                    .quote__author Martin Golding
-        
+            .footer__about.about
+              .footer__info Этот сайт я сделал в рамках обучения в Школе онлайн образования Loftschool
+              .footer__social
+                +social('social', 'social__list', 'social__item', 'social-icon-area social-icon-area--circle', 'social-icon social-icon--light', 'insta', 'vk', 'github')
+            .footer__quoute.quoute
+              .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
+              .quote__author Martin Golding
+    
+    script(src="https://unpkg.com/swiper/js/swiper.min.js")
+    include ./templates/entry.pug
