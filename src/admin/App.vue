@@ -1,11 +1,18 @@
 <template lang="pug">
   .wrapper.admin-wrapper      
+    mixin icon(name, className)
+      - var icon = require(`../images/icons/${name}.svg`);
+      svg(class=className viewBox=icon.viewBox preserveAspectRatio="none")
+        use(xlink:href=icon.url)
+
     header.header
       .user
-        .user__avatar Картинка
+        .user__avatar
+          img(src='../images/content/user.jpg' class='user__avatar-pic')
         .user__name Николай Еловский
-      .header__title Панель администрирования
-      a.exit Выйти
+          +icon("Cross", "test__icon")
+        .header__title Панель администрирования
+      a.header__exit(href="#") Выйти
     .maincontent
       
       nav.nav
@@ -24,8 +31,10 @@
             ul.fields__list
               
               li.fields__item.fields__item--new
-                .skill
-                  .field__name
+                .field
+                  .field__header
+                    input.field__name(placeholder="Название новой группы")
+                    .field__name-ico
                   .field__skills
                     ul.skills__list
                   .fields__new-skill.new-skill
@@ -35,13 +44,14 @@
 
               li.fields__item(v-for="field in skills")
                 .field
-                  .field__name {{ field.skillsGroup }}
+                  input(class="field__name" :value="field.skillsGroup")
                   .field__skills
                     ul.skills__list
                       li.skills__item(v-for="(skillPower, skillName) in field.skills")
                         .skill
-                          .skills__name {{skillName}}
-                          .skills__power {{skillPower}}
+                          input(class="skills__name" :value="skillName")
+                          span.skillpower-wrapper
+                            input(class="skills__power" :value="skillPower")
                           .skills__icons
                   .fields__new-skill.new-skill
                     .new-skill__name
@@ -108,13 +118,11 @@ body {
   display: grid;
   grid-template-columns: 
     1fr;
-  grid-template-rows: 
-    200px 1fr;
-  grid-gap:
-    20px 10px;
+  grid-auto-rows:
+    minmax(min-content, max-content);
   grid-template-areas: 
     "header"
-    "content";
+    "maincontent";
 }
 
 .header {
@@ -127,15 +135,97 @@ body {
   text-align: left;
   color: $text-color-white;
   background-color: $blue-dark;
+  display: flex;
+  grid-area: header;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1% 2%;
 }
 
-.section {
+.header__title {
+  opacity: 0.5;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: $text-color-white;
+}
+
+.header__exit {
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: $text-color-white;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.user__avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20px;
+  @include tablets {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.user__avatar-pic {
   width: 100%;
+  height: 100%;
+  object-fit: cover;  
+}
+
+.user__name {
+  font-size: 18px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+  margin-right: 30px;
+}
+
+.maincontent {
+  grid-area: maincontent;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 
+    1fr;
+  grid-auto-rows:
+    minmax(min-content, max-content);
+  grid-template-areas: 
+    "nav"
+    "content";
+}
+
+.admin-section {
+  width: 100%;
+  padding: 0 2%;
+}
+
+.nav {
+  grid-area: nav;
+  padding: 0 2%;
+  z-index: 50;
 }
 
 .nav__list {
   display: flex;
-  min-height: 100px;
   align-content: center;
 }
 
@@ -145,16 +235,15 @@ body {
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.88;
   letter-spacing: normal;
-  text-align: left;
+  text-align: center;
   color: $light-grey;
-  padding: 10px;  
+  padding: 30px;
 
   &--active {
     font-weight: 600;
-    border-bottom: 2px solid $blue-hover;
-    color: $blue-hover;
+    border-bottom: 3px solid $blue-admin;
+    color: $blue-admin;
   }
   &:hover {
     font-weight: 600;
@@ -163,22 +252,28 @@ body {
 
 .headline {
   display: flex;
+  padding: 60px 0;
 }
 
 .headline__text {
-  font-size: 18px;
+  font-size: 21px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 2.67;
   letter-spacing: normal;
   text-align: left;
-  color: $links-color;
+  color: $text-color-light;
+}
+
+.about-section {
+  background: linear-gradient(0deg, rgba($text-color-white, 0.9), rgba($text-color-white, 0.9)), url('~images/content/Mountain_Baloon.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
 .fields {
   display: flex;
-  padding: 10px 10px;
 }
 
 .fields__list {
@@ -186,7 +281,6 @@ body {
   justify-content: space-between;
   width: 100%;
   flex-wrap: wrap;
-  background-color: white;
   &--new {
 
   }
@@ -196,13 +290,83 @@ body {
 .fields__item {
   //flex: 1 1 20px;
   min-width: 45%;
-  background-color: aqua;
+  background-color: white;
   //margin-right: 20px;
   margin-bottom: 20px;
+  color: $text-color-light;
+  box-shadow: 4.1px 2.9px 20px 0 rgba(black, 0.07);
+}
+
+.field {
+  padding: 30px 20px;
+}
+
+.field__name {
+  font-size: 18px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: $text-color-light;
+  &::placeholder {
+    opacity: 0.51;
+  }
 }
 
 .skill {
   display: flex;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: $text-color-light;
+  padding: 10px 0;
+  justify-content: space-between;
 }
+
+.skills__name {
+  border: none;
+  outline: none;
+  margin-right: 20px;
+  &--active {
+    border-bottom: 1px solid black;
+  }
+  &:focus {
+    border-bottom: 1px solid $blue-admin;
+  }
+}
+
+.skillpower-wrapper {
+  margin-right: 50px;
+  max-width: 75px;
+  &::after {
+    content: "%";
+    opacity: 0.7;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: $light-grey;
+  }
+  &:focus-within {
+    border-bottom: 1px solid $blue-admin;
+  }
+  &--active {
+    border-bottom: 1px solid black;
+  }
+}
+
+.skills__power {
+  border: none;
+  outline: none;
+  width: 50%;
+}
+
+
 
 </style>

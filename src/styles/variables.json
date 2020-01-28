@@ -6,9 +6,12 @@
 
   "blue-dark": "#252830",
   "blue-middle": "#353e4e",
+  "blue-admin": "#383bcf",
   "grey": "#e6e6e6",
   "light-grey": "#414c63",  
   "orange": "#dc9322",
+  "admin-grey": "#1f232d",
+
 
   "violet1": "#9300e8",
   "violet2": "#4a00ed",
