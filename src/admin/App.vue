@@ -10,7 +10,7 @@
         .user__avatar
           img(src='../images/content/user.jpg' class='user__avatar-pic')
         .user__name Николай Еловский
-          +icon("Cross", "test__icon")
+          
         .header__title Панель администрирования
       a.header__exit(href="#") Выйти
     .maincontent

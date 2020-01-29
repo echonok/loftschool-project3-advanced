@@ -2,13 +2,10 @@ const parallax = document.querySelector('.parallax');
 const layers = parallax.children;
 
 const moveLayersOnScroll = (wScroll) => {
-  Array.from(layers).forEach(layer => {
-    //console.log(layers);
-    const divider = layer.dataset.speed;
-    const strafe = wScroll * divider / 10;
-
-    layer.style.transform = `translateY(-${strafe}%)`;
-
+  Array.from(layers).forEach((layer, index) => {
+    const divider = index;
+    const strafe = wScroll / (-divider * 40);
+    layer.style.transform = `translateY(${strafe}%)`;
   });
 };
 
