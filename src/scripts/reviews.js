@@ -18,7 +18,6 @@ new Vue({
         wrapAround: true,
         groupCells: 2,
         cellAlign: 'left'
-        // any options from Flickity can be used
       }
     }
   },
@@ -26,6 +25,7 @@ new Vue({
   created() {
     const data = require("../data/reviews.json");
     this.reviews = this.makeArrayWithImages(data);
+    this.handleResize();
   },
 
   methods: {
@@ -44,6 +44,19 @@ new Vue({
     
     previous() {
       this.$refs.flickity.previous();
+    },
+
+    handleResize() {
+      
+
+      if (window.innerWidth <= 320) {
+        this.flickityOptions.groupCells = 1;
+      }
+      console.log('window.innerWidth', window.innerWidth);
+      console.log('this.flickityOptions.groupCells', this.flickityOptions.groupCells);
+
+
     }
+
   }
 });

@@ -1,13 +1,33 @@
 .reviews__switcher {
   width: 70%;
+  @include tablets {
+    width: 100%;
+  }
 }
 
 .carousel-cell {
   width: 50%;
+  @include phones {
+    width: 100%;
+  }
 }
 
 .reviews__headline {
   display: flex;
+  margin-bottom: 4%;
+  align-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: $text-color-light;
+  @include tablets {
+  }
+  @include phones {
+    flex-direction: column;
+  }
 }
 
 .review {
@@ -18,12 +38,18 @@
   &:last-shild {
     margin-right: 0;
   }
+  @include tablets {
+    height: auto;
+  }
 }
 
 .review__image-box {
   width: 75px;
   opacity: 0.1;
-  margin-right: 20px;  
+  margin-right: 20px;
+  @include phones {
+    display: none;
+  }
 }
 
 .review__box {
@@ -40,7 +66,6 @@
   font-weight: 600;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.88;
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
@@ -70,6 +95,7 @@
 .author__box {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
 }
 
 .author__name {
@@ -77,7 +103,6 @@
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 2.67;
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
@@ -92,7 +117,6 @@
   font-weight: 600;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.88;
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
