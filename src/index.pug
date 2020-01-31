@@ -20,7 +20,7 @@ html(lang="en")
       header.header.header__container
         .logo ен
         +nav('nav nav--header', 'nav__list', 'nav__item', 'nav__link', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
-        +social('social', 'social__list', 'social__item', 'social-icon-area', 'social-icon', 'insta', 'vk', 'github')
+        +social('social social--header', 'social__list', 'social__item', 'social-icon-area', 'social-icon', 'insta', 'vk', 'github')
         .hamburger
           a(href="").hamburger-menu-link
             div(id="hamburger-animated").hamburger-menu-link__animated
@@ -42,6 +42,7 @@ html(lang="en")
             img(src=require("images/content/parallax/6.png")).parallax__image
           .parallax__layer(data-speed="7")
             img(src=require("images/content/parallax/7.png")).parallax__image
+          
 
           section.section.maincontent
             .container.maincontent__container
@@ -89,22 +90,23 @@ html(lang="en")
 
       .goodbye
         .goodbye__polygon
-        section.section.reviews
-          #reviews-container
+        section
+          .reviews
+            #reviews-container
 
-        section.section.feedback
-          .container.feedback__container
-            .feedback__headline.container-headline Связаться со мной
-            form.form
-              .feedback__fields
-                ul.fields__list
-                  li.fields__item
-                    +addField('field__name', 'Введите ваше имя', 'field__value', 'Ковальчук Дмитрий', 'field__pic-area', 'avatar', 'field__pic')
-                  li.fields__item
-                    +addField('field__name', 'Введите ваш email', 'field__value', 'loftschool@study.com', 'field__pic-area', 'envelope', 'field__pic')
-                  li.fields__item
-                    +addField('field__name', 'Сообщение к письму', 'field__value', 'Требуется ваша помощь в создании сайта. Интересуют сроки и цена вопроса', 'field__pic-area', 'chat', 'field__pic')
-              button(class='btn btn--velvet' type='submit' id='send-button') Отправить
+          .feedback
+            .container.feedback__container
+              .feedback__headline.container-headline Связаться со мной
+              form.form
+                .feedback__fields
+                  ul.fields__list
+                    li.fields__item
+                      +addField('field__name', 'Введите ваше имя', 'field__value', 'Ковальчук Дмитрий', 'field__pic-area', 'avatar', 'field__pic')
+                    li.fields__item
+                      +addField('field__name', 'Введите ваш email', 'field__value', 'loftschool@study.com', 'field__pic-area', 'envelope', 'field__pic')
+                    li.fields__item
+                      +addField('field__name', 'Сообщение к письму', 'field__value', 'Требуется ваша помощь в создании сайта. Интересуют сроки и цена вопроса', 'field__pic-area', 'chat', 'field__pic')
+                button(class='btn btn--velvet' type='submit' id='send-button') Отправить
 
       footer.footer
         .container.footer__container
@@ -117,8 +119,7 @@ html(lang="en")
             +nav('nav nav--footer', 'nav__list nav__list--footer', 'nav__item', 'nav__link nav__link--footer', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
             .footer__about.about
               .footer__info Этот сайт я сделал в рамках обучения в Школе онлайн образования Loftschool
-              .footer__social
-                +social('social', 'social__list', 'social__item', 'social-icon-area social-icon-area--circle', 'social-icon social-icon--light', 'insta', 'vk', 'github')
+              +social('social social--footer', 'social__list', 'social__item', 'social-icon-area social-icon-area--circle', 'social-icon social-icon--light', 'insta', 'vk', 'github')
             .footer__quoute.quoute
               .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
               .quote__author Martin Golding

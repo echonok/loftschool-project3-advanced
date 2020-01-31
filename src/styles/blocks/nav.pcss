@@ -1,5 +1,5 @@
 .nav {
-  flex: 1 1 auto;
+  //flex: 1 1 auto;
   &--header {
     max-width: 50%;
     @include tablets {
@@ -11,6 +11,10 @@
     margin-bottom: 70px;
     @include tablets {
       display: flex;
+      margin-bottom: 20px;
+    }
+    @include phones {
+      margin-bottom: 0;
     }
   }
 }
@@ -36,6 +40,11 @@
   }
   @include tablets {
     margin-right: 8%;
+    margin-bottom: 10%;
+  }
+  @include phones {
+    margin-right: 20%;
+    margin-bottom: 10%;
   }
 }
 
@@ -46,7 +55,6 @@
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.88;
   letter-spacing: normal;
   text-align: left;
   &--footer {

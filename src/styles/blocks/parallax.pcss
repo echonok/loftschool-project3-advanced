@@ -1,12 +1,13 @@
 .parallax {
-  //display: none;
-  //position: absolute;
   position: relative;
   overflow: hidden;
-  height: 200vh;
+  //height: 200vh;
 }
 
 .parallax__layer {
+  @include tablets {
+    display: none;
+  }
   position: absolute;
   top: 0;
   left: 0;

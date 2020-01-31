@@ -1,6 +1,13 @@
 .social {
-  @include phones {
-    display: none;
+  &--header {
+    @include phones {
+      display: none;
+    }
+  }
+  &--footer {
+    @include tablets {
+      margin-bottom: 50px;
+    }
   }
 }
 

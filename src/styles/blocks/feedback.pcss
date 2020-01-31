@@ -1,3 +1,7 @@
+.form {
+  margin-bottom: 50px;
+}
+
 .feedback {
   display: flex;
   flex-direction: column;
@@ -12,6 +16,9 @@
 .feedback__fields {
   max-width: 70%;
   margin: 60px 0;
+  @include tablets {
+    max-width: 100%;
+  }
 }
 
 .fields__list {
@@ -22,17 +29,24 @@
 .fields__item {
   display: flex;
   flex-direction: column;
-  min-width: 350px;
+  //min-width: 350px;
   border-bottom: 2px solid black;
   flex: 1 1 auto;
   margin-right: 90px;  
   margin-bottom: 40px;
+  &:nth(2n)-child {
+    margin: 0;
+  }
   &:last-child {
     margin: 0;
   }
   &:hover .field__pic {
     opacity: 1;
     fill: $blue-hover;
+  }
+  @include phones {
+    width: 100%;
+    margin-right: 0;
   }
 }
 
@@ -95,4 +109,7 @@
   height: 100%;
   fill: $text-color;
   opacity: 0.3;
+  @include phones {
+    display: none;
+  }
 }
