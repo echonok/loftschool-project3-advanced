@@ -27,29 +27,33 @@ html(lang="en")
               span
       
       .welcome
-        section.parallax
-          .parallax__layer(data-speed="1")
-            img(src=require("images/content/parallax/1.png")).parallax__image
-          .parallax__layer(data-speed="2")
-            img(src=require("images/content/parallax/2.png")).parallax__image
-          .parallax__layer(data-speed="3")
-            img(src=require("images/content/parallax/3.png")).parallax__image
-          .parallax__layer(data-speed="4")
-            img(src=require("images/content/parallax/4.png")).parallax__image
-          .parallax__layer(data-speed="5")
-            img(src=require("images/content/parallax/5.png")).parallax__image
-          .parallax__layer(data-speed="6")
-            img(src=require("images/content/parallax/6.png")).parallax__image
-          .parallax__layer(data-speed="7")
-            img(src=require("images/content/parallax/7.png")).parallax__image
-          
+        .no-paralax
+          +picture('content/baloon', 'no-parallax-image')
+          .triangles
+            svg.triangles__item(viewBox="0 0 1000 100" preserveAspectRatio="none")
+              polygon(points="0,0 0,100 1000,100")
+            svg.triangles__item(viewBox="0 0 1000 100" preserveAspectRatio="none")
+              polygon(points="0,100 1000,100 1000,0")
+        .parallax         
+          each layer in ['7','6','5','4','3','2'] 
+            .parallax__layer 
+              +pictureParallax(`mountain${layer}`, 'parallax__image')          
+          .parallax__layer
+            +pictureParallax(`mountain1`, 'parallax__image')
+            .triangles
+              svg.triangles__item(viewBox="0 0 1000 100" preserveAspectRatio="none")
+                polygon(points="0,0 0,100 1000,100")
+              svg.triangles__item(viewBox="0 0 1000 100" preserveAspectRatio="none")
+                polygon(points="0,100 1000,100 1000,0")      
 
+        section.parallax-content1
           section.section.maincontent
             .container.maincontent__container
               .site
                 .site__short Личный сайт веб разработчика
                 .site__full Еловский Николай              
           
+        section.parallax-content2
           section.section.main-info
             .container.main-info__container
               .short-bio
@@ -74,55 +78,74 @@ html(lang="en")
           
           .welcome__polygon
 
-      section.section.skills
-        .container.skills__container
-          .skills__big-pic
-            +image('content/backpack.png', 'skill-img')
-          .skills__box
-            .skills__heeadline.container-headline Чем я могу быть полезен вам
-            .skills__info Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
-            #skill-component
+        section.section.skills
+          .container.skills__container
+            .skills__big-pic
+              +image('content/backpack.png', 'skill-img')
+            .skills__box
+              .skills__heeadline.container-headline Чем я могу быть полезен вам
+              .skills__info Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
+              #skill-component
 
-      section.section.portfolio
-        .container.portfolio__container
-          .container-headline Мои работы
-          #projects-component
+        section.section.portfolio
+          .container.portfolio__container
+            .container-headline Мои работы
+            #projects-component
 
-      .goodbye
-        .goodbye__polygon
-        section
-          .reviews
-            #reviews-container
+        .budda-wrapper
+          .no-paralax
+            +picture('content/Budda', 'no-parallax-image')
+            .triangles-budda
+              svg.triangles-budda__item(viewBox="0 0 1000 100" preserveAspectRatio="none")
+                polygon(points="0,0 1000,100 1000,0")
+              svg.triangles-budda__item(viewBox="0 0 1000 100" preserveAspectRatio="none")
+                polygon(points="0,0 0,100 1000,0")
+          .parallax-budda        
+            each layer in ['6','5','4','3','2'] 
+              .parallax__layer
+                +pictureParallax(`budda${layer}`, 'parallax__image')          
+            .parallax__layer
+              +pictureParallax(`budda1`, 'parallax__image')
+              .triangles-budda
+                svg.triangles-budda__item(viewBox="0 0 1000 100" preserveAspectRatio="none")
+                  polygon(points="0,0 1000,100 1000,0")
+                svg.triangles-budda__item(viewBox="0 0 1000 100" preserveAspectRatio="none")
+                  polygon(points="0,0 0,100 1000,0")
 
-          .feedback
-            .container.feedback__container
-              .feedback__headline.container-headline Связаться со мной
-              form.form
-                .feedback__fields
-                  ul.fields__list
-                    li.fields__item
-                      +addField('field__name', 'Введите ваше имя', 'field__value', 'Ковальчук Дмитрий', 'field__pic-area', 'avatar', 'field__pic')
-                    li.fields__item
-                      +addField('field__name', 'Введите ваш email', 'field__value', 'loftschool@study.com', 'field__pic-area', 'envelope', 'field__pic')
-                    li.fields__item
-                      +addField('field__name', 'Сообщение к письму', 'field__value', 'Требуется ваша помощь в создании сайта. Интересуют сроки и цена вопроса', 'field__pic-area', 'chat', 'field__pic')
-                button(class='btn btn--velvet' type='submit' id='send-button') Отправить
+          section.parallax-content2
+            .reviews
+              #reviews-container
 
-      footer.footer
-        .container.footer__container
-          .footer__left
-            .footer__copyright ©2020
-            .footer__block
-              .footer__author Николай Еловский
-              .footer__site Личный сайт веб-разработчика
-          .footer__right
-            +nav('nav nav--footer', 'nav__list nav__list--footer', 'nav__item', 'nav__link nav__link--footer', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
-            .footer__about.about
-              .footer__info Этот сайт я сделал в рамках обучения в Школе онлайн образования Loftschool
-              +social('social social--footer', 'social__list', 'social__item', 'social-icon-area social-icon-area--circle', 'social-icon social-icon--light', 'insta', 'vk', 'github')
-            .footer__quoute.quoute
-              .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
-              .quote__author Martin Golding
+          section.parallax-content2
+            .feedback
+              .container.feedback__container
+                .feedback__headline.container-headline Связаться со мной
+                form.form
+                  .feedback__fields
+                    ul.fields__list
+                      li.fields__item
+                        +addField('field__name', 'Введите ваше имя', 'field__value', 'Ковальчук Дмитрий', 'field__pic-area', 'avatar', 'field__pic')
+                      li.fields__item
+                        +addField('field__name', 'Введите ваш email', 'field__value', 'loftschool@study.com', 'field__pic-area', 'envelope', 'field__pic')
+                      li.fields__item
+                        +addField('field__name', 'Сообщение к письму', 'field__value', 'Требуется ваша помощь в создании сайта. Интересуют сроки и цена вопроса', 'field__pic-area', 'chat', 'field__pic')
+                  button(class='btn btn--velvet' type='submit' id='send-button') Отправить
+
+        footer.footer
+          .container.footer__container
+            .footer__left
+              .footer__copyright ©2020
+              .footer__block
+                .footer__author Николай Еловский
+                .footer__site Личный сайт веб-разработчика
+            .footer__right
+              +nav('nav nav--footer', 'nav__list nav__list--footer', 'nav__item', 'nav__link nav__link--footer', 'Главная', 'Обо мне', 'Навыки', 'Работы', 'Отзывы', 'Связаться')
+              .footer__about.about
+                .footer__info Этот сайт я сделал в рамках обучения в Школе онлайн образования Loftschool
+                +social('social social--footer', 'social__list', 'social__item', 'social-icon-area social-icon-area--circle', 'social-icon social-icon--light', 'insta', 'vk', 'github')
+              .footer__quoute.quoute
+                .quote__text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
+                .quote__author Martin Golding
     
     script(src="https://unpkg.com/swiper/js/swiper.min.js")
     include ./templates/entry.pug
