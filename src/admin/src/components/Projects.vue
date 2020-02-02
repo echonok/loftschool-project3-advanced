@@ -1,0 +1,177 @@
+<template lang="pug">
+.container
+  .admin-section.projects-section
+    
+    mixin icon(name, className)
+      - var icon = require(`../images/icons/${name}.svg`);
+      svg(class=className viewBox=icon.viewBox preserveAspectRatio="none")
+        use(xlink:href=icon.url)
+
+    mixin addField(nameClassName, nameValue, valueClassName, placeholderValue)
+      label.field__label
+        span(class=nameClassName)&attributes(attributes)= nameValue
+      div.field__box        
+        input(class=valueClassName type='text' placeholder=placeholderValue required)
+
+    mixin addTextArea(nameClassName, nameValue, valueClassName, placeholderValue)
+      label.field__label
+        span(class=nameClassName)&attributes(attributes)= nameValue
+      div.field__box        
+        textarea(class=valueClassName type='text' placeholder=placeholderValue required)
+
+
+    .headline
+      .headline__text Блок «Работы»
+    .projects
+      
+      .project-editor.editor
+        .project-editor__headline Редактирование работы
+        .project-editor__content
+          .project-editor__pic-box
+            .project-editor__pic-area
+              .project-editor__pic
+              .editor-button.editor-button--save Загрузить
+            .project-editor__pic-desc Добавить фото
+          form.project-editor__form
+            +addField('project__field', 'Название', 'field__value', 'Введите название')
+            +addField('project__field', 'Ссылка', 'field__value', 'Введите ссылку')
+            +addTextArea('project__field', 'Описание', 'textarea__value', 'Введите Описание')
+            +addField('project__field', 'Добавление тега', 'field__value', 'Теги через запятую')
+            .editor-buttons
+              .editor-button.editor-button--cancel Отмена
+                svg.project-icon
+                  use(:xlink:href="this.$importSvg('cross')")
+
+              .editor-button.editor-button--save Сохранить
+                svg.project-icon
+                  use(:xlink:href="this.$importSvg('tick')")
+
+
+      ul.projects__list
+        li.projects__item.projects__area--new
+          a.add-element
+            .add-element__pic +
+            .add-element__text Добавить работу
+        li.projects__item(v-for="project in projects")
+          .project
+            .project__pic-area
+              .project__pic {{project.photo}}
+                
+              ul.project__tags.tags__list
+                li.tags__item.tag(v-for="tag in project.tags")
+                  .tag__text {{tag}}
+            .project__info
+              .project__title {{project.title}}
+              .project__desc {{project.desc}}
+              a.project__link(:href="project.link") {{ project.link }}
+              .button-set--projects
+                .edit Править
+                .remove Удалить
+
+</template>
+
+<script>
+export default {
+  name: 'projects',
+  data() {
+    return {
+      projects: []
+    };
+  },
+  created() {
+    this.projects = require("../../../data/projects.json");
+  }
+}
+
+
+</script>
+
+<style lang="postcss">
+
+.projects {
+  display: flex;
+  flex-direction: column;
+}
+
+.projects__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 20px;
+  row-gap: 20px;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 768px) {
+  .projects__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .projects__list {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+.projects__item {
+  width: 100%;
+  background-color: white;
+  box-shadow: 4.1px 2.9px 20px 0 rgba(black, 0.07);
+  margin-bottom: 30px;
+}
+
+.project__info {
+  padding: 40px 30px;
+  min-height: 200px;
+}
+
+.project__title {
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: $text-color-light;
+  margin-bottom: 30px;
+}
+
+.project__desc {
+  opacity: 0.7;
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: normal;
+  text-align: left;
+  color: $text-color-light;
+  margin-bottom: 30px;
+}
+
+.project__link {
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: $blue-admin;
+  margin-bottom: 45px;
+}
+
+.project-icon{
+  width: 15px;
+  height: 15px;
+  fill:#a0a5b1;
+}
+
+.button-set--projects {
+  display: flex;
+  justify-content: space-between;
+}
+
+</style>
