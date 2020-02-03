@@ -47,29 +47,22 @@
             span +
           .add-element__text 
             span Добавить работу
-        li.projects__item(v-for="project in projects")
-          .project
-            .project__pic-area
-              .project__pic {{project.photo}}
-                
-              ul.project__tags.tags__list
-                li.tags__item.tag(v-for="tag in project.tags")
-                  .tag__text {{tag}}
-            .project__info
-              .project__title {{project.title}}
-              .project__desc {{project.desc}}
-              a.project__link(:href="project.link") {{ project.link }}
-              .button-set--projects
-                .edit Править
-                .remove Удалить
+        project(
+          v-for="(project, index) in projects"
+          :project="project"
+          :key="`project_${project.id}`"
+        )
 
 </template>
 
 <script>
+import project from './Project'
 export default {
   name: 'projects',
+  components: { project },
   data() {
     return {
+      currentProject: null,
       projects: []
     };
   },
