@@ -21,9 +21,10 @@
     .reviews
       ul.reviews__list
         li.reviews__item.reviews__item--new
-          a.add-element
-            .add-element__pic +
-            .add-element__text Добавить отзыв
+          .add-element__pic
+            span +
+          .add-element__text 
+            span Добавить отзыв
         li.reviews__item(v-for="review in reviews")
           .review
             .review__author
@@ -92,7 +93,12 @@ export default {
   box-shadow: 4.1px 2.9px 20px 0 rgba(black, 0.07);
   margin-bottom: 30px;
   &--new {
-    background-image: linear-gradient(to top, $admin-grad-1, $admin-grad-2);
+    background-image: linear-gradient(to right, $admin-grad-1, $admin-grad-2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
   }
 }
 

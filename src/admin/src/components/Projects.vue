@@ -2,11 +2,6 @@
 .container
   .admin-section.projects-section
     
-    mixin icon(name, className)
-      - var icon = require(`../images/icons/${name}.svg`);
-      svg(class=className viewBox=icon.viewBox preserveAspectRatio="none")
-        use(xlink:href=icon.url)
-
     mixin addField(nameClassName, nameValue, valueClassName, placeholderValue)
       label.field__label
         span(class=nameClassName)&attributes(attributes)= nameValue
@@ -18,7 +13,6 @@
         span(class=nameClassName)&attributes(attributes)= nameValue
       div.field__box        
         textarea(class=valueClassName type='text' placeholder=placeholderValue required)
-
 
     .headline
       .headline__text Блок «Работы»
@@ -48,10 +42,11 @@
 
 
       ul.projects__list
-        li.projects__item.projects__area--new
-          a.add-element
-            .add-element__pic +
-            .add-element__text Добавить работу
+        li.projects__item.projects__item--new
+          .add-element__pic
+            span +
+          .add-element__text 
+            span Добавить работу
         li.projects__item(v-for="project in projects")
           .project
             .project__pic-area
@@ -121,7 +116,46 @@ export default {
   background-color: white;
   box-shadow: 4.1px 2.9px 20px 0 rgba(black, 0.07);
   margin-bottom: 30px;
+  &--new {
+    background-image: linear-gradient(to right, #006aed, #3f35cb);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+  }
 }
+
+.add-element__pic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95px;
+  height: 95px;
+  font-weight: 600;
+  line-height: 1;
+  color: #ffffff;
+  background: transparent;
+  border-radius: 50%;
+  border: 2px solid white;  
+  cursor: pointer;  
+  font-size: 72px;
+  font-weight: 300;
+}
+
+.add-element__text {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.67;
+  text-align: center;
+  color: #ffffff;
+  padding-top: 30px;
+}
+
+.add-element__text span {
+  display: block;
+}
+
 
 .project__info {
   padding: 40px 30px;
@@ -163,7 +197,7 @@ export default {
   margin-bottom: 45px;
 }
 
-.project-icon{
+.project-icon {
   width: 15px;
   height: 15px;
   fill:#a0a5b1;
