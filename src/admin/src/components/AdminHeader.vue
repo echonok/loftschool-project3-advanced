@@ -11,7 +11,9 @@
 </template>
 
 <script>
+import login from './Login';
 export default {
+  components: { login },
   name: 'admin-header',
 }
 

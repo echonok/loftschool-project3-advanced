@@ -4,61 +4,141 @@
     .headline
       .headline__text  Блок «Отзывы»
     
-    .review-editor.editor
-      .review-editor__headline Новый отзыв
-      .review-editor__content
-        .review-editor__pic-box
-          .review-editor__pic-area
-            .review-editor__pic
-          .review-editor__pic-desc Добавить фото
-        form.review-editor__form
-          .editor-buttons
-            .editor-button.editor-button--cancel Отмена
-            .editor-button.editor-button--save Сохранить
-    
-
+    .edit-reviews(
+      v-if="currentReview != null"
+    )
+      .edit-reviews-title 
+        .edit-reviews-title-text Новый отзыв
+      hr  
+      .edit-reviews-body
+        .edit-reviews-avatar
+          .edit-reviews-image
+            img.admin-edit-reviews-avatar-img(                 
+              :src="this.$importImg(`reviews/${currentReview && currentReview.author_pic ? currentReview.author_pic: 'anonimous.jpg'}`)"
+            )
+          .edit-reviews-avatar-text {{currentReview && currentReview.author_pic ? 'Изменить фото' : 'Добавить фото'}}
+        .edit-reviews-comment  
+          .edit-reviews-revier
+            .edit-reviews-name
+              adminInput.reviews-name(
+                :labelText="'Имя автора'"
+                :isInvalid="false"
+                :toolTipText="'toolTipText'"
+                :id="'reviews-name'"
+                :type="'input'"
+                :val="currentReview.author_name"
+                @change="nameChange"
+              )
+            .edit-reviews-position
+              adminInput.reviews-position(
+                :labelText="'Титул автора'"
+                :isInvalid="false"
+                :toolTipText="'toolTipText'"
+                :id="'reviews-position'"
+                :type="'input'"
+                :val="currentReview.author_occ"
+                @change="positionChange"
+              )
+          .edit-reviews-message
+            adminInput.reviews-message(
+              :labelText="'Отзыв'"
+              :isInvalid="false"
+              :toolTipText="'toolTipText'"
+              :id="'reviews-message'"
+              :type="'textarea'"
+              :val="currentReview.text"
+              @change="messageChange"
+            )
+          .edit-reviews-buttons
+            .edit-reviews-cancel(
+              @click="cancelEdit"
+            ) Отмена
+            .edit-reviews-save(
+              @click="saveEdit"
+            )
+              loadButton(
+                text="СОХРАНИТЬ"
+              )
 
     .reviews
       ul.reviews__list
-        li.reviews__item.reviews__item--new
+        li.reviews__item.reviews__item--new(
+          @click="addNewReviews"
+        )
           .add-element__pic
             span +
           .add-element__text 
             span Добавить отзыв
-        li.reviews__item(v-for="review in reviews")
-          .review
-            .review__author
-              .review__avatar {{review.author_pic}}
-              .author__area
-                .review__name {{review.author_name}}
-                .review__occup {{review.author_occ}}
-            .review__info
-              .review__text {{review.text}}
-              .tools
-                a.tools__edit
-                  .btn__pic-area
-                    .btn__pic
-                  .btn__title Править
-                a.tools__del
-                  .btn__pic-area
-                    .btn__pic
-                  .btn__title Удалить
+        review(
+          v-for="(review, index) in reviews"
+          :review="review"
+          :selected="currentReview && review.id == currentReview.id"
+          @selectReview="selectReview"
+          @removeReview="removeReview"
+          :key="index"
+        )
 </template>
+
 <script>
+import review from './Review';
+import adminInput from './AdminInput';
+import loadButton from './LoadButton';
 export default {
   name: 'reviews',
+  components: { review, adminInput, loadButton },
   data() {
     return {
-      reviews: []
+      reviews: [],
+      currentReview: null
     };
   },
   created() {
     this.reviews = require("../../../data/reviews.json");
+  },
+  methods:{
+    cancelEdit(){
+      this.currentReview = null;
+    },
+    saveEdit(){
+      if(!this.currentReview.id){
+        this.currentReview.id = this.reviews[this.reviews.length - 1].id + 1;
+        this.reviews.push(this.currentReview);
+      }
+      else{
+        let tmp = this.reviews.find(f => f.id == this.currentReview.id); 
+        this.reviews[this.reviews.indexOf(tmp)] = this.currentReview;
+      }
+      this.currentReview = null;
+    },
+    nameChange(value){
+      this.currentReview.author_name = value;
+    },
+    positionChange(value){
+      this.currentReview.author_occ = value;
+    },
+    messageChange(value){
+      this.currentReview.text = value;
+    },
+    addNewReviews(){
+      this.currentReview = {
+        id: null,
+        text: '',
+        author_name: '',
+        author_occ: '',
+        author_pic: ''
+      }
+    },
+    selectReview(review){
+      this.currentReview = {...review};
+    },
+    removeReview(review){
+      this.reviews.splice(this.reviews.indexOf(review), 1);
+    }
   }
 }
 </script>
-<style lang="postcss">
 
+<style lang="postcss">
 .reviews {
   display: flex;
   flex-direction: column;
@@ -91,7 +171,6 @@ export default {
   width: 100%;
   background-color: white;
   box-shadow: 4.1px 2.9px 20px 0 rgba(black, 0.07);
-  margin-bottom: 30px;
   &--new {
     background-image: linear-gradient(to right, $admin-grad-1, $admin-grad-2);
     display: flex;
@@ -102,142 +181,81 @@ export default {
   }
 }
 
-.review-editor {
-  width: 100%;
+
+.edit-reviews {
+  padding: 30px;
   background-color: white;
-  box-shadow: 4.1px 2.9px 20px 0 rgba(black, 0.07);
-  margin-bottom: 30px;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: 
-    1fr;
-  grid-auto-rows:
-    minmax(min-content, max-content);
-  grid-template-areas: 
-    "head"
-    "body";
+  box-shadow: 4.1px 2.9px 20px 0 rgba(0, 0, 0, 0.07);
+  margin-bottom: 20px;
 }
 
-.review-editor__headline {
-  grid-area: head;
+.edit-reviews-title {
+  padding-bottom: 25px;
+  padding-left: 10px;
   font-size: 18px;
   font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: $light-grey;
-  padding: 30px 10px;
-  border-bottom: 1px solid rgba($admin-grey, 0.15);
+  line-height: 1.89;
 }
 
-.review-editor__content {
-  grid-area: body;
-  padding: 50px 10px;
-  display: grid;
-  grid-auto-columns: 
-    minmax(min-content, max-content);
-  grid-auto-rows:
-    minmax(min-content, max-content);
-  grid-template-areas: 
-    "left right";
+hr {
+  opacity: 0.15;
 }
 
-.review-editor__pic-box {
-  grid-area: left;
-}
-
-.review-editor__form {
-  grid-area: right;
-  width: 100%;
-}
-
-.review-editor__pic-desc {
-  font-size: 16px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: $blue-admin;
-}
-
-.reviev__field {
-  opacity: 0.5;
-  font-size: 16px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: $light-grey;
-}
-
-.review {
-  padding: 30px 30px;
-  display: grid;
-  grid-template-columns: 
-    1fr;
-  grid-auto-rows:
-    minmax(min-content, max-content);
-  grid-template-areas: 
-    "head"
-    "body";
-}
-
-.review__author {
+.edit-reviews-body {
   display: flex;
-  border-bottom: 1px solid rgba($admin-grey, 0.15);
-  padding-bottom: 30px;
-  grid-area: head;
+  padding-top: 50px;
 }
 
-.author__area {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+.admin-edit-reviews-avatar-img {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.review__name {
-  font-size: 18px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: $text-color-light;
+.edit-reviews-avatar {
+  width:200px;
+  height:200px;
 }
 
-.review__occup {
-  opacity: 0.5;
-  font-size: 16px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: $text-color-light;
-}
-
-.review__info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.edit-reviews-avatar-text {
   padding-top: 30px;
-  grid-area: body;
-  min-height: 200px;
-}
-
-.review__text {
-  opacity: 0.7;
   font-size: 16px;
   font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.88;
-  letter-spacing: normal;
-  text-align: left;
-  color: $text-color-light;
+  line-height: 2.13;
+  color: #383bcf;
+  text-align: center;
+}
+
+.edit-reviews-revier {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap:30px;
+}
+
+.edit-reviews-comment {
+  padding-left: 30px;
+  width:100%;
+  max-width: 700px;
+}
+
+.edit-reviews-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.edit-reviews-cancel {
+  font-weight: 600;
+  line-height: 2.13;
+  color: #383bcf;
+  padding-right: 60px;
+  cursor: pointer;
+}
+
+.edit-reviews-save {
+  height: 60px;
+  width: 180px
 }
 
 </style>

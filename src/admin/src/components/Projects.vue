@@ -1,48 +1,98 @@
 <template lang="pug">
 .container
   .admin-section.projects-section
-    
-    mixin addField(nameClassName, nameValue, valueClassName, placeholderValue)
-      label.field__label
-        span(class=nameClassName)&attributes(attributes)= nameValue
-      div.field__box        
-        input(class=valueClassName type='text' placeholder=placeholderValue required)
-
-    mixin addTextArea(nameClassName, nameValue, valueClassName, placeholderValue)
-      label.field__label
-        span(class=nameClassName)&attributes(attributes)= nameValue
-      div.field__box        
-        textarea(class=valueClassName type='text' placeholder=placeholderValue required)
-
     .headline
       .headline__text Блок «Работы»
     .projects
       
-      .project-editor.editor
-        .project-editor__headline Редактирование работы
-        .project-editor__content
-          .project-editor__pic-box
-            .project-editor__pic-area
-              .project-editor__pic
-              .editor-button.editor-button--save Загрузить
-            .project-editor__pic-desc Добавить фото
-          form.project-editor__form
-            +addField('project__field', 'Название', 'field__value', 'Введите название')
-            +addField('project__field', 'Ссылка', 'field__value', 'Введите ссылку')
-            +addTextArea('project__field', 'Описание', 'textarea__value', 'Введите Описание')
-            +addField('project__field', 'Добавление тега', 'field__value', 'Теги через запятую')
-            .editor-buttons
-              .editor-button.editor-button--cancel Отмена
-                svg.project-icon
-                  use(:xlink:href="this.$importSvg('cross')")
+      .project-editor(
+        v-if="currentProject != null"
+      )
+        .project-editor-title 
+          .project-editor-title-text Редактирование работы
+        hr
+        .project-editor-body
+          .import-image-wrapper 
+            .admin-preview(
+              v-if="currentProject.photo"
+            )
+              img.admin-edit-image-img(                 
+                :src="this.$importImg(`projects/${currentProject.photo}`)"
+              )
+              .admin-preview-text  Изменить превью
+            .import-image(
+                v-if="!currentProject.photo"
+              )
+              .import-image-content
+                .import-image-text
+                  span Перетащите или загрузите
+                  br
+                  span для загрузки изображения
+                .load-button-wrapper
+                  load-button(
+                    text="ЗАГРУЗИТЬ"
+                  )
+          .project-description
+            admin-input.name-project(
+              :labelText="'Название'"
+              :isInvalid="false"
+              :toolTipText="'toolTipText'"
+              :id="'name-project'"
+              :type="'input'"
+              :val="currentProject.title"
+              @change="titleChange"
+            )
 
-              .editor-button.editor-button--save Сохранить
-                svg.project-icon
-                  use(:xlink:href="this.$importSvg('tick')")
+            admin-input.link-project(
+              :labelText="'Ссылка'"
+              :isInvalid="false"
+              :toolTipText="'toolTipText'"
+              :id="'link-project'"
+              :type="'input'"
+              :val="currentProject.link"
+              @change="linkChange"
+            )
 
+            admin-input.desc-project(
+              :labelText="'Описание'"
+              :isInvalid="false"
+              :toolTipText="'toolTipText'"
+              :id="'desc-project'"
+              :type="'textarea'"
+              :val="currentProject.desc"
+              @change="descChange"
+            )
+
+            admin-input.tags-project(
+              :labelText="'Добавление тэга'"
+              :isInvalid="false"
+              :toolTipText="'toolTipText'"
+              :id="'tags-project'"
+              :type="'input'"
+              :val="currentProject.skills"
+              @change="tagsChange"
+            )
+            .admin-tags
+              tags.edit-tag(
+                :tags="currentProject.skills"
+                :edit="true"
+                @removeTag="removeTag"
+              )
+        .project-editor-buttons
+          .project-editor-cancel(
+            @click="cancelEdit"
+          ) Отмена
+          .project-editor-save(
+            @click="saveEdit"
+          )
+            load-button(
+              text="СОХРАНИТЬ"
+            )
 
       ul.projects__list
-        li.projects__item.projects__item--new
+        li.projects__item.projects__item--new(
+          @click="addNewProject"
+        )
           .add-element__pic
             span +
           .add-element__text 
@@ -50,16 +100,22 @@
         project(
           v-for="(project, index) in projects"
           :project="project"
-          :key="`project_${project.id}`"
+          :selected="currentProject && project.id == currentProject.id"
+          @selectProject="selectProject"
+          @removeProject="removeProject"
+          :key="index"
         )
 
 </template>
 
 <script>
-import project from './Project'
+import project from './Project';
+import loadButton from './LoadButton';
+import adminInput from './AdminInput';
+import tags from './Tags';
 export default {
   name: 'projects',
-  components: { project },
+  components: { project, loadButton, adminInput, tags },
   data() {
     return {
       currentProject: null,
@@ -68,6 +124,64 @@ export default {
   },
   created() {
     this.projects = require("../../../data/projects.json");
+  },
+  computed: {
+    tagsArray() {
+      return this.currentProject.skills.split(', ');
+    }
+  },
+  methods:{
+    removeTag(val){
+      let tags = [...this.currentProject.skills]
+      tags.forEach((element, i) => {
+        if(element == val){
+          tags.splice(i, 1);
+        }
+      this.currentProject.skills = tags;
+      });
+    },
+    titleChange(value){
+      this.currentProject.title = value;
+    },
+    linkChange(value){
+      this.currentProject.link = value;
+    },
+    descChange(value){
+      this.currentProject.desc = value;
+    },
+    tagsChange(value){
+      this.currentProject.skills = value.split(', ');
+    },
+    selectProject(project){
+      this.currentProject = {...project};
+    },
+    removeProject(project){
+      this.projects.splice(this.projects.indexOf(project), 1);
+    },
+    cancelEdit(){
+      this.currentProject = null;
+    },
+    saveEdit(){
+      if(!this.currentProject.id){
+        this.currentProject.id = this.projects[this.projects.length - 1].id + 1;
+        this.projects.push(this.currentProject);
+      }
+      else{
+        let tmp = this.projects.find(f => f.id == this.currentProject.id); 
+        this.projects[this.projects.indexOf(tmp)] = this.currentProject;
+      }
+      this.currentProject = null;
+    },
+    addNewProject(){
+      this.currentProject = {
+          id: null,         
+          title: '',
+          photo: '',
+          link: '',
+          desc: '',
+          skills: ""
+      };
+    }
   }
 }
 
@@ -108,7 +222,6 @@ export default {
   width: 100%;
   background-color: white;
   box-shadow: 4.1px 2.9px 20px 0 rgba(black, 0.07);
-  margin-bottom: 30px;
   &--new {
     background-image: linear-gradient(to right, #006aed, #3f35cb);
     display: flex;
@@ -126,7 +239,6 @@ export default {
   width: 95px;
   height: 95px;
   font-weight: 600;
-  line-height: 1;
   color: #ffffff;
   background: transparent;
   border-radius: 50%;
@@ -139,7 +251,6 @@ export default {
 .add-element__text {
   font-size: 18px;
   font-weight: bold;
-  line-height: 1.67;
   text-align: center;
   color: #ffffff;
   padding-top: 30px;
@@ -172,7 +283,6 @@ export default {
   font-weight: 600;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.88;
   letter-spacing: normal;
   text-align: left;
   color: $text-color-light;
@@ -199,6 +309,95 @@ export default {
 .button-set--projects {
   display: flex;
   justify-content: space-between;
+}
+
+.project-editor {
+  padding: 30px;
+  background-color: white;
+  box-shadow: 4.1px 2.9px 20px 0 rgba(0, 0, 0, 0.07);
+}
+
+.project-editor-title {
+  padding-bottom: 25px;
+  padding-left: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.project-editor-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 30px;
+  padding-top: 45px;
+}
+
+.import-image{
+  background-color: #dee4ed;
+  background-image: url("data:image/svg+xml;utf8,<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' style='fill: none; stroke: darkgrey; stroke-width: 2; stroke-dasharray: 10 10'/></svg>");
+  position: relative;
+  width: 100%; 
+  display: block;
+  padding-top: 56%;    
+}
+
+.import-image-wrapper {
+  width: 100%;
+  padding: 10px;
+}
+
+.import-image-content {
+  position:  absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.import-image-text {
+  opacity: 0.5;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 2.13;
+}
+
+.admin-preview-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: $blue-admin;
+  text-align: center;
+  padding-top: 30px;
+}
+
+.project-description {
+  padding:10px;
+}
+
+.desc-project {
+  height:190px;
+}
+
+.admin-tags {
+  display: flex;
+  padding-top: 20px;
+}
+
+.project-editor-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.project-editor-cancel {
+  font-weight: 600;
+  color: $blue-admin;
+  cursor: pointer;
+  margin-right: 60px;
 }
 
 </style>

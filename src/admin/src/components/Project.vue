@@ -2,9 +2,9 @@
 li.projects__item
   .project
     .project__pic-area
-      .project__pic {{project.photo}}
-        
-      ul.project__tags.tags__list
+      .project__pic
+        img.admin-work-image-img(:src="project.photo ? this.$importImg(`projects/${project.photo}`): ''")
+      ul.project__tags
         tags(          
           :tags="project.skills"
         )
@@ -12,14 +12,28 @@ li.projects__item
       .project__title {{ project.title }}
       .project__desc {{ project.desc }}
       a.project__link(:href="project.link") {{ project.link }}
-      .button-set--projects
-        .edit Править
-        .remove Удалить
+      .tools
+        a.admin-project-buttons-edit(
+          :class="selected ? 'selected' : ''"
+          @click="$emit('selectProject', project)"
+        )
+          .admin-project-buttons-edit-text Править
+          .admin-project-buttons-edit-icon
+            svg
+              use(:xlink:href="this.$importSvg('pencil')")          
+        a.admin-project-buttons-remove(
+          :class="selected ? 'selected' : ''"
+          @click="!selected ? $emit('removeProject', project) : ''"
+        )
+          .admin-project-buttons-remove-text Удалить
+          .admin-project-buttons-remove-icon
+            svg
+              use(:xlink:href="this.$importSvg('cross')")
 
 </template>
 
 <script>
-import tags from './tags'
+import tags from './Tags'
 export default {
   name: 'project',
   components: { tags },
@@ -35,7 +49,6 @@ export default {
   width: 100%;
   background-color: white;
   box-shadow: 4.1px 2.9px 20px 0 rgba(black, 0.07);
-  margin-bottom: 30px;
   &--new {
     background-image: linear-gradient(to right, #006aed, #3f35cb);
     display: flex;
@@ -127,4 +140,69 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
+.edit {
+  cursor: pointer;
+}
+
+.remove {
+  cursor: pointer;
+}
+
+.project__pic-area {
+  position: relative;
+}
+
+.project__pic {
+  object-fit: cover;
+  width: 100%;
+}
+
+.project__tags {
+  display: flex;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.tools {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 40px;
+}
+
+.admin-project-buttons-edit,
+.admin-project-buttons-remove {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.admin-project-buttons-edit-icon svg {
+  fill: $admin-grad-2;
+  width: 15px;
+  height: 15px;
+  margin-top: 8px;
+}
+
+.admin-project-buttons-remove-icon svg {
+  fill: $admin-red;
+  width: 15px;
+  height: 15px;
+  margin-top: 8px;
+}
+
+.admin-project-buttons-edit-text,
+.admin-project-buttons-remove-text {
+  opacity: 0.5;
+  font-size: 16px;
+  font-weight: 600;
+  padding-right: 10px;
+}
+
+.selected {
+  opacity: 0.3;
+  cursor: default;
+}
+
 </style>
