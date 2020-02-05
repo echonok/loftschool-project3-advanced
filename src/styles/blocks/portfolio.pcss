@@ -1,13 +1,21 @@
 .portfolio__container {
   max-width: 1480px;
+  margin-bottom: 50px;
 }
 
 .project {
   display: flex;
+  justify-content: space-between;
+  @include tablets {
+    flex-direction: column;
+  }
 }
 
 .project__image {
   margin-right: 8%;
+  @include phones {
+    margin-right: 0;
+  }
 }
 
 .project__pic-area {
@@ -31,29 +39,35 @@
   top: 80px;
   right: -150px;
   z-index: -1;
+  @include phones {
+    display: none;
+  }
 }
-
 
 .project__list {
   position: absolute;
   bottom: 0;
   right: 0;
   max-width: 20%;
-  z-index: 50;
+  @include phones {
+    display: none;
+  }
 }
 
 .project__item{
+  cursor: pointer;
   position: relative;
   &:hover .overlay {
     opacity: 0.7;
+  }
+  &--active {
+    outline: solid 3px $orange;
+    z-index: 50;
   }
 }
 
 .project__small-pic {
   cursor: pointer;
-  &--active {
-    outline: solid 3px $orange;
-  }
 }
 
 .overlay {
@@ -72,6 +86,10 @@
 .project__desc {
   display: flex;
   flex-direction: column;
+  @include tablets {
+    align-items: center;
+    margin-top: 10%;
+  }
 }
 
 .project__headline {
@@ -84,6 +102,9 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    text-align: center;
+  }
 }
 
 .project__info {
@@ -97,6 +118,9 @@
   text-align: left;
   color: $text-color;
   margin-bottom: 50px;
+  @include tablets {
+    text-align: center;
+  }
 }
 
 .project__link {
@@ -127,10 +151,12 @@
   letter-spacing: normal;
   text-align: left;
   color: $text-color-blue;
-
 }
 
 .project__switcher {
   position: absolute;
   right: 0;
+  @include phones {
+    bottom: 0;
+  }
 }

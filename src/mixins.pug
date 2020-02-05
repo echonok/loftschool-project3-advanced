@@ -44,7 +44,7 @@ mixin social(socialClassName, listClassName, itemClassName, iconAreaClassName, i
           div(class=iconAreaClassName)
             +icon(item, iconClassName)
 
-mixin indicator(indicatorPower="50", indicatorText="new")
+mixin indicator(indicatorPower=50, indicatorText="new")
   -var persentage = indicatorPower + ` ` + (100 - indicatorPower)
   div(class="indicator__circle-area")
     div(class="indicator__text-area")
@@ -54,3 +54,14 @@ mixin indicator(indicatorPower="50", indicatorText="new")
       circle(class="indicator__circle-hole" cx="21" cy="21" r="15.91549430918954" fill="none")
       circle(class="indicator__circle-ring" cx="21" cy="21" r="15.91549430918954" fill="none" stroke="#d2d3d4" stroke-width="3")
       circle(class="indicator__circle-segment" cx="21" cy="21" r="15.91549430918954" fill="none" stroke="#9300e8" stroke-width="5" stroke-dasharray=persentage stroke-dashoffset="50")
+  
+mixin pictureParallax(parallaxName, className)
+  picture(class=className)
+    source(srcset=require(`images/parallax/${parallaxName}.png`) media="screen and (min-width: 769px)")
+    img(srcset="" class=className)
+
+mixin picture(path, className)
+  picture(class=className)
+    source(srcset=require(`images/${path}320.jpg`) media="screen and (max-width: 480px)")
+    source(srcset=require(`images/${path}768.jpg`) media="screen and (max-width: 768px)")
+    img(srcset="" class=className)

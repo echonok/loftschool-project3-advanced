@@ -20,6 +20,9 @@
   color: $text-color;
   z-index: 100;
   max-width: 100px;
+  @include tablets {
+    font-size: 16px;
+  }
 }
 
 
@@ -28,6 +31,10 @@
   height: 150px;
   position: relative;
   z-index: 50;
+  @include phones {
+    width: 140px;
+    height: 140px;
+  }
 }
 
 .indicator__circle {

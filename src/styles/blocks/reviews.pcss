@@ -1,42 +1,66 @@
-.reviews {
-  
+.reviews__container {
+  padding-top: 100px;
+}
+
+.reviews__switcher {
+  width: 70%;
+  @include tablets {
+    width: 100%;
+  }
+}
+
+.carousel-cell {
+  width: 50%;
+  @include phones {
+    width: 100%;
+  }
 }
 
 .reviews__headline {
   display: flex;
-}
-
-.reviews__list {
-  display: flex;
-}
-
-.reviews__item {
-  display: flex;
-  flex-direction: column;
-  margin-right: 80px;
-  
-  
-  &:last-shild {
-    margin-right: 0;
+  margin-bottom: 4%;
+  align-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: $text-color-light;
+  @include tablets {
+  }
+  @include phones {
+    flex-direction: column;
   }
 }
 
 .review {
+  width: 100%;
   display: flex;
+  //flex-direction: column;
+  margin-right: 80px;  
+  &:last-shild {
+    margin-right: 0;
+  }
+  @include tablets {
+    height: auto;
+  }
 }
 
 .review__image-box {
   width: 75px;
   opacity: 0.1;
   margin-right: 20px;
-  
+  @include phones {
+    display: none;
+  }
 }
 
 .review__box {
   min-height: 210px;
   display: flex;
   flex-direction: column;
-  max-width: 350px;
+  //max-width: 350px;
   justify-content: space-between;
 }
 
@@ -46,10 +70,12 @@
   font-weight: 600;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.88;
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    font-size: 14px;
+  }
 }
 
 .review__author {
@@ -61,7 +87,7 @@
   height: 75px;
   border-radius: 50%;
   overflow: hidden;
-  margin-right: 30px;
+  margin-right: 2.5%;
 }
 
 .author__avatar {
@@ -73,18 +99,20 @@
 .author__box {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
 }
-
 
 .author__name {
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 2.67;
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    font-size: 16px;
+  }
 }
 
 .author__occup {
@@ -93,8 +121,10 @@
   font-weight: 600;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.88;
   letter-spacing: normal;
   text-align: left;
   color: $text-color;
+  @include tablets {
+    font-size: 14px;
+  }
 }

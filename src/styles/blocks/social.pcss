@@ -1,3 +1,16 @@
+.social {
+  &--header {
+    @include phones {
+      display: none;
+    }
+  }
+  &--footer {
+    @include tablets {
+      margin-bottom: 50px;
+    }
+  }
+}
+
 .social__list {
   display: flex;
 }
