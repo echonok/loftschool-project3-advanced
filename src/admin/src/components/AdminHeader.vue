@@ -30,8 +30,8 @@ export default {
   height: 80px;
   display: flex;
   justify-items: center;
-  
 }
+
 .avatar{
   margin: auto 0;
 }
