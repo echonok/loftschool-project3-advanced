@@ -58,9 +58,11 @@
 </template>
 
 <script>
-import skill from './skills'
+import skill from './skills';
+import plus from './plus';
+
 export default {
-  components:{skill},
+  components:{ skill, plus },
   name: 'skillsGroup',
   props:{
     skillGroup:Object

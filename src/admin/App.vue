@@ -8,15 +8,15 @@
     )
     .content
       .content-background
-        img.background-img(:src="this.$importImg('baloonAdmin.jpg')")
+        img.background-img(:src="this.$importImg('Mountain_Baloon.jpg')")
       about(
-        v-if="activeContent == 'about'"
+        v-if="activeContent == 'About'"
       )
       Projects(
-        v-if="activeContent == 'projects'"
+        v-if="activeContent == 'Projects'"
       )
       Reviews(
-        v-if="activeContent == 'reviews'"
+        v-if="activeContent == 'Reviews'"
       )
 
 </template>
@@ -24,16 +24,17 @@
 <script>
   import AdminHeader from "./src/components/AdminHeader"
   import AdminMenu from "./src/components/AdminMenu"
-  import about from "./src/components/about"
+  import About from "./src/components/About"
   import Projects from "./src/components/Projects"
   import Reviews from "./src/components/Reviews"
+  import plus from "./src/components/plus"
   export default {
     data(){
       return{
-        activeContent: 'about'
+        activeContent: 'About'
       }
     },
-    components: {'admin-header':AdminHeader, 'admin-menu': AdminMenu, about, Projects , Reviews },
+    components: {'admin-header':AdminHeader, 'admin-menu': AdminMenu, About, Projects , Reviews, plus },
     created() {
       this.skills = require("../data/skills.json");
       this.projects = require("../data/projects.json");
@@ -72,7 +73,6 @@
 
   .maincontent {
     grid-area: maincontent;
-    //height: 100%;
     display: grid;
     grid-template-columns: 
       1fr;

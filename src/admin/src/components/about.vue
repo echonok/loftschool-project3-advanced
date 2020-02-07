@@ -21,8 +21,9 @@
 <script>
 
 import skillsGroup from "./skillsGroup"
+import plus from "./plus"
 export default {
-  components: { skillsGroup },
+  components: { skillsGroup, plus },
   name: 'about',
   data() {
     return {
