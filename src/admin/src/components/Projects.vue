@@ -28,10 +28,17 @@
                   span Перетащите или загрузите
                   br
                   span для загрузки изображения
-                .load-button-wrapper
+                .load-button-wrapper(
+                  @click="uploadImage"
+                )
                   load-button(
                     text="ЗАГРУЗИТЬ"
                   )
+          input#work-photo(
+            type="file"
+            ref="projectImage"
+            @change="changeImgFile"
+          )    
           .project-description
             admin-input.name-project(
               :labelText="'Название'"
@@ -149,6 +156,20 @@ export default {
         }
       this.currentProject.skills = tags;
       });
+    },
+    uploadImage(){
+      this.$refs.projectImage.click();
+    },
+    changeImgFile(e){
+      this.currentProject.photo = e.target.files[0];
+      let reader = new FileReader();
+
+      reader.onload = function(event) {
+        let imgtag = document.getElementById("edit-img-preview");;
+        imgtag.src = event.target.result;
+      };
+
+      reader.readAsDataURL(this.currentProject.photo);
     },
     titleChange(value){
       this.currentProject.title = value;

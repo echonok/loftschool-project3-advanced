@@ -9,7 +9,7 @@
     .count-button  
       .count(:class="edit ? 'input-edited' : '' ")
         input.skill-count-input(
-            :value="skill.count"
+            :value="skill.percent"
             :readOnly="edit ? false : true"
             :ref="`skill-count__${iterator}`"
             )
@@ -47,23 +47,35 @@
 export default {
   name: 'skill',
   props:{
-    skill: Object,
+    defaultSkill: Object,
     iterator: Number
   },
   data(){
     return{
+      skill: {},
       edit: false
     }
   },
   methods:{
     editSkill(){
-      this.skill.title = this.$refs[`skill-name__${this.iterator}`].value;
-      this.skill.count = this.$refs[`skill-count__${this.iterator}`].value;
+      this.$axios.post(`/skills/${this.skill.id}`, {title: this.$refs[`skill-name__${this.iterator}`].value,
+                                                    percent: this.$refs[`skill-count__${this.iterator}`].value,
+                                                    category: this.skill.category
+                                                    })
+      .then(Response => {
+        this.skill = Response.data.skill
+      })
+      .catch(error => {
+        console.log(error.Response);
+      });
       this.edit = false;
     },
     cancelEdit(){
       this.edit = false;
     }
+  },
+  beforeMount(){
+    this.skill = this.defaultSkill;
   }
 }
 </script>
@@ -94,6 +106,7 @@ export default {
   background-color: transparent;
   border-color: transparent;
   width:100%;
+  outline: none;
 }
 
 .count-button{
@@ -113,6 +126,7 @@ export default {
   width:100%;
   background-color: transparent;
   border-color: transparent;
+  outline: none;
 }
 .percent{
   font-size: 16px;   
@@ -125,6 +139,7 @@ export default {
   line-height: 2;
   font-weight: 600;
   color: #a0a5b1;
+  outline: none;
 }
 .input-edited{
   border-bottom: 1px solid;
