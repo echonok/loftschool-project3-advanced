@@ -4,7 +4,7 @@
       .group-title-input(:class="editTitle ? 'input-edited' : '' ")
         input.skill-group-name-input(
           placeholder="Название новой группы"
-          :value="skillGroup.name"
+          :value="category.category"
           :readOnly="editTitleComputed ? false : true"
           ref="skillGroupName"
           )
@@ -32,8 +32,8 @@
     hr.spliter
     .group-body
       skill(
-        v-for="(item, i) in skillGroup.skills"
-        :skill="item"
+        v-for="(item, i) in category.skills"
+        :defaultSkill="item"
         :key="`${item.name}_${i}`"
         :iterator="i"
         @removeSkill="removeSkill"
@@ -65,28 +65,56 @@ export default {
   components:{ skill, plus },
   name: 'skillsGroup',
   props:{
-    skillGroup:Object
+    defaultCategory: Object
   },
   data() {
     return{
-      editTitle: false,
+      category: [],
+      editTitle: false
     }
+  },
+  beforeMount(){
+    this.category = {...this.defaultCategory}
   },
   computed:{
     editTitleComputed(){
-      return this.editTitle || this.skillGroup.name.length == 0
+      console.log('this.category.category', this.category.category.length);
+      return this.editTitle || this.category.category.length === 0;
     }
   },
   methods:{
     editSkillGroupName(){
-      this.skillGroup.name = this.$refs.skillGroupName.value;
+      if(!this.category.category){
+        this.$axios.post('/categories', {title: this.$refs.skillGroupName.value})
+        .then(Response => {
+          this.category = Response.data;
+        })
+        .catch(error => {
+          console.log(error.Response);
+        });
+      }
+      else{
+        this.$axios.post(`/categories/${this.category.id}`, {title: this.$refs.skillGroupName.value})
+        .then(Response => {
+          this.category = Response.data.category;
+        })
+        .catch(error => {
+          console.log(error.Response);
+        });
+      }
       this.editTitle = false;
     },
     addSkill(){
-      this.skillGroup.skills.push({
-        title: this.$refs.newSkillName.value,
-        count: this.$refs.newSkillCount.value,
+      this.$axios.post('/skills', {title: this.$refs.newSkillName.value,
+                                    percent: this.$refs.newSkillCount.value,
+                                    category: this.category.id
+                                    })
+      .then(Response => {
+        this.skills.push(Response.data)
       })
+      .catch(error => {
+        console.log(error.Response);
+      });
       this.$refs.newSkillName.value = "";
       this.$refs.newSkillCount.value = 100;
     },
@@ -94,7 +122,13 @@ export default {
       this.editTitle = false;
     },
     removeSkill(skill){
-      this.skillGroup.skills.splice(this.skillGroup.skills.indexOf(skill), 1);
+      this.$axios.delete(`/skills/${skill.id}`)
+      .then(Response => {
+        this.skills.splice(this.skills.indexOf(skill), 1);
+      })
+      .catch(error => {
+        console.log(error.Response);
+      });
     }
   }
 }

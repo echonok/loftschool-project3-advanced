@@ -8,6 +8,7 @@
           .name Николай Еловский
           .title Панель администратора
           .logout Выйти
+          login
 </template>
 
 <script>

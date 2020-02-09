@@ -31,12 +31,12 @@
   export default {
     data(){
       return{
-        activeContent: 'reviews'
+        activeContent: 'about'
       }
     },
     components: {'admin-header':adminHeader, 'admin-menu': adminMenu, about, projects, reviews, plus },
     created() {
-      this.skills = require("../data/skills.json");
+      this.skillsGroup = require("../data/skills.json");
       this.projects = require("../data/projects.json");
       this.reviews = require("../data/reviews.json");    
     },

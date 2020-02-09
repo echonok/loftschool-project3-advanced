@@ -122,6 +122,16 @@ export default {
       projects: []
     };
   },
+  beforeMount(){
+    this.$axios.get(`/works/${this.$user.id}`)
+    .then(Response => {
+      this.projects = Response.data;
+      console.log(Response.data);
+    })
+    .catch(error => {
+      console.log(error.Response);
+    });
+  },
   created() {
     this.projects = require("../../../data/projects.json");
   },
@@ -163,14 +173,46 @@ export default {
     },
     saveEdit(){
       if(!this.currentProject.id){
-        this.currentProject.id = this.projects[this.projects.length - 1].id + 1;
-        this.projects.push(this.currentProject);
+        var formData = new FormData();
+        formData.append("title", this.currentProject.title);
+        formData.append("techs", this.currentProject.skills);
+        formData.append("photo", this.currentProject.photo);
+        formData.append("link", this.currentProject.link);
+        formData.append("description", this.currentProject.desc);
+        this.$axios.post(`/works`, formData, {
+                                        headers: {
+                                          'Content-Type': 'multipart/form-data'
+                                        }
+          })
+        .then(Response => {
+          this.projects.push(Response.data);
+        })
+        .catch(error => {
+          console.log(error.Response);
+        });
+        
       }
       else{
-        let tmp = this.projects.find(f => f.id == this.currentProject.id); 
-        this.projects[this.projects.indexOf(tmp)] = this.currentProject;
-      }
-      this.currentProject = null;
+        var formData = new FormData();
+        formData.append("title", this.currentProject.title);
+        formData.append("techs", this.currentProject.skills);
+        formData.append("photo", this.currentProject.photo);
+        formData.append("link", this.currentProject.link);
+        formData.append("description", this.currentProject.desc);
+        this.$axios.post(`/works/${this.currentProject.id}`, formData, {
+                                        headers: {
+                                          'Content-Type': 'multipart/form-data'
+                                        }
+          })
+        .then(Response => {
+          let tmp = this.projects.find(f => f.id === this.currentProject.id);
+          this.projects[this.projects.indexOf(tmp)] = Response.data.work;
+          this.currentProject = null;
+        })
+        .catch(error => {
+          console.log(error.Response);
+        });
+      }      
     },
     addNewProject(){
       this.currentProject = {

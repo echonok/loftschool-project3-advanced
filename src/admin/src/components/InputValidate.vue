@@ -39,9 +39,9 @@ export default {
 
 <style lang="postcss" scoped>
 .tooltip {
-    position: relative;
-    display: inline-block;
-    visibility: visible;
+  position: relative;
+  display: inline-block;
+  visibility: visible;
 }
 
 .input-tooltip {
@@ -49,48 +49,72 @@ export default {
 }
 
 .tooltip .input-tooltip {
-    width: 80%;
-    background-color: red;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
+  width: 80%;
+  background-color: red;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
 }
 
 .showed {
-    visibility: visible;
+  visibility: visible;
 }
 
 .tooltip .input-tooltip::after {
-    content: " ";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent red transparent;
+  content: " ";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent red transparent;
 }
 
 .input {
   border-bottom: 1px solid black;
   &:hover {
-      border-bottom: 1px solid $links-color;
-      fill: $links-color;
-      color: $links-color;
+    border-bottom: 1px solid $links-color;
+    fill: $links-color;
+    color: $links-color;
     }  
 }
 
 .input__focus {
-   border-bottom: 1px solid $links-color;
-      fill: $links-color;
-      color: $links-color;
+  border-bottom: 1px solid $links-color;
+  fill: $links-color;
+  color: $links-color;
 }
 
 .input__error {
   border-bottom: 1px solid red;
   fill: red;
 }
+
+.connect-icon {
+  width: 30px;
+  height: 30px;
+  margin-top: 18px;
+}
+
+.connect-input {
+  outline: none;
+  background-color: transparent;
+  border-color: transparent;
+  min-width: 150px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.input-label {
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.3;
+  padding-left: 46px;
+}
+
 </style>
