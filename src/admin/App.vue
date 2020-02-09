@@ -10,31 +10,31 @@
       .content-background
         img.background-img(:src="this.$importImg('Mountain_Baloon.jpg')")
       about(
-        v-if="activeContent == 'About'"
+        v-if="activeContent == 'about'"
       )
-      Projects(
-        v-if="activeContent == 'Projects'"
+      projects(
+        v-if="activeContent == 'projects'"
       )
-      Reviews(
-        v-if="activeContent == 'Reviews'"
+      reviews(
+        v-if="activeContent == 'reviews'"
       )
 
 </template>
 
 <script>
-  import AdminHeader from "./src/components/AdminHeader"
-  import AdminMenu from "./src/components/AdminMenu"
-  import About from "./src/components/About"
-  import Projects from "./src/components/Projects"
-  import Reviews from "./src/components/Reviews"
+  import adminHeader from "./src/components/adminHeader"
+  import adminMenu from "./src/components/adminMenu"
+  import about from "./src/components/about"
+  import projects from "./src/components/projects"
+  import reviews from "./src/components/reviews"
   import plus from "./src/components/plus"
   export default {
     data(){
       return{
-        activeContent: 'About'
+        activeContent: 'reviews'
       }
     },
-    components: {'admin-header':AdminHeader, 'admin-menu': AdminMenu, About, Projects , Reviews, plus },
+    components: {'admin-header':adminHeader, 'admin-menu': adminMenu, about, projects, reviews, plus },
     created() {
       this.skills = require("../data/skills.json");
       this.projects = require("../data/projects.json");

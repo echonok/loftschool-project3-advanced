@@ -80,9 +80,9 @@
 </template>
 
 <script>
-import review from './Review';
-import adminInput from './AdminInput';
-import loadButton from './LoadButton';
+import review from './review';
+import adminInput from './adminInput';
+import loadButton from './loadButton';
 export default {
   name: 'reviews',
   components: { review, adminInput, loadButton },

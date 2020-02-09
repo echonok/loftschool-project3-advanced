@@ -33,7 +33,7 @@ li.projects__item
 </template>
 
 <script>
-import tags from './Tags'
+import tags from './tags'
 export default {
   name: 'project',
   components: { tags },

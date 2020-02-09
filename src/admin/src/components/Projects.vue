@@ -109,10 +109,10 @@
 </template>
 
 <script>
-import project from './Project';
-import loadButton from './LoadButton';
-import adminInput from './AdminInput';
-import tags from './Tags';
+import project from './project';
+import loadButton from './loadButton';
+import adminInput from './adminInput';
+import tags from './tags';
 export default {
   name: 'projects',
   components: { project, loadButton, adminInput, tags },

@@ -2,6 +2,7 @@
   .plus 
     span +
 </template>
+
 <script>
 export default {
   name: 'plus'
