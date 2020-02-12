@@ -17,8 +17,8 @@
         @input="$emit('change', value)")
     .input-tooltip(:class="{'showed':isInvalid}") {{toolTipText}}
 </template>
-
 <script>
+
 export default {
   name: 'input-validate',
   props:['iconName', 'labelText', 'id', 'type', 'firstClass', 'isInvalid', 'toolTipText'],
@@ -38,13 +38,13 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.tooltip {
-  position: relative;
-  display: inline-block;
-  visibility: visible;
-}
 
-.input-tooltip {
+.tooltip {
+    position: relative;
+    display: inline-block;
+    visibility: visible;
+}
+.input-tooltip{
   visibility: hidden;
 }
 
@@ -59,7 +59,7 @@ export default {
   z-index: 1;
 }
 
-.showed {
+ .showed {
   visibility: visible;
 }
 
@@ -74,47 +74,23 @@ export default {
   border-color: transparent transparent red transparent;
 }
 
-.input {
+.input{
   border-bottom: 1px solid black;
-  &:hover {
+  &:hover{
     border-bottom: 1px solid $links-color;
     fill: $links-color;
     color: $links-color;
-    }  
+  }  
 }
 
-.input__focus {
+.input__focus{
   border-bottom: 1px solid $links-color;
   fill: $links-color;
   color: $links-color;
 }
 
-.input__error {
+.input__error{
   border-bottom: 1px solid red;
   fill: red;
 }
-
-.connect-icon {
-  width: 30px;
-  height: 30px;
-  margin-top: 18px;
-}
-
-.connect-input {
-  outline: none;
-  background-color: transparent;
-  border-color: transparent;
-  min-width: 150px;
-  font-size: 18px;
-  font-weight: bold;
-  margin-left: 20px;
-}
-
-.input-label {
-  font-size: 16px;
-  font-weight: 600;
-  opacity: 0.3;
-  padding-left: 46px;
-}
-
 </style>

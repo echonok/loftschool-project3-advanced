@@ -1,23 +1,20 @@
 <template lang="pug">
-.wrapper.admin-wrapper
+.maincontent
   admin-header
-  .maincontent
-    admin-menu(
-      :active = "activeContent"
-      @changeContent="changeContent"
+  admin-menu(
+    :active = "activeContent"
+    @changeContent="changeContent"
+  )
+  .content     
+    about(
+      v-if="activeContent == 'about'"
     )
-    .content
-      .content-background
-        img.background-img(:src="this.$importImg('Mountain_Baloon.jpg')")
-      about(
-        v-if="activeContent == 'about'"
-      )
-      works(
-        v-if="activeContent == 'works'"
-      )
-      reviews(
-        v-if="activeContent == 'reviews'"
-      )
+    works(
+      v-if="activeContent == 'works'"
+    )
+    reviews(
+      v-if="activeContent == 'reviews'"
+    )  
 
 </template>
 

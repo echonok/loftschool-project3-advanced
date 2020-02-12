@@ -1,4 +1,4 @@
-import axios from "../../requests";
+import axios from "../../../requests";
 
 export default {
   namespaced: true,

@@ -22,7 +22,7 @@ export default {
           title:'Обо мне'
         },
         {
-          section:'projects',
+          section:'works',
           title:'Работы'
         },
         {

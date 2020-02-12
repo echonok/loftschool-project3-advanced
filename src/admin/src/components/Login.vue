@@ -1,17 +1,40 @@
 <template lang="pug">
-.test
-  .test-login
-    form(@submit.prevent="login")
-      input(type="text" placeholder="login" v-model="user.name")
-      input(type="password" placeholder="password" v-model="user.password")
-      input(type="submit")
-  .test-category
-    form(@submit.prevent="createCategory")
-      input(type="text" placeholder="category" v-model="category.title")
-      input(type="submit")
-  .get-category
-    form(@submit.prevent="takeCategories")
-      input(type="submit" name="user")
+div
+  .content-background-black
+  .login-wrapper
+    .login-body
+      .login-exit &#215;
+      .title 
+        span Авторизация
+      .form-wrapper
+        form(@submit.prevent="submit")
+          imputValidate.login-input.login(
+            :iconName="'user'"
+            :labelText="'Логин'" 
+            :id="'login'"
+            :type="'text'"
+            :firstClass="'person-info-name'"
+            :value="login"
+            :isInvalid="validation.hasError('login')"
+            :toolTipText="validation.firstError('login')"
+            @change="changeLogin"
+          )
+          imputValidate.login-input.password(
+            :iconName="'key'"
+            :labelText="'Пароль'" 
+            :id="'password'"
+            :type="'password'"
+            :firstClass="'person-info-name'"
+            :value="password"
+            :isInvalid="validation.hasError('password')"
+            :toolTipText="validation.firstError('password')"
+            @change="changePassword"
+          )
+          button.button-wrapper(            
+            :class="disableButton() ? 'buttonDisabled' : '' "
+            :disabled="disableButton()"
+          )
+            span ОТПРАВИТЬ
 </template>
 
 <script>
@@ -20,67 +43,139 @@ const Validator = SimpleVueValidator.Validator;
 
 import imputValidate from './inputValidate'
 
-import axios from 'axios';
-const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI0OSwiaXNzIjoiaHR0cDovL3dlYmRldi1hcGkubG9mdHNjaG9vbC5jb20vbG9naW4iLCJpYXQiOjE1ODA3NDg3NjgsImV4cCI6MTU4MDc2Njc2OCwibmJmIjoxNTgwNzQ4NzY4LCJqdGkiOiJ6QWc4UnJSZnhTUnlWdVBIIn0.ePV4tBJY3tcl-ApGHsZYXOkWMxqFxn8VRpDsiHcrJlk";
-axios.defaults.baseURL = 'https://webdev-api.loftschool.com';
-axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 export default {
-  components: {'inputValidate': imputValidate},
+  mixins: [SimpleVueValidator.mixin],
+  components: { imputValidate },
   name: 'login',
-  data() {
-    return {
-      token: "",
-      category: {
-        title: ""
-      },
-      user: {
-        name: "",
-        password: "",
-        id: ""
-      },
-      categories: []
-    };
+  data(){
+    return{
+      login:'',
+      password:''
+    }
   },
-  created() {
-    this.takeCategories();
+  validators:{
+    login:function(value){
+      return Validator.value(value).required('Поле не должно быть пустым');
+    },
+    password:function(value){
+      return Validator.value(value).required('Поле не должно быть пустым');
+    },
   },
   methods: {
-    login() {
-      //console.log(this.user);
-      axios.post('/login', this.user).then(response => {
-
-        localStorage.setItem('token', response.data.token);
-        this.$token = response.data.token;
-        this.$axios.defaults.headers["Authorization"] = `Bearer ${response.data.token}`;
-        this.$user = this.user;
-        //this.$router.push({name:'home'});
-
-        //this.token = response.data;
-        console.log('response.data', response.data);
-      }).catch(error => {
-        console.log('error.response.data', error.response.data);
-      });
+    disableButton(){
+      return this.validation.hasError('password') || this.validation.hasError('login')
     },
-    createCategory() {
-      axios.post('/categories', {
-        title: this.category.title
-      }).then(response => {
-        //console.log(response.data);        
-      }).catch(error => {
-        console.log(error.response.data);
-      });
+    changeLogin(val){
+      this.login = val;
     },
-    takeCategories() {
-      axios.get('/user').then(response => {
-        //console.log(response.data);
-      }).catch(errpr => {
-        console.log(response.data);
+    changePassword(val){
+      this.password = val;
+    },
+    submit(){
+      this.$validate()
+        .then(async(success) => {
+          if (success) {
+            this.$axios.post('/login', {
+              name:this.login,
+              password: this.password
+            })
+            .then(response => {
+             localStorage.setItem('token', response.data.token);
+             this.$token = response.data.token;
+             this.$axios.defaults.headers["Authorization"] = `Bearer ${response.data.token}`;
+             this.$router.push({name:'home'});
+           })
+           .catch(error => {
+             console.log(error.response)
+           })
+        }
       });
     }
   }
 }
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
+.title {
+  padding-bottom: 40px;
+  text-align:center;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.login-wrapper {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  z-index: 10;
+}
+
+.login-exit {
+  text-align: end;
+  font-size: 36px;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-right: 30px;
+  cursor: pointer;
+}
+
+.login-body {
+  width: 563px;
+  height: 517px;
+  background-color: #ffffff;
+}
+
+.login-input {
+  width:100%;
+  margin-bottom: 40px;
+}
+
+.form-wrapper {
+  height: 100%;
+  max-width: 440px;
+  text-align: left;
+  margin: 0 auto;
+}
+
+.button-wrapper {
+  display: flex;
+  width: 347px;
+  height: 80px;
+  background-image: linear-gradient(to right, $violet-admin1, $violet-admin2);
+  margin: 0 auto;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 2.67;
+  color: #ffffff;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px 0;
+  cursor:pointer;
+  &:hover{
+    background-image: linear-gradient(to left, $violet-admin1, $violet-admin2);
+  }
+}
+
+.content-background-black {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  background-color: black;
+  opacity: 0.6;
+  z-index: -1;
+}
+
+.buttonDisabled{
+  opacity: 0.5;
+  cursor:default;
+  &:hover{
+    background-image: linear-gradient(to right, $violet-admin1, $violet-admin2);
+  }
+}
+
 </style>

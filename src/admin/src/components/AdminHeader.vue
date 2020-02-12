@@ -7,15 +7,28 @@
         .header-text  
           .name Николай Еловский
           .title Панель администратора
-          .logout Выйти
-          login
+          .logout(
+            @click="logout"
+          ) Выйти
+
 </template>
 
 <script>
 import login from './login';
 export default {
   components: { login },
-  name: 'admin-header',
+  name: 'header-admin',
+  methods:{
+    logout(){
+      this.$axios.post('/logout')
+      .then(response =>{
+        this.$router.push({name:'login'});
+      })
+      .catch( error => {
+        console.log(error)
+      });
+    }
+  }
 }
 
 </script>
@@ -68,9 +81,9 @@ export default {
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.5;
   letter-spacing: normal;
   text-decoration: underline;
   margin-left:auto;
+  cursor: pointer;
 }
 </style>

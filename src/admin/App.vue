@@ -1,23 +1,10 @@
 <template lang="pug">
 .wrapper.admin-wrapper
-  admin-header
-  .maincontent
-    admin-menu(
-      :active = "activeContent"
-      @changeContent="changeContent"
-    )
-    .content
-      .content-background
-        img.background-img(:src="this.$importImg('Mountain_Baloon.jpg')")
-      about(
-        v-if="activeContent == 'about'"
-      )
-      works(
-        v-if="activeContent == 'works'"
-      )
-      reviews(
-        v-if="activeContent == 'reviews'"
-      )
+  .content-background
+    img.background-img(
+      :src="this.$importImg('Mountain_Baloon.jpg')"
+      )     
+  router-view
 
 </template>
 
@@ -30,31 +17,14 @@
   import plus from "./src/components/plus"
   export default {
     data(){
-      return{
-        activeContent: 'about'
+      return {
       }
     },
-    components: {'admin-header':adminHeader, 'admin-menu': adminMenu, about, works, reviews, plus },
-    created() {
-      this.skillsGroup = require("../data/skills.json");
-      this.works = require("../data/works.json");
-      this.reviews = require("../data/reviews.json");    
-    },
-    methods:{
-      changeContent(content){
-        this.activeContent = content;
-      }
-    }
-
   };
 </script>
 
+<style src="../styles/main.pcss" lang="postcss"></style>
 <style lang="postcss">
-
-  @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
-  @import "normalize.css";
-  @import "../styles/mixins.pcss";
-  @import "../styles/layout/base.pcss";
 
   .wrapper {
     display: grid;

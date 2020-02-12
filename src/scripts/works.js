@@ -32,7 +32,7 @@ const worksImage = {
   template: "#works-image",
   props: ["works", "currentProject", "lastUp", "lastDown"],
   computed: {
-    reversedProjects() {
+    reversedWorks() {
       return [...this.works].reverse();
     }
   },
