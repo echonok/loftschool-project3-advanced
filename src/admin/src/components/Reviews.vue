@@ -215,7 +215,7 @@ export default {
     }
   },
   created() {
-    //this.fetchReviews(this.$user.id);
+    this.fetchReviews(this.$user.id);
   }
 };
 </script>

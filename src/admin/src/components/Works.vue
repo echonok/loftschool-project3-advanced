@@ -34,6 +34,7 @@
                   load-button(
                     text="ЗАГРУЗИТЬ"
                   )
+            .input-tooltip(:class="{'showed':validation.hasError('currentWork.photo')}") {{validation.firstError('currentWork.photo')}}
           input#work-photo(
             type="file"
             ref="workImage"
@@ -42,8 +43,8 @@
           .work-description
             admin-input.name-work(
               :labelText="'Название'"
-              :isInvalid="false"
-              :toolTipText="'toolTipText'"
+              :isInvalid="validation.hasError('currentWork.title')"
+              :toolTipText="validation.firstError('currentWork.title')"
               :id="'name-work'"
               :type="'input'"
               :val="currentWork.title"
@@ -52,8 +53,8 @@
 
             admin-input.link-work(
               :labelText="'Ссылка'"
-              :isInvalid="false"
-              :toolTipText="'toolTipText'"
+              :isInvalid="validation.hasError('currentWork.link')"
+              :toolTipText="validation.firstError('currentWork.link')"
               :id="'link-work'"
               :type="'input'"
               :val="currentWork.link"
@@ -62,27 +63,29 @@
 
             admin-input.desc-work(
               :labelText="'Описание'"
-              :isInvalid="false"
-              :toolTipText="'toolTipText'"
+              :isInvalid="validation.hasError('currentWork.description')"
+              :toolTipText="validation.firstError('currentWork.description')"
               :id="'desc-work'"
               :type="'textarea'"
-              :val="currentWork.desc"
+              :val="currentWork.description"
               @change="descChange"
             )
 
             admin-input.tags-work(
               :labelText="'Добавление тэга'"
-              :isInvalid="false"
-              :toolTipText="'toolTipText'"
+              :isInvalid="validation.hasError('currentWork.techs')"
+              :toolTipText="validation.firstError('currentWork.techs')"
               :id="'tags-work'"
               :type="'input'"
-              :val="currentWork.skills"
+              :val="currentWork.techs"
               @change="tagsChange"
             )
             .admin-tags
               tags.edit-tag(
-                :tags="currentWork.skills"
+                v-for="tag in currentWork.techs.split(',')"
+                :tag="tag"
                 :edit="true"
+                :key="currentWork.id + '_' + tag"
                 @removeTag="removeTag"
               )
         .work-editor-buttons
@@ -134,18 +137,30 @@ export default {
       works: []
     };
   },
-  beforeMount(){
-    this.$axios.get(`/works/269`)
-    //this.$axios.get(`/works/${this.$user.id}`)
-    .then(Response => {
-      this.works = Response.data;
+  computed: {
+    ...mapState("works", {
+      works: state => state.works
     })
-    .catch(error => {
-      console.log(error.Response);
-    });
+  },
+  validators: {
+    "currentWork.title"(value) {
+      return Validator.value(value).required("Поле не должно быть пустым");
+    },
+    "currentWork.link"(value) {
+      return Validator.value(value).required("Поле не должно быть пустым");
+    },
+    "currentWork.description"(value) {
+      return Validator.value(value).required("Поле не должно быть пустым");
+    },
+    "currentWork.techs"(value) {
+      return Validator.value(value).required("Поле не должно быть пустым");
+    },
+    "currentWork.photo"(value) {
+      return Validator.value(value).required("Нужно загрузить фото");
+    }
   },
   created() {
-    this.works = require("../../../data/works.json");
+    this.fetchWorks(this.$user.id);
   },
   computed: {
     tagsArray() {
@@ -153,6 +168,7 @@ export default {
     }
   },
   methods:{
+    ...mapActions("works", ["fetchWorks", "removeWork", "saveWork", "addWork"]),
     removeTag(val){
       let tags = [...this.currentWork.skills]
       tags.forEach((element, i) => {
@@ -229,9 +245,10 @@ export default {
           title: '',
           photo: '',
           link: '',
-          desc: '',
-          skills: ""
+          description: '',
+          techs: ""
       };
+      this.validation.reset();
     }
   }
 }

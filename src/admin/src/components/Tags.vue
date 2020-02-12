@@ -1,20 +1,19 @@
 <template lang="pug">
-.tags__list
-  li.tags__item.tag(v-for="tag in tagsArray")
-    .tag__text {{ tag }}
-
+  .admin-tag(
+    v-if="tag != ''"
+  )
+    .admin-tag-text {{tag}}
+    .admin-tag-exit(
+      v-if="edit"
+      @click="$emit('removeTag', tag)"
+    ) &#215;
 </template>
 
 <script>
 export default {
-  name: 'tags',
-  props: [ 'tags' ],
-  computed: {
-    tagsArray() {
-      return this.tags.split(', ');
-    }
-  },
-}
+  name: "tags",
+  props: ["tag", "edit"]
+};
 </script>
 
 <style lang="postcss" scoped>

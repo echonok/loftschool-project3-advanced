@@ -23,8 +23,13 @@
   };
 </script>
 
-<style src="../styles/main.pcss" lang="postcss"></style>
 <style lang="postcss">
+
+  @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
+  @import "normalize.css";
+  @import "../styles/mixins.pcss";
+  @import "../styles/layout/base.pcss";
+  @import "../styles/main.pcss";
 
   .wrapper {
     display: grid;
@@ -35,6 +40,7 @@
     grid-template-areas: 
       "header"
       "maincontent";
+    overflow: auto;
   }
 
   .header {
