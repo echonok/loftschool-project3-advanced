@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import VueRouter from 'vue-router';
+import $axios from './requests';
 import axios from 'axios';
 import "core-js/stable";
 import "regenerator-runtime/runtime";
@@ -13,12 +14,14 @@ import adminInput from './src/components/adminInput'
 
 import picturePlugin from './src/utils/ImgSvg.plugin';
 
+//store.$axios = $axios;
+
 const baseUrl = Vue.prototype.$baseUrl = "https://webdev-api.loftschool.com/";
 Vue.prototype.$token = localStorage.getItem('token') || '';
 
-axios.defaults.baseURL = baseUrl;
-axios.defaults.headers["Authorization"] = `Bearer ${Vue.prototype.$token}`;
-Vue.prototype.$axios = axios;
+$axios.defaults.baseURL = baseUrl;
+$axios.defaults.headers["Authorization"] = `Bearer ${Vue.prototype.$token}`;
+Vue.prototype.$axios = $axios;
 
 const router = new VueRouter({
   routes:[

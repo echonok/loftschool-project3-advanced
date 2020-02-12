@@ -78,7 +78,7 @@ export default {
   },
   computed:{
     editTitleComputed(){
-      console.log('this.category.category', this.category.category.length);
+      //console.log('this.category.category', this.category.category.length);
       return this.editTitle || this.category.category.length === 0;
     }
   },

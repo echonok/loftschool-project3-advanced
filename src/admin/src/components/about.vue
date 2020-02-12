@@ -40,13 +40,10 @@ export default {
     }
   },
   beforeMount(){
-    console.log('this.$user.id');
-    console.log(this.$user);
     //this.$axios.get('/categories/' + this.$user.id)
     this.$axios.get('/categories/269')
     .then(Response => {
       this.categories = Response.data;
-      console.log('this.categories', Response.data);
     })
     .catch(error => {
       console.log(error.Response);

@@ -12,8 +12,8 @@
       about(
         v-if="activeContent == 'about'"
       )
-      projects(
-        v-if="activeContent == 'projects'"
+      works(
+        v-if="activeContent == 'works'"
       )
       reviews(
         v-if="activeContent == 'reviews'"
@@ -25,7 +25,7 @@
   import adminHeader from "./src/components/adminHeader"
   import adminMenu from "./src/components/adminMenu"
   import about from "./src/components/about"
-  import projects from "./src/components/projects"
+  import works from "./src/components/works"
   import reviews from "./src/components/reviews"
   import plus from "./src/components/plus"
   export default {
@@ -34,10 +34,10 @@
         activeContent: 'about'
       }
     },
-    components: {'admin-header':adminHeader, 'admin-menu': adminMenu, about, projects, reviews, plus },
+    components: {'admin-header':adminHeader, 'admin-menu': adminMenu, about, works, reviews, plus },
     created() {
       this.skillsGroup = require("../data/skills.json");
-      this.projects = require("../data/projects.json");
+      this.works = require("../data/works.json");
       this.reviews = require("../data/reviews.json");    
     },
     methods:{

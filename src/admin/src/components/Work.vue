@@ -1,32 +1,32 @@
 <template lang="pug">
-li.projects__item
+li.works__item
   .project
-    .project__pic-area
-      .project__pic
-        img.admin-work-image-img(:src="project.photo ? this.$importImg(`projects/${project.photo}`): ''")
-      ul.project__tags
+    .work__pic-area
+      .work__pic
+        img.admin-work-image-img(:src="work.photo ? this.$importImg(`works/${work.photo}`): ''")
+      ul.work__tags
         tags(          
-          :tags="project.skills"
+          :tags="work.skills"
         )
-    .project__info
-      .project__title {{ project.title }}
-      .project__desc {{ project.desc }}
-      a.project__link(:href="project.link") {{ project.link }}
+    .work__info
+      .work__title {{ work.title }}
+      .work__desc {{ work.desc }}
+      a.work__link(:href="work.link") {{ work.link }}
       .tools
-        a.admin-project-buttons-edit(
+        a.admin-work-buttons-edit(
           :class="selected ? 'selected' : ''"
-          @click="$emit('selectProject', project)"
+          @click="$emit('selectProject', work)"
         )
-          .admin-project-buttons-edit-text Править
-          .admin-project-buttons-edit-icon
+          .admin-work-buttons-edit-text Править
+          .admin-work-buttons-edit-icon
             svg
               use(:xlink:href="this.$importSvg('pencil')")          
-        a.admin-project-buttons-remove(
+        a.admin-work-buttons-remove(
           :class="selected ? 'selected' : ''"
-          @click="!selected ? $emit('removeProject', project) : ''"
+          @click="!selected ? $emit('removeProject', work) : ''"
         )
-          .admin-project-buttons-remove-text Удалить
-          .admin-project-buttons-remove-icon
+          .admin-work-buttons-remove-text Удалить
+          .admin-work-buttons-remove-icon
             svg
               use(:xlink:href="this.$importSvg('cross')")
 
@@ -35,17 +35,17 @@ li.projects__item
 <script>
 import tags from './tags'
 export default {
-  name: 'project',
+  name: 'work',
   components: { tags },
   props:{
-    project: Object,
+    work: Object,
     selected: Boolean
   }
 }
 </script>
 
 <style lang="postcss">
-.projects__item {
+.works__item {
   width: 100%;
   background-color: white;
   box-shadow: 4.1px 2.9px 20px 0 rgba(black, 0.07);
@@ -90,12 +90,12 @@ export default {
 }
 
 
-.project__info {
+.work__info {
   padding: 40px 30px;
   min-height: 200px;
 }
 
-.project__title {
+.work__title {
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
@@ -106,7 +106,7 @@ export default {
   margin-bottom: 30px;
 }
 
-.project__desc {
+.work__desc {
   opacity: 0.7;
   font-size: 16px;
   font-weight: 600;
@@ -119,7 +119,7 @@ export default {
   margin-bottom: 30px;
 }
 
-.project__link {
+.work__link {
   font-size: 16px;
   font-weight: 600;
   font-stretch: normal;
@@ -130,13 +130,13 @@ export default {
   margin-bottom: 45px;
 }
 
-.project-icon {
+.work-icon {
   width: 15px;
   height: 15px;
   fill:#a0a5b1;
 }
 
-.button-set--projects {
+.button-set--works {
   display: flex;
   justify-content: space-between;
 }
@@ -149,16 +149,16 @@ export default {
   cursor: pointer;
 }
 
-.project__pic-area {
+.work__pic-area {
   position: relative;
 }
 
-.project__pic {
+.work__pic {
   object-fit: cover;
   width: 100%;
 }
 
-.project__tags {
+.work__tags {
   display: flex;
   position: absolute;
   right: 10px;
@@ -171,29 +171,29 @@ export default {
   padding-top: 40px;
 }
 
-.admin-project-buttons-edit,
-.admin-project-buttons-remove {
+.admin-work-buttons-edit,
+.admin-work-buttons-remove {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.admin-project-buttons-edit-icon svg {
+.admin-work-buttons-edit-icon svg {
   fill: $admin-grad-2;
   width: 15px;
   height: 15px;
   margin-top: 8px;
 }
 
-.admin-project-buttons-remove-icon svg {
+.admin-work-buttons-remove-icon svg {
   fill: $admin-red;
   width: 15px;
   height: 15px;
   margin-top: 8px;
 }
 
-.admin-project-buttons-edit-text,
-.admin-project-buttons-remove-text {
+.admin-work-buttons-edit-text,
+.admin-work-buttons-remove-text {
   opacity: 0.5;
   font-size: 16px;
   font-weight: 600;
