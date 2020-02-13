@@ -63,7 +63,7 @@
 
             admin-input.desc-work(
               :labelText="'Описание'"
-              :isInvalid="validation.hasError('currentWork.description')"
+              :isInvalid="false"
               :toolTipText="validation.firstError('currentWork.description')"
               :id="'desc-work'"
               :type="'textarea'"
@@ -73,7 +73,7 @@
 
             admin-input.tags-work(
               :labelText="'Добавление тэга'"
-              :isInvalid="validation.hasError('currentWork.techs')"
+              :isInvalid="false"
               :toolTipText="validation.firstError('currentWork.techs')"
               :id="'tags-work'"
               :type="'input'"
@@ -133,8 +133,7 @@ export default {
   components: { work, loadButton, adminInput, tags },
   data() {
     return {
-      currentWork: null,
-      works: []
+      currentWork: null
     };
   },
   computed: {
@@ -149,33 +148,19 @@ export default {
     "currentWork.link"(value) {
       return Validator.value(value).required("Поле не должно быть пустым");
     },
-    "currentWork.description"(value) {
-      return Validator.value(value).required("Поле не должно быть пустым");
-    },
-    "currentWork.techs"(value) {
-      return Validator.value(value).required("Поле не должно быть пустым");
-    },
     "currentWork.photo"(value) {
       return Validator.value(value).required("Нужно загрузить фото");
     }
   },
-  created() {
-    this.fetchWorks(this.$user.id);
-  },
-  computed: {
-    tagsArray() {
-      return this.currentWork.skills.split(', ');
-    }
-  },
   methods:{
     ...mapActions("works", ["fetchWorks", "removeWork", "saveWork", "addWork"]),
-    removeTag(val){
-      let tags = [...this.currentWork.skills]
+    removeTag(val) {
+      let tags = this.currentWork.techs.split(',');
       tags.forEach((element, i) => {
-        if(element == val){
+        if (element == val) {
           tags.splice(i, 1);
         }
-      this.currentWork.skills = tags;
+        this.currentWork.techs = tags.join(',');
       });
     },
     uploadImage(){
@@ -199,22 +184,20 @@ export default {
       this.currentWork.link = value;
     },
     descChange(value){
-      this.currentWork.desc = value;
+      this.currentWork.description = value;
     },
     tagsChange(value){
-      this.currentWork.skills = value.split(', ');
+      this.currentWork.techs = value;
     },
     selectWork(work){
       this.currentWork = {...work};
-    },
-    removeWork(work){
-      this.works.splice(this.works.indexOf(work), 1);
     },
     cancelEdit(){
       this.currentWork = null;
     },
     saveEdit() {
       this.$validate().then(success => {
+        console.log('success', success);
         if (success) {
           if (!this.currentWork.id) {
             var formData = new FormData();
@@ -223,7 +206,9 @@ export default {
             formData.append("photo", this.currentWork.photo);
             formData.append("link", this.currentWork.link);
             formData.append("description", this.currentWork.description);
-
+            
+            console.log('addWork');
+            console.log(this.currentWork.techs);
             this.addWork(formData);
           } else {
             var formData = new FormData();
@@ -232,7 +217,8 @@ export default {
             formData.append("photo", this.currentWork.photo);
             formData.append("link", this.currentWork.link);
             formData.append("description", this.currentWork.description);
-
+            
+            console.log('saveWork');
             this.saveWork({ workId: this.currentWork.id, formData: formData });
           }
           this.currentWork = null;
@@ -250,7 +236,10 @@ export default {
       };
       this.validation.reset();
     }
-  }
+  },
+  created() {
+    this.fetchWorks(this.$user.id);
+  },
 }
 
 

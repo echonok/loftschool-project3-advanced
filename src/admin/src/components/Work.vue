@@ -3,7 +3,7 @@ li.works__item
   .project
     .work__pic-area
       .work__pic
-        img.admin-work-image-img(:src="work.photo ? this.$importImg(`works/${work.photo}`): ''")
+        img.admin-work-image-img(:src="work.photo ? this.$baseUrl + work.photo : ''")
       ul.work__tags
         tags(          
           :tags="work.skills"
@@ -15,7 +15,7 @@ li.works__item
       .tools
         a.admin-work-buttons-edit(
           :class="selected ? 'selected' : ''"
-          @click="$emit('selectProject', work)"
+          @click="$emit('selectWork', work)"
         )
           .admin-work-buttons-edit-text Править
           .admin-work-buttons-edit-icon
@@ -23,7 +23,7 @@ li.works__item
               use(:xlink:href="this.$importSvg('pencil')")          
         a.admin-work-buttons-remove(
           :class="selected ? 'selected' : ''"
-          @click="!selected ? $emit('removeProject', work) : ''"
+          @click="!selected ? $emit('removeWork', work) : ''"
         )
           .admin-work-buttons-remove-text Удалить
           .admin-work-buttons-remove-icon

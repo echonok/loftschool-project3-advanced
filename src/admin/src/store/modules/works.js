@@ -24,7 +24,9 @@ export default {
           }
         })
         .then(Response => {
+          console.log('проходит...');
           commit("ADD_WORK", Response.data);
+          console.log('прошло');
         })
         .catch(error => {
           console.log(error.Response);

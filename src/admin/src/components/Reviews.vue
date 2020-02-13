@@ -31,28 +31,28 @@
             .edit-reviews-name
               adminInput.reviews-name(
                 :labelText="'Имя автора'"
-                :isInvalid="false"
-                :toolTipText="'toolTipText'"
+                :isInvalid="validation.hasError('currentReview.author')"
+                :toolTipText="validation.firstError('currentReview.author')"
                 :id="'reviews-name'"
                 :type="'input'"
-                :val="currentReview.author_name"
+                :val="currentReview.author"
                 @change="authorChange"
               )
             .edit-reviews-position
               adminInput.reviews-position(
                 :labelText="'Титул автора'"
-                :isInvalid="false"
-                :toolTipText="'toolTipText'"
+                :isInvalid="validation.hasError('currentReview.occ')"
+                :toolTipText="validation.firstError('currentReview.occ')"
                 :id="'reviews-position'"
                 :type="'input'"
-                :val="currentReview.author_occ"
+                :val="currentReview.occ"
                 @change="occChange"
               )
           .edit-reviews-message
             adminInput.reviews-message(
               :labelText="'Отзыв'"
-              :isInvalid="false"
-              :toolTipText="'toolTipText'"
+              :isInvalid="validation.hasError('currentReview.text')"
+              :toolTipText="validation.firstError('currentReview.text')"
               :id="'reviews-message'"
               :type="'textarea'"
               :val="currentReview.text"
