@@ -175,7 +175,7 @@ export default {
 .buttonDisabled{
   opacity: 0.5;
   cursor:default;
-  &:hover{
+  &:hover {
     background-image: linear-gradient(to right, $violet-admin1, $violet-admin2);
   }
 }
