@@ -44,40 +44,44 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
-  name: 'skill',
-  props:{
-    defaultSkill: Object,
+  name: "skill",
+  props: {
+    skill: Object,
     iterator: Number
   },
-  data(){
-    return{
-      skill: {},
-      edit: false
-    }
+  data() {
+    return {
+      edit: false,
+      showError: false
+    };
   },
-  methods:{
-    editSkill(){
-      this.$axios.post(`/skills/${this.skill.id}`, {title: this.$refs[`skill-name__${this.iterator}`].value,
-                                                    percent: this.$refs[`skill-count__${this.iterator}`].value,
-                                                    category: this.skill.category
-                                                    })
-      .then(Response => {
-        this.skill = Response.data.skill
-      })
-      .catch(error => {
-        console.log(error.Response);
-      });
-      this.edit = false;
+  methods: {
+    ...mapActions("about", ["removeSkill", "editSkillAction"]),
+    editSkill() {
+      if (
+        this.$refs[`skill-name__${this.iterator}`].value != "" &&
+        this.$refs[`skill-count__${this.iterator}`].value != ""
+      ) {
+        this.editSkillAction({
+          title: this.$refs[`skill-name__${this.iterator}`].value,
+          percent: this.$refs[`skill-count__${this.iterator}`].value,
+          category: this.skill.category,
+          id: this.skill.id
+        });
+        this.edit = false;
+        this.showError = false;
+      } else {
+        this.showError = true;
+      }
     },
-    cancelEdit(){
+    cancelEdit() {
       this.edit = false;
+      this.showError = false;
     }
-  },
-  beforeMount(){
-    this.skill = this.defaultSkill;
   }
-}
+};
 </script>
 
 <style lang="postcss" scoped>

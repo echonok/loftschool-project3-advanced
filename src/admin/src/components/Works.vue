@@ -197,7 +197,6 @@ export default {
     },
     saveEdit() {
       this.$validate().then(success => {
-        console.log('success', success);
         if (success) {
           if (!this.currentWork.id) {
             var formData = new FormData();
@@ -207,8 +206,6 @@ export default {
             formData.append("link", this.currentWork.link);
             formData.append("description", this.currentWork.description);
             
-            console.log('addWork');
-            console.log(this.currentWork.techs);
             this.addWork(formData);
           } else {
             var formData = new FormData();
@@ -218,7 +215,6 @@ export default {
             formData.append("link", this.currentWork.link);
             formData.append("description", this.currentWork.description);
             
-            console.log('saveWork');
             this.saveWork({ workId: this.currentWork.id, formData: formData });
           }
           this.currentWork = null;

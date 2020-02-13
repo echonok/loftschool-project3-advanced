@@ -4,7 +4,7 @@ li.reviews__item
     .review__author
       .review__avatar-area
         img.review__avatar(
-          :src="this.$importImg(`reviews/${review.photo_ ? review.photo_: 'anonimous.jpg'}`)"
+          :src="review.photo ? this.$baseUrl + review.photo : 'anonimous.jpg'"
         )
       .author__area
         .review__name {{review.author}}

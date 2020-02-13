@@ -5,36 +5,35 @@ div
     .login-body
       .login-exit &#215;
       .title 
-        span Авторизация
-      .form-wrapper
-        form(@submit.prevent="submit")
-          imputValidate.login-input.login(
-            :iconName="'user'"
-            :labelText="'Логин'" 
-            :id="'login'"
-            :type="'text'"
-            :firstClass="'person-info-name'"
-            :value="login"
-            :isInvalid="validation.hasError('login')"
-            :toolTipText="validation.firstError('login')"
-            @change="changeLogin"
-          )
-          imputValidate.login-input.password(
-            :iconName="'key'"
-            :labelText="'Пароль'" 
-            :id="'password'"
-            :type="'password'"
-            :firstClass="'person-info-name'"
-            :value="password"
-            :isInvalid="validation.hasError('password')"
-            :toolTipText="validation.firstError('password')"
-            @change="changePassword"
-          )
-          button.button-wrapper(            
-            :class="disableButton() ? 'buttonDisabled' : '' "
-            :disabled="disableButton()"
-          )
-            span ОТПРАВИТЬ
+        span Авторизация    
+      form.form-wrapper(@submit.prevent="submit")
+        imputValidate.login-input.login(
+          :iconName="'user'"
+          :labelText="'Логин'" 
+          :id="'login'"
+          :type="'text'"
+          :firstClass="'person-info-name'"
+          :value="login"
+          :isInvalid="validation.hasError('login')"
+          :toolTipText="validation.firstError('login')"
+          @change="changeLogin"
+        )
+        imputValidate.login-input.password(
+          :iconName="'key'"
+          :labelText="'Пароль'" 
+          :id="'password'"
+          :type="'password'"
+          :firstClass="'person-info-name'"
+          :value="password"
+          :isInvalid="validation.hasError('password')"
+          :toolTipText="validation.firstError('password')"
+          @change="changePassword"
+        )
+        button.button-wrapper(            
+          :class="disableButton() ? 'buttonDisabled' : '' "
+          :disabled="disableButton()"
+        )
+          span ОТПРАВИТЬ
 </template>
 
 <script>
@@ -116,15 +115,18 @@ export default {
   text-align: end;
   font-size: 36px;
   font-weight: 600;
-  margin-top: 30px;
-  margin-right: 30px;
+  margin-top: -30px;
+  margin-right: -30px;
   cursor: pointer;
+  align-self: flex-end;
 }
 
 .login-body {
-  width: 563px;
-  height: 517px;
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 80px;
 }
 
 .login-input {

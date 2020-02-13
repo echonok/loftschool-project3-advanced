@@ -5,7 +5,7 @@
       .title-text 
         span Блок «Обо мне»
       .add-button(
-        @click="addNewSkillGroup"
+        @click="addClearCategory"
       )
         .plus_wrapper
           plus
@@ -14,40 +14,28 @@
     .fields            
       skillsGroup.item(
         v-for="item in categories"
-        :defaultCategory="item"
+        :category="item"
         :key="item.id"
       )
 </template>
 <script>
 
-import skillsGroup from "./skillsGroup"
-import plus from "./plus"
+import skillsGroup from "./skillsGroup";
+import plus from "./plus";
+import { mapActions, mapState } from "vuex";
 export default {
   components: { skillsGroup, plus },
   name: 'about',
-  data() {
-    return {
-      skillGroups: [],
-      categories: []
-    };
-  },
-    methods:{
-    addNewSkillGroup(){
-      this.categories.unshift({
-          category: '',
-          skills: []
-        })
-    }
-  },
-  beforeMount(){
-    //this.$axios.get('/categories/' + this.$user.id)
-    this.$axios.get('/categories/269')
-    .then(Response => {
-      this.categories = Response.data;
+  computed: {
+    ...mapState("about", {
+      categories: state => state.categories
     })
-    .catch(error => {
-      console.log(error.Response);
-    });
+  },
+  methods:{
+    ...mapActions("about", ["fetchCategories", "addClearCategory"])
+  },
+  created() {
+    this.fetchCategories(this.$user.id);
   }
 }
 </script>

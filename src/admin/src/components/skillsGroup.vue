@@ -4,10 +4,11 @@
       .group-title-input(:class="editTitle ? 'input-edited' : '' ")
         input.skill-group-name-input(
           placeholder="Название новой группы"
-          :value="category.category"
           :readOnly="editTitleComputed ? false : true"
+          v-model="categoryTitleValue"
           ref="skillGroupName"
           )
+        .input-tooltip(:class="{'showed':validation.hasError('categoryTitleValue')}") {{validation.firstError('categoryTitleValue')}}  
       .button-set
         .edit-buttons(
           v-if="editTitleComputed"
@@ -18,7 +19,7 @@
             svg.skill-icon
               use(:xlink:href="this.$importSvg('tick')")  
           .cancel(
-            @click="cancelEdit"
+            @click="removeCategory(category)"
           )
             svg.skill-icon
               use(:xlink:href="this.$importSvg('cross')")  
@@ -33,10 +34,9 @@
     .group-body
       skill(
         v-for="(item, i) in category.skills"
-        :defaultSkill="item"
+        :skill="item"
         :key="`${item.name}_${i}`"
         :iterator="i"
-        @removeSkill="removeSkill"
         )
     .add-skill
       .new-skill
@@ -44,12 +44,11 @@
           placeholder="Новый навык"
           ref="newSkillName"
           )
-        
       .new-count
         input.skill-count-input(
-            :value="100"
-            ref="newSkillCount"
-            )
+          :value="100"
+          ref="newSkillCount"
+        )
         .percent %
       .plus-wrapper(
         @click="addSkill"
@@ -58,77 +57,72 @@
 </template>
 
 <script>
+import SimpleVueValidator from "simple-vue-validator";
+import { mapActions } from "vuex";
+const Validator = SimpleVueValidator.Validator;
+
 import skill from './skills';
 import plus from './plus';
 
 export default {
-  components:{ skill, plus },
+  mixins: [SimpleVueValidator.mixin],
+  components: { skill, plus },
   name: 'skillsGroup',
-  props:{
-    defaultCategory: Object
+  props: {
+    category: Object
   },
   data() {
-    return{
-      category: [],
-      editTitle: false
-    }
+    return {
+      editTitle: false,
+      categoryTitleValue: this.category.category,
+      showNewSkillError: false
+    };
   },
-  beforeMount(){
-    this.category = {...this.defaultCategory}
-  },
-  computed:{
-    editTitleComputed(){
-      //console.log('this.category.category', this.category.category.length);
+  computed: {
+    editTitleComputed() {
       return this.editTitle || this.category.category.length === 0;
     }
   },
-  methods:{
-    editSkillGroupName(){
-      if(!this.category.category){
-        this.$axios.post('/categories', {title: this.$refs.skillGroupName.value})
-        .then(Response => {
-          this.category = Response.data;
-        })
-        .catch(error => {
-          console.log(error.Response);
-        });
-      }
-      else{
-        this.$axios.post(`/categories/${this.category.id}`, {title: this.$refs.skillGroupName.value})
-        .then(Response => {
-          this.category = Response.data.category;
-        })
-        .catch(error => {
-          console.log(error.Response);
-        });
-      }
-      this.editTitle = false;
-    },
-    addSkill(){
-      this.$axios.post('/skills', {title: this.$refs.newSkillName.value,
-                                    percent: this.$refs.newSkillCount.value,
-                                    category: this.category.id
-                                    })
-      .then(Response => {
-        this.skills.push(Response.data)
-      })
-      .catch(error => {
-        console.log(error.Response);
+  validators: {
+    categoryTitleValue(value) {
+      return Validator.value(value).required("Поле не должно быть пустым");
+    }
+  },
+  methods: {
+    ...mapActions("about", [
+      "removeCategory",
+      "addCategory",
+      "renameCategory",
+      "addSkillAction"
+    ]),
+    editSkillGroupName() {
+      this.$validate().then(success => {
+        if (success) {
+          if (!this.category.id) {
+            this.addCategory({ title: this.$refs.skillGroupName.value });
+          } else {
+            this.renameCategory({
+              category: this.category,
+              title: this.$refs.skillGroupName.value
+            });
+          }
+          this.editTitle = false;
+        }
       });
-      this.$refs.newSkillName.value = "";
-      this.$refs.newSkillCount.value = 100;
     },
-    cancelEdit(){
-      this.editTitle = false;
-    },
-    removeSkill(skill){
-      this.$axios.delete(`/skills/${skill.id}`)
-      .then(Response => {
-        this.skills.splice(this.skills.indexOf(skill), 1);
-      })
-      .catch(error => {
-        console.log(error.Response);
-      });
+    addSkill() {
+      if (this.$refs.newSkillName.value != "") {
+        this.addSkillAction({
+          title: this.$refs.newSkillName.value,
+          percent: this.$refs.newSkillCount.value,
+          category: this.category.id
+        });
+        this.$refs.newSkillName.value = "";
+        this.$refs.newSkillCount.value = 100;
+        this.showNewSkillError = false;
+      } else {
+        this.showNewSkillError = true;
+      }
     }
   }
 }

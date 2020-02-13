@@ -1,11 +1,11 @@
 <template lang="pug">
 .container
   nav.nav
-    ul.nav__list
-      li.nav__item(
+    ul.admin-nav__list
+      li.admin-nav__item(
         v-for="item of this.navigateItem"
         @click="$emit('changeContent', item.section)"
-        :class="active == item.section ? 'nav__item--active' : ''"
+        :class="active == item.section ? 'admin-nav__item--active' : ''"
         )
         a(class=`navigate__link`) {{item.title}}
 </template>
@@ -47,12 +47,13 @@ export default {
   z-index: 50;
 }
 
-.nav__list {
+.admin-nav__list {
   display: flex;
   align-content: center;
+  justify-content: flex-start;
 }
 
-.nav__item {
+.admin-nav__item {
   cursor: pointer;
   font-size: 16px;
   font-weight: normal;
@@ -62,6 +63,9 @@ export default {
   text-align: center;
   color: $light-grey;
   padding: 30px;
+  margin-right: 3.75rem;
+  flex-basis: 15%;
+  white-space: nowrap;
 
   &--active {
     font-weight: 600;

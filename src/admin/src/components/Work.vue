@@ -6,11 +6,13 @@ li.works__item
         img.admin-work-image-img(:src="work.photo ? this.$baseUrl + work.photo : ''")
       ul.work__tags
         tags(          
-          :tags="work.skills"
+          v-for="tag in work.techs.split(',')"
+          :tag="tag"
+          :key="work.id + '_' + tag"
         )
     .work__info
       .work__title {{ work.title }}
-      .work__desc {{ work.desc }}
+      .work__desc {{ work.description }}
       a.work__link(:href="work.link") {{ work.link }}
       .tools
         a.admin-work-buttons-edit(
@@ -88,7 +90,6 @@ export default {
 .add-element__text span {
   display: block;
 }
-
 
 .work__info {
   padding: 40px 30px;
@@ -203,6 +204,12 @@ export default {
 .selected {
   opacity: 0.3;
   cursor: default;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 </style>
