@@ -52,10 +52,6 @@ new Vue({
       if (window.innerWidth <= 320) {
         this.flickityOptions.groupCells = 1;
       }
-      console.log('window.innerWidth', window.innerWidth);
-      console.log('this.flickityOptions.groupCells', this.flickityOptions.groupCells);
-
-
     }
 
   }

@@ -9,18 +9,18 @@ const worksInfo = {
   template: "#works-info",
   computed: {
     tagsArray() {
-      return this.currentProject.skills.split(', ');
+      return this.currentWork.skills.split(', ');
     }
   },
   components: {
     worksTags
   },
-  props: ["works", "currentProject"]
+  props: ["works", "currentWork"]
 };
 
 const worksPreview = {
   template: "#works-preview",
-  props: ["works", "currentProject"]
+  props: ["works", "currentWork"]
 };
 
 const worksButtons = {
@@ -30,7 +30,7 @@ const worksButtons = {
 
 const worksImage = {
   template: "#works-image",
-  props: ["works", "currentProject", "lastUp", "lastDown"],
+  props: ["works", "currentWork", "lastUp", "lastDown"],
   computed: {
     reversedWorks() {
       return [...this.works].reverse();
@@ -55,7 +55,7 @@ new Vue({
     }
   },
   computed: {
-    currentProject() {
+    currentWork() {
       return this.works[this.currentIndex];
     }
   },
