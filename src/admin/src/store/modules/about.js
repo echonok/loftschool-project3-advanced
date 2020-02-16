@@ -36,8 +36,8 @@ export default {
         .then(Response => {
           commit("RENAME_CATEGORY", Response.data.category);
         })
-        .catch(Response => {
-          console.log(Response);
+        .catch(error => {
+          console.log(error.Response);
         });
     },
     removeCategory({ commit }, category) {
