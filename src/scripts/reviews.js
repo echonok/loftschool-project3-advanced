@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Flickity from 'vue-flickity';
+import axios from './../requests';
 
 new Vue({
   el: "#reviews-container",
@@ -22,10 +23,28 @@ new Vue({
     }
   },
   
+  /*
   created() {
     const data = require("../data/reviews.json");
     this.reviews = this.makeArrayWithImages(data);
     this.handleResize();
+  },
+  */
+
+  
+  async created(){
+    await axios.get('/reviews/269')
+    .then(Response => {
+      this.reviews = Response.data;
+      this.handleResize();
+    })
+    .catch(error => {
+      console.log(error.Response);
+    });
+  },
+  
+  mounted() {
+    this.$refs.flickity.rerender();
   },
 
   methods: {

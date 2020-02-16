@@ -1,4 +1,5 @@
 import Vue from "vue";
+import axios from './../requests';
 
 const worksTags = {
   template: "#works-tags",
@@ -9,13 +10,16 @@ const worksInfo = {
   template: "#works-info",
   computed: {
     tagsArray() {
-      return this.currentWork.skills.split(', ');
+      //console.log(this.currentWork);
+      //console.log(this.currentWork.title);
+      return [];
+      return this.currentWork.techs.split(',');
     }
   },
   components: {
     worksTags
   },
-  props: ["works", "currentWork"]
+  props: ["currentWork"]
 };
 
 const worksPreview = {
@@ -87,9 +91,16 @@ new Vue({
       this.lastUp = this.currentIndex + 1 === this.works.length
     }
   },
-  created() {
-    const data = require("../data/works.json");
-    this.works = this.makeArrayWithImages(data);
-    this.makeDisabledButtons();
-  }
+  async created() {
+    await axios.get('/works/269')
+    .then(Response => {
+      const data = Response.data;
+      //this.works = this.makeArrayWithImages(data);
+      this.works = data;
+      this.makeDisabledButtons();
+    })
+    .catch(error => {
+      console.log(error.Response);
+    });
+  },
 });

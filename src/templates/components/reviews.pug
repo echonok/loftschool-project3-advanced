@@ -16,7 +16,7 @@ script(type="text/x-template")#reviews-component
             p.review__text {{review.text}}
             .review__author
               .author__pic-area
-                img(:src="review.author_pic" class="author__avatar")
+                imgreview.author__avatar(:src="'https://webdev-api.loftschool.com/' + review.photo")
               .author__box
-                .author__name {{review.author_name}}
-                .author__occup {{review.author_occ}}
+                .author__name {{review.author}}
+                .author__occup {{review.occ}}

@@ -12,15 +12,15 @@ script(type="text/x-template")#works-container
     )
 
 script(type="text/x-template")#works-image
-  .project__image(:data-slide="currentWork.id")
+  .project__image
     .project__pic-area
-      img(:src="currentWork.photo" alt="" class="project__big-pic")
+      img.project__big-pic(:src="currentWork ? 'https://webdev-api.loftschool.com/' + currentWork.photo : ''")
       works-buttons(
         :lastUp="lastUp",
         :lastDown="lastDown",
         @slide="$emit('slide', $event)"
       )
-      span.project__number {{currentWork.id}}
+      span.project__number {{works.indexOf(currentWork) + 1}}
       works-preview(
         :works="reversedWorks",
         :currentWork="currentWork"
@@ -32,7 +32,7 @@ script(type="text/x-template")#works-info
       :tagsArray="tagsArray"
     )
     .project__headline {{currentWork.title}}
-    .project__info {{currentWork.desc}}
+    .project__info {{currentWork.description}}
     .project__link
       a(class="link__text" :href="currentWork.link") Посмотреть сайт
 
@@ -43,7 +43,7 @@ script(type="text/x-template")#works-preview
       :class="{'project__item--active': work.id === currentWork.id}"
     )
       .project__pic-area
-        img(:src="work.photo" alt="" class="project__small-pic")
+        img.project__small-pic(:src="work.photo ? 'https://webdev-api.loftschool.com/' + work.photo : ''")
         .overlay
 
 script(type="text/x-template")#works-buttons
