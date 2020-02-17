@@ -1,20 +1,22 @@
 script(type="text/x-template")#works-container
   .project
     works-image(
-      :works="works",
-      :currentWork="currentWork",
-      :lastUp="lastUp",
-      :lastDown="lastDown",
+      :v-if="allLoaded"
+      :works="works"
+      :currentWork="currentWork"
+      :lastUp="lastUp"
+      :lastDown="lastDown"
       @slide="handleSlide"
     )
     works-info(
-      :currentWork="currentWork"
+      :currentWork="currentWork",
+      :works="works"
     )
 
 script(type="text/x-template")#works-image
   .project__image
     .project__pic-area
-      img.project__big-pic(:src="currentWork ? 'https://webdev-api.loftschool.com/' + currentWork.photo : ''")
+      img.project__big-pic(:src="currentWork.photo ? 'https://webdev-api.loftschool.com/' + currentWork.photo : ''")
       works-buttons(
         :lastUp="lastUp",
         :lastDown="lastDown",
@@ -29,7 +31,8 @@ script(type="text/x-template")#works-image
 script(type="text/x-template")#works-info
   .project__desc
     works-tags(
-      :tagsArray="tagsArray"
+      :tagsArray="tagsArray",
+      :currentWork="currentWork"
     )
     .project__headline {{currentWork.title}}
     .project__info {{currentWork.description}}

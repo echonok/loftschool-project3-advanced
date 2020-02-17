@@ -38,15 +38,14 @@ new Vue({
       this.reviews = Response.data;
       this.handleResize();
     })
+    .then(Response => {
+      this.$refs.flickity.rerender();
+    })
     .catch(error => {
       console.log(error.Response);
     });
   },
   
-  mounted() {
-    this.$refs.flickity.rerender();
-  },
-
   methods: {
     
     makeArrayWithImages(data) {

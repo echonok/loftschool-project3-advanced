@@ -8,18 +8,18 @@ const worksTags = {
 
 const worksInfo = {
   template: "#works-info",
+  props: ["currentWork", "works"],
   computed: {
     tagsArray() {
-      //console.log(this.currentWork);
-      //console.log(this.currentWork.title);
-      return [];
-      return this.currentWork.techs.split(',');
+      if (Object.keys(this.currentWork).length === 0 && this.currentWork.constructor === Object) {
+        return [];
+      }      
+      return this.currentWork.techs.split(','); // тут ошибка
     }
   },
   components: {
     worksTags
-  },
-  props: ["currentWork"]
+  }
 };
 
 const worksPreview = {
@@ -55,12 +55,8 @@ new Vue({
       works: [],
       lastUp: false,
       lastDown: false,
+      currentWork: {},
       currentIndex: 0
-    }
-  },
-  computed: {
-    currentWork() {
-      return this.works[this.currentIndex];
     }
   },
   components: {
@@ -68,20 +64,17 @@ new Vue({
     worksInfo
   },
   methods: {
-    makeArrayWithImages(data) {
-      return data.map(elem => {
-        const requiredPic = require(`../images/content/works/${elem.id}.jpg`);
-        elem.photo = requiredPic;
-        return elem;
-      });
-    },
     handleSlide(direction) {
-      switch(direction) {
+      switch(direction) {      
       case "next":
-        this.currentIndex + 1 < this.works.length ? this.currentIndex++ : this.currentIndex
+        if (this.works.indexOf(this.currentWork) + 1 < this.works.length) {
+          this.currentWork = this.works[this.works.indexOf(this.currentWork) + 1];
+        }
         break;
       case "prev":
-        this.currentIndex > 0 ? this.currentIndex-- : this.currentIndex  
+        if (this.works.indexOf(this.currentWork) > 0) {
+          this.currentWork = this.works[this.works.indexOf(this.currentWork) - 1];
+        }
         break;
       }
       this.makeDisabledButtons();
@@ -89,14 +82,19 @@ new Vue({
     makeDisabledButtons() {
       this.lastDown = this.currentIndex === 0 
       this.lastUp = this.currentIndex + 1 === this.works.length
+    },
+    allLoaded() {
+      return false;
     }
   },
+
   async created() {
     await axios.get('/works/269')
     .then(Response => {
       const data = Response.data;
       //this.works = this.makeArrayWithImages(data);
       this.works = data;
+      this.currentWork = this.works[0];
       this.makeDisabledButtons();
     })
     .catch(error => {
