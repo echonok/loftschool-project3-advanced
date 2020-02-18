@@ -18,6 +18,7 @@
       @input="$emit('change', value)")
   .input-tooltip(:class="{'showed':isInvalid}") {{toolTipText}}
 </template>
+
 <script>
 export default {
   name: 'admin-input',
@@ -41,6 +42,7 @@ export default {
   },
 }
 </script>
+
 <style lang="postcss" scoped>
 .admin-input{
   border-bottom: 1px solid black;

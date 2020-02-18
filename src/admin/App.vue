@@ -1,50 +1,25 @@
 <template lang="pug">
 .wrapper.admin-wrapper
-  admin-header
-  .maincontent
-    admin-menu(
-      :active = "activeContent"
-      @changeContent="changeContent"
-    )
-    .content
-      .content-background
-        img.background-img(:src="this.$importImg('baloonAdmin.jpg')")
-      about(
-        v-if="activeContent == 'about'"
-      )
-      Projects(
-        v-if="activeContent == 'projects'"
-      )
-      Reviews(
-        v-if="activeContent == 'reviews'"
-      )
+  .content-background
+    img.background-img(
+      :src="this.$importImg('Mountain_Baloon.jpg')"
+      )     
+  router-view
 
 </template>
 
 <script>
-  import AdminHeader from "./src/components/AdminHeader"
-  import AdminMenu from "./src/components/AdminMenu"
+  import adminHeader from "./src/components/adminHeader"
+  import adminMenu from "./src/components/adminMenu"
   import about from "./src/components/about"
-  import Projects from "./src/components/Projects"
-  import Reviews from "./src/components/Reviews"
+  import works from "./src/components/works"
+  import reviews from "./src/components/reviews"
+  import plus from "./src/components/plus"
   export default {
     data(){
-      return{
-        activeContent: 'about'
+      return {
       }
     },
-    components: {'admin-header':AdminHeader, 'admin-menu': AdminMenu, about, Projects , Reviews },
-    created() {
-      this.skills = require("../data/skills.json");
-      this.projects = require("../data/projects.json");
-      this.reviews = require("../data/reviews.json");    
-    },
-    methods:{
-      changeContent(content){
-        this.activeContent = content;
-      }
-    }
-
   };
 </script>
 
@@ -54,6 +29,7 @@
   @import "normalize.css";
   @import "../styles/mixins.pcss";
   @import "../styles/layout/base.pcss";
+  @import "../styles/main.pcss";
 
   .wrapper {
     display: grid;
@@ -64,6 +40,7 @@
     grid-template-areas: 
       "header"
       "maincontent";
+    overflow: auto;
   }
 
   .header {
@@ -72,7 +49,6 @@
 
   .maincontent {
     grid-area: maincontent;
-    //height: 100%;
     display: grid;
     grid-template-columns: 
       1fr;

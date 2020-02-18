@@ -4,10 +4,11 @@
       .group-title-input(:class="editTitle ? 'input-edited' : '' ")
         input.skill-group-name-input(
           placeholder="Название новой группы"
-          :value="skillGroup.name"
           :readOnly="editTitleComputed ? false : true"
+          v-model="categoryTitleValue"
           ref="skillGroupName"
           )
+        .input-tooltip(:class="{'showed':validation.hasError('categoryTitleValue')}") {{validation.firstError('categoryTitleValue')}}  
       .button-set
         .edit-buttons(
           v-if="editTitleComputed"
@@ -18,7 +19,7 @@
             svg.skill-icon
               use(:xlink:href="this.$importSvg('tick')")  
           .cancel(
-            @click="cancelEdit"
+            @click="removeCategory(category)"
           )
             svg.skill-icon
               use(:xlink:href="this.$importSvg('cross')")  
@@ -32,11 +33,10 @@
     hr.spliter
     .group-body
       skill(
-        v-for="(item, i) in skillGroup.skills"
+        v-for="(item, i) in category.skills"
         :skill="item"
         :key="`${item.name}_${i}`"
         :iterator="i"
-        @removeSkill="removeSkill"
         )
     .add-skill
       .new-skill
@@ -44,12 +44,11 @@
           placeholder="Новый навык"
           ref="newSkillName"
           )
-        
       .new-count
         input.skill-count-input(
-            :value="100"
-            ref="newSkillCount"
-            )
+          :value="100"
+          ref="newSkillCount"
+        )
         .percent %
       .plus-wrapper(
         @click="addSkill"
@@ -58,41 +57,72 @@
 </template>
 
 <script>
-import skill from './skills'
+import SimpleVueValidator from "simple-vue-validator";
+import { mapActions } from "vuex";
+const Validator = SimpleVueValidator.Validator;
+
+import skill from './skills';
+import plus from './plus';
+
 export default {
-  components:{skill},
+  mixins: [SimpleVueValidator.mixin],
+  components: { skill, plus },
   name: 'skillsGroup',
-  props:{
-    skillGroup:Object
+  props: {
+    category: Object
   },
   data() {
-    return{
+    return {
       editTitle: false,
+      categoryTitleValue: this.category.category,
+      showNewSkillError: false
+    };
+  },
+  computed: {
+    editTitleComputed() {
+      return this.editTitle || this.category.category.length === 0;
     }
   },
-  computed:{
-    editTitleComputed(){
-      return this.editTitle || this.skillGroup.name.length == 0
+  validators: {
+    categoryTitleValue(value) {
+      return Validator.value(value).required("Поле не должно быть пустым");
     }
   },
-  methods:{
-    editSkillGroupName(){
-      this.skillGroup.name = this.$refs.skillGroupName.value;
-      this.editTitle = false;
+  methods: {
+    ...mapActions("about", [
+      "removeCategory",
+      "addCategory",
+      "renameCategory",
+      "addSkillAction"
+    ]),
+    editSkillGroupName() {
+      this.$validate().then(success => {
+        if (success) {
+          if (!this.category.id) {
+            this.addCategory({ title: this.$refs.skillGroupName.value });
+          } else {
+            this.renameCategory({
+              category: this.category,
+              title: this.$refs.skillGroupName.value
+            });
+          }
+          this.editTitle = false;
+        }
+      });
     },
-    addSkill(){
-      this.skillGroup.skills.push({
-        title: this.$refs.newSkillName.value,
-        count: this.$refs.newSkillCount.value,
-      })
-      this.$refs.newSkillName.value = "";
-      this.$refs.newSkillCount.value = 100;
-    },
-    cancelEdit(){
-      this.editTitle = false;
-    },
-    removeSkill(skill){
-      this.skillGroup.skills.splice(this.skillGroup.skills.indexOf(skill), 1);
+    addSkill() {
+      if (this.$refs.newSkillName.value != "") {
+        this.addSkillAction({
+          title: this.$refs.newSkillName.value,
+          percent: this.$refs.newSkillCount.value,
+          category: this.category.id
+        });
+        this.$refs.newSkillName.value = "";
+        this.$refs.newSkillCount.value = 100;
+        this.showNewSkillError = false;
+      } else {
+        this.showNewSkillError = true;
+      }
     }
   }
 }

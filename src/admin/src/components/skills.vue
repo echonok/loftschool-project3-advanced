@@ -9,7 +9,7 @@
     .count-button  
       .count(:class="edit ? 'input-edited' : '' ")
         input.skill-count-input(
-            :value="skill.count"
+            :value="skill.percent"
             :readOnly="edit ? false : true"
             :ref="`skill-count__${iterator}`"
             )
@@ -44,28 +44,44 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
-  name: 'skill',
-  props:{
+  name: "skill",
+  props: {
     skill: Object,
     iterator: Number
   },
-  data(){
-    return{
-      edit: false
-    }
+  data() {
+    return {
+      edit: false,
+      showError: false
+    };
   },
-  methods:{
-    editSkill(){
-      this.skill.title = this.$refs[`skill-name__${this.iterator}`].value;
-      this.skill.count = this.$refs[`skill-count__${this.iterator}`].value;
-      this.edit = false;
+  methods: {
+    ...mapActions("about", ["removeSkill", "editSkillAction"]),
+    editSkill() {
+      if (
+        this.$refs[`skill-name__${this.iterator}`].value != "" &&
+        this.$refs[`skill-count__${this.iterator}`].value != ""
+      ) {
+        this.editSkillAction({
+          title: this.$refs[`skill-name__${this.iterator}`].value,
+          percent: this.$refs[`skill-count__${this.iterator}`].value,
+          category: this.skill.category,
+          id: this.skill.id
+        });
+        this.edit = false;
+        this.showError = false;
+      } else {
+        this.showError = true;
+      }
     },
-    cancelEdit(){
+    cancelEdit() {
       this.edit = false;
+      this.showError = false;
     }
   }
-}
+};
 </script>
 
 <style lang="postcss" scoped>
@@ -94,6 +110,7 @@ export default {
   background-color: transparent;
   border-color: transparent;
   width:100%;
+  outline: none;
 }
 
 .count-button{
@@ -113,6 +130,7 @@ export default {
   width:100%;
   background-color: transparent;
   border-color: transparent;
+  outline: none;
 }
 .percent{
   font-size: 16px;   
@@ -125,6 +143,7 @@ export default {
   line-height: 2;
   font-weight: 600;
   color: #a0a5b1;
+  outline: none;
 }
 .input-edited{
   border-bottom: 1px solid;

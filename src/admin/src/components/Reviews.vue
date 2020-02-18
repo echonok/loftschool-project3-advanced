@@ -11,39 +11,48 @@
         .edit-reviews-title-text Новый отзыв
       hr  
       .edit-reviews-body
-        .edit-reviews-avatar
+        .edit-reviews-avatar.tooltip
           .edit-reviews-image
-            img.admin-edit-reviews-avatar-img(                 
-              :src="this.$importImg(`reviews/${currentReview && currentReview.author_pic ? currentReview.author_pic: 'anonimous.jpg'}`)"
-            )
-          .edit-reviews-avatar-text {{currentReview && currentReview.author_pic ? 'Изменить фото' : 'Добавить фото'}}
+            img.admin-edit-reviews-avatar-img#edit-avatar-preview(  
+                ref="reviewAvatar"               
+                :src="getAvatar()"
+                )
+          input#reviews-photo(
+            type="file"
+            ref="reviewImage"
+            @change="changeImgFile"
+          )      
+          .edit-reviews-avatar-text(
+            @click="uploadImage"
+          ) {{currentReview && currentReview.photo ? 'Изменить фото' : 'Добавить фото'}}
+          .input-tooltip(:class="{'showed':validation.hasError('currentReview.photo')}") {{validation.firstError('currentReview.photo')}}
         .edit-reviews-comment  
           .edit-reviews-revier
             .edit-reviews-name
               adminInput.reviews-name(
                 :labelText="'Имя автора'"
-                :isInvalid="false"
-                :toolTipText="'toolTipText'"
+                :isInvalid="validation.hasError('currentReview.author')"
+                :toolTipText="validation.firstError('currentReview.author')"
                 :id="'reviews-name'"
                 :type="'input'"
-                :val="currentReview.author_name"
-                @change="nameChange"
+                :val="currentReview.author"
+                @change="authorChange"
               )
             .edit-reviews-position
               adminInput.reviews-position(
                 :labelText="'Титул автора'"
-                :isInvalid="false"
-                :toolTipText="'toolTipText'"
+                :isInvalid="validation.hasError('currentReview.occ')"
+                :toolTipText="validation.firstError('currentReview.occ')"
                 :id="'reviews-position'"
                 :type="'input'"
-                :val="currentReview.author_occ"
-                @change="positionChange"
+                :val="currentReview.occ"
+                @change="occChange"
               )
           .edit-reviews-message
             adminInput.reviews-message(
               :labelText="'Отзыв'"
-              :isInvalid="false"
-              :toolTipText="'toolTipText'"
+              :isInvalid="validation.hasError('currentReview.text')"
+              :toolTipText="validation.firstError('currentReview.text')"
               :id="'reviews-message'"
               :type="'textarea'"
               :val="currentReview.text"
@@ -80,62 +89,135 @@
 </template>
 
 <script>
-import review from './Review';
-import adminInput from './AdminInput';
-import loadButton from './LoadButton';
+import review from "./review";
+import adminInput from "./adminInput";
+import SimpleVueValidator from "simple-vue-validator";
+const Validator = SimpleVueValidator.Validator;
+import { mapActions, mapState } from "vuex";
+
 export default {
-  name: 'reviews',
-  components: { review, adminInput, loadButton },
+  mixins: [SimpleVueValidator.mixin],
+  components: { review, adminInput },
+  name: "reviews",
   data() {
     return {
-      reviews: [],
       currentReview: null
     };
   },
-  created() {
-    this.reviews = require("../../../data/reviews.json");
+  computed: {
+    ...mapState("reviews", {
+      reviews: state => state.reviews
+    })
   },
-  methods:{
-    cancelEdit(){
+  validators: {
+    "currentReview.author"(value) {
+      return Validator.value(value).required("Поле не должно быть пустым");
+    },
+    "currentReview.occ"(value) {
+      return Validator.value(value).required("Поле не должно быть пустым");
+    },
+    "currentReview.text"(value) {
+      return Validator.value(value).required("Поле не должно быть пустым");
+    },
+    "currentReview.photo"(value) {
+      return Validator.value(value).required("Необходимо загрузить фото");
+    }
+  },
+  methods: {
+    ...mapActions("reviews", [
+      "fetchReviews",
+      "removeReview",
+      "saveReview",
+      "addReview"
+    ]),
+    cancelEdit() {
       this.currentReview = null;
     },
-    saveEdit(){
-      if(!this.currentReview.id){
-        this.currentReview.id = this.reviews[this.reviews.length - 1].id + 1;
-        this.reviews.push(this.currentReview);
+    uploadImage() {
+      this.$refs.reviewImage.click();
+    },
+    changeImgFile(e) {
+      this.currentReview.photo = e.target.files[0];
+      var reader = new FileReader();
+
+      reader.onload = function(event) {
+        var imgtag = document.getElementById("edit-avatar-preview");
+        imgtag.src = event.target.result;
+      };
+
+      reader.readAsDataURL(this.currentReview.photo);
+    },
+    getAvatar() {
+      if (typeof this.currentReview.photo == "Object") {
+        var reader = new FileReader();
+
+        reader.onload = function(event) {
+          var imgtag = document.getElementById("edit-avatar-preview");
+          imgtag.src = event.target.result;
+        };
+
+        reader.readAsDataURL(this.currentReview.photo);
       }
-      else{
-        let tmp = this.reviews.find(f => f.id == this.currentReview.id); 
-        this.reviews[this.reviews.indexOf(tmp)] = this.currentReview;
+      if (this.currentReview && this.currentReview.id) {
+        return this.$baseUrl + this.currentReview.photo;
+      } else {
+        return this.$importImg(`reviews/anonimous.jpg`);
       }
-      this.currentReview = null;
     },
-    nameChange(value){
-      this.currentReview.author_name = value;
+    saveEdit() {
+      this.$validate().then(success => {
+        if (success) {
+          if (!this.currentReview.id) {
+            var formData = new FormData();
+            formData.append("author", this.currentReview.author);
+            formData.append("occ", this.currentReview.occ);
+            formData.append("photo", this.currentReview.photo);
+            formData.append("text", this.currentReview.text);
+
+            this.addReview(formData);
+          } else {
+            var formData = new FormData();
+            formData.append("author", this.currentReview.author);
+            formData.append("occ", this.currentReview.occ);
+            formData.append("photo", this.currentReview.photo);
+            formData.append("text", this.currentReview.text);
+
+            this.saveReview({
+              reviewId: this.currentReview.id,
+              formData: formData
+            });
+          }
+          this.currentReview = null;
+        }
+      });
     },
-    positionChange(value){
-      this.currentReview.author_occ = value;
+    authorChange(value) {
+      this.currentReview.author = value;
     },
-    messageChange(value){
+    occChange(value) {
+      this.currentReview.occ = value;
+    },
+    messageChange(value) {
       this.currentReview.text = value;
     },
-    addNewReviews(){
+    addNewReviews() {
       this.currentReview = {
         id: null,
-        text: '',
-        author_name: '',
-        author_occ: '',
-        author_pic: ''
-      }
+        photo: null,
+        author: "",
+        occ: "",
+        text: ""
+      };
+      this.validation.reset();
     },
-    selectReview(review){
-      this.currentReview = {...review};
-    },
-    removeReview(review){
-      this.reviews.splice(this.reviews.indexOf(review), 1);
+    selectReview(review) {
+      this.currentReview = { ...review };
     }
+  },
+  created() {
+    this.fetchReviews(this.$user.id);
   }
-}
+};
 </script>
 
 <style lang="postcss">

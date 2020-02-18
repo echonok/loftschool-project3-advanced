@@ -5,7 +5,7 @@
       .title-text 
         span Блок «Обо мне»
       .add-button(
-        @click="addNewSkillGroup"
+        @click="addClearCategory"
       )
         .plus_wrapper
           plus
@@ -13,75 +13,29 @@
           span Добавить группу
     .fields            
       skillsGroup.item(
-        v-for="item in skillGroups"
-        :skillGroup="item"
-        :key="item.name"
+        v-for="item in categories"
+        :category="item"
+        :key="item.id"
       )
 </template>
 <script>
 
-import skillsGroup from "./skillsGroup"
+import skillsGroup from "./skillsGroup";
+import plus from "./plus";
+import { mapActions, mapState } from "vuex";
 export default {
-  components: { skillsGroup },
+  components: { skillsGroup, plus },
   name: 'about',
-  data() {
-    return {
-      skillGroups: [
-        {
-          name: 'Workflow',
-          skills:[
-            {
-              title: 'Git',
-              count: 100
-            },
-            {
-              title: 'Terminal',
-              count: 10
-            },
-            {
-              title: 'Gulp',
-              count: 80
-            },
-            {
-              title: 'Webpack',
-              count: 70
-            },
-          ]
-        },
-        {
-          name: 'Front-end',
-          skills:[
-            {
-              title: 'HTML4',
-              count: 100
-            },
-            {
-              title: 'CSS3',
-              count: 10
-            },
-            {
-              title: 'JavaScript',
-              count: 80
-            },
-            {
-              title: 'jquery и Vue.js',
-              count: 70
-            },
-          ]
-        }
-      ]
-    };
+  computed: {
+    ...mapState("about", {
+      categories: state => state.categories
+    })
+  },
+  methods:{
+    ...mapActions("about", ["fetchCategories", "addClearCategory"])
   },
   created() {
-    //this.skillGroups = require("../../../data/skills.json"); // не работает :(
-  },  
-  methods:{
-    addNewSkillGroup(){
-      this.skillGroups.unshift({
-          name: '',
-          skills:[]
-        })
-    }
+    this.fetchCategories(this.$user.id);
   }
 }
 </script>

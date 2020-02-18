@@ -1,32 +1,28 @@
 <template lang="pug">
-.tags__list
-  li.tags__item.tag(v-for="tag in tagsArray")
-    .tag__text {{ tag }}
-
+  .tags__item(
+    v-if="tag != ''"
+  )
+    .tags__item-text {{tag}}
+    .tags__item-exit(
+      v-if="edit"
+      @click="$emit('removeTag', tag)"
+    ) &#215;
 </template>
 
 <script>
 export default {
-  name: 'tags',
-  props: [ 'tags' ],
-  computed: {
-    tagsArray() {
-      return this.tags.split(', ');
-    }
-  },
-}
+  name: "tags",
+  props: ["tag", "edit"]
+};
 </script>
 
 <style lang="postcss" scoped>
-.tags__list {
-  display: flex;
-}
-
-.tags__item{
+.tags__item {
   display: flex;
   width: max-content;
+  align-items: center;
   padding: 3px 10px;
-  background-color: #e6e6e6;
+  background-color: #ffffff;
   border-radius: 25px;
   margin-right: 8px;
   &:last-child {
@@ -34,9 +30,23 @@ export default {
   }
 }
 
-.tag__text {
+.tags__item-text {
   opacity: 0.7;
   font-size: 13px;
   font-weight: 600;
+}
+
+.tags__item-exit {
+  padding-left: 5px;
+  opacity: 0.7;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.edit-tag {
+  background-color: #f4f4f4;
+  color: #283340;
+  opacity: 1;
 }
 </style>

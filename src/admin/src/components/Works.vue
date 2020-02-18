@@ -1,188 +1,241 @@
 <template lang="pug">
 .container
-  .admin-section.projects-section
+  .admin-section.works-section
     .headline
       .headline__text Блок «Работы»
-    .projects
+    .works
       
-      .project-editor(
-        v-if="currentProject != null"
+      .work-editor(
+        v-if="currentWork != null"
       )
-        .project-editor-title 
-          .project-editor-title-text Редактирование работы
+        .work-editor-title 
+          .work-editor-title-text Редактирование работы
         hr
-        .project-editor-body
+        .work-editor-body
           .import-image-wrapper 
             .admin-preview(
-              v-if="currentProject.photo"
+              v-if="currentWork.photo"
             )
-              img.admin-edit-image-img(                 
-                :src="this.$importImg(`projects/${currentProject.photo}`)"
+              img.admin-edit-image-img#edit-img-preview(                 
+                :src="this.$baseUrl + currentWork.photo"
               )
               .admin-preview-text  Изменить превью
             .import-image(
-                v-if="!currentProject.photo"
+                v-if="!currentWork.photo"
               )
               .import-image-content
                 .import-image-text
                   span Перетащите или загрузите
                   br
                   span для загрузки изображения
-                .load-button-wrapper
+                .load-button-wrapper(
+                  @click="uploadImage"
+                )
                   load-button(
                     text="ЗАГРУЗИТЬ"
                   )
-          .project-description
-            admin-input.name-project(
+            .input-tooltip(:class="{'showed':validation.hasError('currentWork.photo')}") {{validation.firstError('currentWork.photo')}}
+          input#work-photo(
+            type="file"
+            ref="workImage"
+            @change="changeImgFile"
+          )
+          .work-description
+            admin-input.name-work(
               :labelText="'Название'"
-              :isInvalid="false"
-              :toolTipText="'toolTipText'"
-              :id="'name-project'"
+              :isInvalid="validation.hasError('currentWork.title')"
+              :toolTipText="validation.firstError('currentWork.title')"
+              :id="'name-work'"
               :type="'input'"
-              :val="currentProject.title"
+              :val="currentWork.title"
               @change="titleChange"
             )
 
-            admin-input.link-project(
+            admin-input.link-work(
               :labelText="'Ссылка'"
-              :isInvalid="false"
-              :toolTipText="'toolTipText'"
-              :id="'link-project'"
+              :isInvalid="validation.hasError('currentWork.link')"
+              :toolTipText="validation.firstError('currentWork.link')"
+              :id="'link-work'"
               :type="'input'"
-              :val="currentProject.link"
+              :val="currentWork.link"
               @change="linkChange"
             )
 
-            admin-input.desc-project(
+            admin-input.desc-work(
               :labelText="'Описание'"
               :isInvalid="false"
-              :toolTipText="'toolTipText'"
-              :id="'desc-project'"
+              :toolTipText="validation.firstError('currentWork.description')"
+              :id="'desc-work'"
               :type="'textarea'"
-              :val="currentProject.desc"
+              :val="currentWork.description"
               @change="descChange"
             )
 
-            admin-input.tags-project(
+            admin-input.tags-work(
               :labelText="'Добавление тэга'"
               :isInvalid="false"
-              :toolTipText="'toolTipText'"
-              :id="'tags-project'"
+              :toolTipText="validation.firstError('currentWork.techs')"
+              :id="'tags-work'"
               :type="'input'"
-              :val="currentProject.skills"
+              :val="currentWork.techs"
               @change="tagsChange"
             )
             .admin-tags
               tags.edit-tag(
-                :tags="currentProject.skills"
+                v-for="tag in currentWork.techs.split(',')"
+                :tag="tag"
                 :edit="true"
+                :key="currentWork.id + '_' + tag"
                 @removeTag="removeTag"
               )
-        .project-editor-buttons
-          .project-editor-cancel(
+        .work-editor-buttons
+          .work-editor-cancel(
             @click="cancelEdit"
           ) Отмена
-          .project-editor-save(
+          .work-editor-save(
             @click="saveEdit"
           )
             load-button(
               text="СОХРАНИТЬ"
             )
 
-      ul.projects__list
-        li.projects__item.projects__item--new(
-          @click="addNewProject"
+      ul.works__list
+        li.works__item.works__item--new(
+          @click="addNewWork"
         )
           .add-element__pic
             span +
           .add-element__text 
             span Добавить работу
-        project(
-          v-for="(project, index) in projects"
-          :project="project"
-          :selected="currentProject && project.id == currentProject.id"
-          @selectProject="selectProject"
-          @removeProject="removeProject"
+        work(
+          v-for="(work, index) in works"
+          :work="work"
+          :selected="currentWork && work.id == currentWork.id"
+          @selectWork="selectWork"
+          @removeWork="removeWork"
           :key="index"
         )
 
 </template>
 
 <script>
-import project from './Project';
-import loadButton from './LoadButton';
-import adminInput from './AdminInput';
-import tags from './Tags';
+import SimpleVueValidator from "simple-vue-validator";
+const Validator = SimpleVueValidator.Validator;
+import { mapActions, mapState } from "vuex";
+
+import work from './Work';
+import loadButton from './loadButton';
+import adminInput from './adminInput';
+import tags from './tags';
 export default {
-  name: 'projects',
-  components: { project, loadButton, adminInput, tags },
+  mixins: [SimpleVueValidator.mixin] ,
+  name: 'works',
+  components: { work, loadButton, adminInput, tags },
   data() {
     return {
-      currentProject: null,
-      projects: []
+      currentWork: null
     };
   },
-  created() {
-    this.projects = require("../../../data/projects.json");
-  },
   computed: {
-    tagsArray() {
-      return this.currentProject.skills.split(', ');
+    ...mapState("works", {
+      works: state => state.works
+    })
+  },
+  validators: {
+    "currentWork.title"(value) {
+      return Validator.value(value).required("Поле не должно быть пустым");
+    },
+    "currentWork.link"(value) {
+      return Validator.value(value).required("Поле не должно быть пустым");
+    },
+    "currentWork.photo"(value) {
+      return Validator.value(value).required("Нужно загрузить фото");
     }
   },
   methods:{
-    removeTag(val){
-      let tags = [...this.currentProject.skills]
+    ...mapActions("works", ["fetchWorks", "removeWork", "saveWork", "addWork"]),
+    removeTag(val) {
+      let tags = this.currentWork.techs.split(',');
       tags.forEach((element, i) => {
-        if(element == val){
+        if (element == val) {
           tags.splice(i, 1);
         }
-      this.currentProject.skills = tags;
+        this.currentWork.techs = tags.join(',');
       });
     },
+    uploadImage(){
+      this.$refs.workImage.click();
+    },
+    changeImgFile(e){
+      this.currentWork.photo = e.target.files[0];
+      let reader = new FileReader();
+
+      reader.onload = function(event) {
+        let imgtag = document.getElementById("edit-img-preview");
+        imgtag.src = event.target.result;
+      };
+
+      reader.readAsDataURL(this.currentWork.photo);
+    },
     titleChange(value){
-      this.currentProject.title = value;
+      this.currentWork.title = value;
     },
     linkChange(value){
-      this.currentProject.link = value;
+      this.currentWork.link = value;
     },
     descChange(value){
-      this.currentProject.desc = value;
+      this.currentWork.description = value;
     },
     tagsChange(value){
-      this.currentProject.skills = value.split(', ');
+      this.currentWork.techs = value;
     },
-    selectProject(project){
-      this.currentProject = {...project};
-    },
-    removeProject(project){
-      this.projects.splice(this.projects.indexOf(project), 1);
+    selectWork(work){
+      this.currentWork = {...work};
     },
     cancelEdit(){
-      this.currentProject = null;
+      this.currentWork = null;
     },
-    saveEdit(){
-      if(!this.currentProject.id){
-        this.currentProject.id = this.projects[this.projects.length - 1].id + 1;
-        this.projects.push(this.currentProject);
-      }
-      else{
-        let tmp = this.projects.find(f => f.id == this.currentProject.id); 
-        this.projects[this.projects.indexOf(tmp)] = this.currentProject;
-      }
-      this.currentProject = null;
+    saveEdit() {
+      this.$validate().then(success => {
+        if (success) {
+          if (!this.currentWork.id) {
+            var formData = new FormData();
+            formData.append("title", this.currentWork.title);
+            formData.append("techs", this.currentWork.techs);
+            formData.append("photo", this.currentWork.photo);
+            formData.append("link", this.currentWork.link);
+            formData.append("description", this.currentWork.description);
+            
+            this.addWork(formData);
+          } else {
+            var formData = new FormData();
+            formData.append("title", this.currentWork.title);
+            formData.append("techs", this.currentWork.techs);
+            formData.append("photo", this.currentWork.photo);
+            formData.append("link", this.currentWork.link);
+            formData.append("description", this.currentWork.description);
+            
+            this.saveWork({ workId: this.currentWork.id, formData: formData });
+          }
+          this.currentWork = null;
+        }
+      });
     },
-    addNewProject(){
-      this.currentProject = {
+    addNewWork(){
+      this.currentWork = {
           id: null,         
           title: '',
           photo: '',
           link: '',
-          desc: '',
-          skills: ""
+          description: '',
+          techs: ""
       };
+      this.validation.reset();
     }
-  }
+  },
+  created() {
+    this.fetchWorks(this.$user.id);
+  },
 }
 
 
@@ -190,12 +243,12 @@ export default {
 
 <style lang="postcss">
 
-.projects {
+.works {
   display: flex;
   flex-direction: column;
 }
 
-.projects__list {
+.works__list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 20px;
@@ -204,7 +257,7 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
-  .projects__list {
+  .works__list {
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 10px;
@@ -212,13 +265,13 @@ export default {
 }
 
 @media screen and (max-width: 600px) {
-  .projects__list {
+  .works__list {
     display: grid;
     grid-template-columns: 1fr;
   }
 }
 
-.projects__item {
+.works__item {
   width: 100%;
   background-color: white;
   box-shadow: 4.1px 2.9px 20px 0 rgba(black, 0.07);
@@ -261,12 +314,12 @@ export default {
 }
 
 
-.project__info {
+.work__info {
   padding: 40px 30px;
   min-height: 200px;
 }
 
-.project__title {
+.work__title {
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
@@ -277,7 +330,7 @@ export default {
   margin-bottom: 30px;
 }
 
-.project__desc {
+.work__desc {
   opacity: 0.7;
   font-size: 16px;
   font-weight: 600;
@@ -289,7 +342,7 @@ export default {
   margin-bottom: 30px;
 }
 
-.project__link {
+.work__link {
   font-size: 16px;
   font-weight: 600;
   font-stretch: normal;
@@ -300,31 +353,31 @@ export default {
   margin-bottom: 45px;
 }
 
-.project-icon {
+.work-icon {
   width: 15px;
   height: 15px;
   fill:#a0a5b1;
 }
 
-.button-set--projects {
+.button-set--works {
   display: flex;
   justify-content: space-between;
 }
 
-.project-editor {
+.work-editor {
   padding: 30px;
   background-color: white;
   box-shadow: 4.1px 2.9px 20px 0 rgba(0, 0, 0, 0.07);
 }
 
-.project-editor-title {
+.work-editor-title {
   padding-bottom: 25px;
   padding-left: 10px;
   font-size: 18px;
   font-weight: bold;
 }
 
-.project-editor-body {
+.work-editor-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 30px;
@@ -373,11 +426,11 @@ export default {
   padding-top: 30px;
 }
 
-.project-description {
+.work-description {
   padding:10px;
 }
 
-.desc-project {
+.desc-work {
   height:190px;
 }
 
@@ -386,14 +439,14 @@ export default {
   padding-top: 20px;
 }
 
-.project-editor-buttons {
+.work-editor-buttons {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   margin-top: 40px;
 }
 
-.project-editor-cancel {
+.work-editor-cancel {
   font-weight: 600;
   color: $blue-admin;
   cursor: pointer;

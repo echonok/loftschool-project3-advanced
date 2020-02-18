@@ -1,12 +1,13 @@
 import Vue from "vue";
+import axios from './../requests'
 
 const skillItem = {
   template: "#skill-item",
-  props: ["skillPower", "skillName"],
+  props: ["skill"],
   methods: {
     drawArea() {
       const circle = this.$refs["color-area"];
-      const percent = `${this.skillPower} ${100 - this.skillPower}`;
+      const percent = `${this.skill.percent} ${100 - this.skill.percent}`;
       circle.style.strokeDasharray = percent;  
     }
   },
@@ -20,7 +21,7 @@ const skillsField = {
   components: {
     skillItem
   },
-  props: ["field"]
+  props: ["category"]
 };
 
 new Vue({
@@ -28,14 +29,19 @@ new Vue({
   template: "#skills-stack",
   data() {
     return {
-      skills: []
+      categories: []
     }
   },
   components: {
     skillsField
   },
-  created() {
-    const data = require("../data/skills.json");
-    this.skills = data;
+  created(){
+    axios.get('/categories/269')
+    .then(Response => {
+      this.categories = Response.data;
+    })
+    .catch(error => {
+      console.log(error.Response);
+    });
   }
 });

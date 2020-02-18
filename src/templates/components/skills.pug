@@ -1,24 +1,23 @@
 script(type="text/x-template")#skills-stack
   .skills__stack
-    .skills__field.field__list(v-for="field in skills")
+    .skills__field.field__list(v-for="category in categories")
       skills-field(
-        :field="field"
+        :category="category"
       )
 
 script(type="text/x-template")#skills-field
   .field
-    .skills__field-name.field__name {{field.skillsGroup}}
+    .skills__field-name.field__name {{category.category}}
     ul.skills__list
-      li.skills__item(v-for="(skillPower, skillName) in field.skills")
+      li.skills__item(v-for="skill in category.skills")
         skill-item(
-          :skillPower="skillPower"
-          :skillName="skillName"
+          :skill="skill"
         )
 
 script(type="text/x-template")#skill-item
   div(class="indicator__circle-area")
     div(class="indicator__text-area")
-      span(class="indicator__text") {{skillName}}
+      span(class="indicator__text") {{skill.title}}
     svg(width="100%" height="100%" viewBox="0 0 42 42" class="indicator__circle")
       linearGradient#circleGradient(x1="0%" y1="0%" x2="0%" y2="100%")
       circle(class="indicator__circle-hole" cx="21" cy="21" r="15.91549430918954" fill="none")
